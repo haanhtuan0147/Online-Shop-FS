@@ -5,7 +5,7 @@ module.exports= class Connect {
             host: 'localhost',
             user: 'root',
             password: '',
-            database: 'animehay',
+            database: 'onlineshopfs',
             charset: 'utf8',
             timezone: 'UTC',
         },

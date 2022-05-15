@@ -4,7 +4,7 @@ module.exports = {
     host: "localhost",
     user: "root",
     password: "",
-    database: "animehay",
+    database: "onlineshopfs",
     timezone: 'UTC',
   },
   migrations: {
