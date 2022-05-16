@@ -5,7 +5,7 @@ const UserController=require('../Controllers/User');
 const Controller = new UserController();
 const Token=require('../Controllers/ToKen');
 const ControllerToken=new Token();
-const login=require('../Controllers/passportt');
+const login=require('../Controllers/passport');
 const ControllerRegisterToken=require('../Controllers/Register_Token')
 const RegisterToken=new ControllerRegisterToken()
 

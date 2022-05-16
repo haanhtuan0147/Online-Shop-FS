@@ -5,6 +5,7 @@ const RepositoryUser= new User();
 const dotenv=require('dotenv');
 dotenv.config();
 const {v4} =require('uuid')
+const jwt=require('jsonwebtoken')
 
 
 module.exports =class ToKen {
@@ -88,11 +89,11 @@ module.exports =class ToKen {
          }
 
     }
-    CreateToken= async (Email) => {
+    CreateToken= async (email) => {
         try {
-            const Acc=await RepositoryUser.findItem({Email:Email});
+            const Acc=await RepositoryUser.findItem({Email:email});
             if(Object.keys(Acc).length==0) return Promise.reject({Message:"Token generation error"})
-            const token=await jwt.sign({Id:Acc[0].id,Email:Email},process.env.ACCES_TOKENUSERID);
+            const token=await jwt.sign({Id:Acc[0].id,Email:email},process.env.ACCES_TOKENUSERID);
             const item={
                 id:v4(),
                 userId:Acc[0].id,
@@ -101,8 +102,7 @@ module.exports =class ToKen {
             const createToken= await Repository.create(item);
             if(createToken)
             return Promise.resolve({Message:"Success",ToKen:token});
-            return Promise.reject({Message:"Add Defective Token"})
-            
+            return Promise.reject({Message:"Add Defective Token"}) 
         } catch (error) {
             return Promise.reject({Message:"Add Defective Token"})
         }

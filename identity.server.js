@@ -6,10 +6,6 @@ const dotenv = require('dotenv')
 global.__basedir = __dirname;
 dotenv.config();
 const routerUser=require('./Router/User')
-const routerToKen=require('./Router/ToKen')
-const routerRegister_Token=require('./Router/Register_Token');
-const User = require('./Model/User');
-const { Route } = require('express');
 class identity{
     app;
     PORT=4000;
