@@ -7,109 +7,131 @@
  exports.up=(knex)=>{
     return knex.schema
     .createTable("User",function(table){
-        table.specificType('Id','CHAR(100)').notNullable().primary();
-        table.specificType('Email','CHAR(100)').checkRegex('/([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@gmail([\.])com/g').notNullable();
-        table.specificType('Password','CHAR(100)').checkRegex('^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$').notNullable();//ít nhất là 8 kí tự tối thiểu 1 chữ số và 1 chữ cái
+        table.specificType('id','CHAR(100)').notNullable().primary();
+        table.specificType('Email','CHAR(100)').checkRegex('^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$').notNullable();
+        table.specificType('Password','CHAR(100)').checkRegex('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$').notNullable();//ít nhất là 8 kí tự tối thiểu 1 chữ số và 1 chữ cái
         table.string('UserName',255).notNullable();
-        table.specificType('PhoneNumber','CHAR(10)').checkRegex('/(84|0[3|5|7|8|9])+([0-9]{8})\b/g').notNullable();
-        table.specificType('Identitycard','CHAR(12)').checkRegex('/[0-9]{12}/g').notNullable();
+        table.specificType('PhoneNumber','CHAR(10)').checkRegex('(84|0[3|5|7|8|9])+([0-9]{8})').notNullable();
+        table.specificType('Identitycard','CHAR(12)').checkRegex('[0-9]{12}').notNullable();
         table.string('Address',255).notNullable();
         table.text('Avatar').notNullable().defaultTo("User.png");
         table.specificType('AccountRights','CHAR(10)').checkIn(['Root','Admin','User']).notNullable();
-        table.timestamp('CreateDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
-        table.timestamp('UpDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+        table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
+        table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
+        table.check('??>=??',['updatedDate','createdDate']);
     })
     .createTable('ToKen', function (table) {
-       table.specificType('Id','CHAR(100)').notNullable().primary();
-       table.specificType('IdUser','CHAR(100)').notNullable();
+       table.specificType('id','CHAR(100)').notNullable().primary();
+       table.specificType('userId','CHAR(100)').notNullable();
        table.text('Token').notNullable();
-       table.timestamp('CreateDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
-       table.timestamp('UpDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-       table.foreign("IdUser").references("Id").inTable("User");
+       table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
+       table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
+       table.check('??>=??',['updatedDate','createdDate']);
+       table.foreign("userId").references("Id").inTable("User");
     })
-    .createTable('Gmail', function (table) {
-       table.specificType('Id','CHAR(100)').notNullable().primary();
+    .createTable('Register_Token', function (table) {
+       table.specificType('id','CHAR(100)').notNullable().primary();
        table.specificType('Email','CHAR(100)').checkRegex('/([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@gmail([\.])com/g').notNullable();
-       table.integer('NumberCheck').notNullable();
-       table.timestamp('CreateDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
-       table.timestamp('UpDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+       table.integer('numberCheck').notNullable();
+       table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
+       table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
+       table.check('??>=??',['updatedDate','createdDate']);
     })
-    .createTable('Bigproductcategory',function(table){
-        table.specificType('Id','CHAR(100)').notNullable().primary();
+    .createTable('Field',function(table){
+        table.specificType('id','CHAR(100)').notNullable().primary();
+        table.string('FieldName',255).notNullable();
+        table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
+        table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
+        table.check('??>=??',['updatedDate','createdDate']);
+
+    })
+    .createTable('Product_Category',function(table){
+        table.specificType('id','CHAR(100)').notNullable().primary();
         table.string('CategoryName',255).notNullable();
-        table.timestamp('CreateDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
-        table.timestamp('UpDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+        table.specificType('fieldId','CHAR(100)').notNullable();
+        table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
+        table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
+        table.check('??>=??',['updatedDate','createdDate']);
+        table.foreign('fieldId').references('id').inTable('Field');
     })
-    .createTable('Productcategory',function(table){
-        table.specificType('Id','CHAR(100)').notNullable().primary();
-        table.string('CategoryName',255).notNullable();
-        table.json('Image').notNullable();
-        table.specificType('IdBigproductcategory','CHAR(100)').notNullable();
-        table.timestamp('CreateDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
-        table.timestamp('UpDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-        table.foreign('IdBigproductcategory').references('Id').inTable('Bigproductcategory');
-    })
-    .createTable('Currencyunit',function(table){
-        table.specificType('Id','CHAR(100)').notNullable().primary();
+    /*.createTable('Currencyunit',function(table){
+        table.specificType('id','CHAR(100)').notNullable().primary();
         table.string('CurrencyName',255).notNullable();
         table.specificType('Symbol','CHAR(10)').notNullable();
         table.integer('Price').notNullable().defaultTo(0);
-        table.timestamp('CreateDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
-        table.timestamp('UpDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-    })
+        table.check('??>=??',['updatedDate','createdDate']);
+        table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
+        table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
+    })*/
     .createTable('Product',function(table){
-        table.specificType('Id','CHAR(100)').notNullable().primary();
+        table.specificType('id','CHAR(100)').notNullable().primary();
         table.string('ProductName',255).notNullable();
         table.text('DescribeProduct').notNullable();
-        table.text('Avatar').notNullable();
-        table.specificType('IdCurrencyunit','CHAR(100)').notNullable();
-        table.json("IdProductcategory").notNullable();
+        table.json('Image').notNullable();
+        table.integer('Money').notNullable().defaultTo(0)
+        table.specificType('Currencyunit','CHAR(10)').notNullable().defaultTo("VND").checkIn(["VND"]);
+        table.json("categoryId").notNullable();
         table.json("DetailsProduct").notNullable();
-        table.timestamp('CreateDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
-        table.timestamp('UpDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+        table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
+        table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
+        table.check('??>=??',['updatedDate','createdDate']);
     })
-    .createTable('Shoppingcart',function(table){
-        table.specificType('Id','CHAR(100)').notNullable().primary();
-        table.specificType('IdUser','CHAR(100)').notNullable();
+    .createTable('Shopping_Cart',function(table){
+        table.specificType('id','CHAR(100)').notNullable().primary();
+        table.specificType('userId','CHAR(100)').notNullable();
         table.specificType('Status','CHAR(100)').checkIn(["Cancel","Wait","Transport","Confirm","Success"]).notNullable();
-        table.timestamp('CreateDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
-        table.timestamp('UpDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-        table.foreign("IdUser").references("Id").inTable("User")
+        table.string('Address',255).notNullable();
+        table.date('IntendTime').notNullable();
+        table.date('CompletionTime');
+        table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
+        table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
+        table.check('??>=??',['updatedDate','createdDate']);
+        table.foreign("userId").references("Id").inTable("User");
+    })
+    .createTable('Order_Product',function(table){
+        table.specificType('id','CHAR(100)').notNullable().primary();
+        table.specificType('shoppingcartId','CHAR(100)').notNullable();
+        table.specificType('productId','CHAR(100)').notNullable();
+        table.integer('numberProduct').notNullable();
+        table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
+        table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
+        table.check('??>=??',['updatedDate','createdDate']);
+        table.foreign("productId").references("Id").inTable("Product")
+        table.foreign("shoppingcartId").references("Id").inTable("Shopping_Cart")
+    })
+    .createTable('Product_Reviews',function(table){
+        table.specificType('id','CHAR(100)').notNullable().primary();
+        table.specificType('userId','CHAR(100)').notNullable();
+        table.specificType('productId','CHAR(100)').notNullable();
+        table.integer('NumberStar').checkBetween([1,10]).notNullable();
+        table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
+        table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
+        table.check('??>=??',['updatedDate','createdDate']);
+        table.foreign("productId").references("Id").inTable("Product");
+        table.foreign("userId").references("Id").inTable("User")
 
     })
-    .createTable('OrderProduct',function(table){
-        table.specificType('Id','CHAR(100)').notNullable().primary();
-        table.specificType('IdProduct','CHAR(100)').notNullable();
-        table.integer('NumberProduct').notNullable();
-        table.timestamp('CreateDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
-        table.timestamp('UpDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-        table.foreign("IdProduct").references("Id").inTable("Product")
-    })
-    .createTable('ProductReviews',function(table){
-        table.specificType('Id','CHAR(100)').notNullable().primary()
-        table.specificType('IdProduct','CHAR(100)').notNullable();
-        table.integer('NumberStar').checkBetween([1,10]).notNullable();
-        table.integer('NumberView').notNullable().defaultTo(0);
-        table.timestamp('CreateDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
-        table.timestamp('UpDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-        table.foreign("IdProduct").references("Id").inTable("Product")
-    })
-    .createTable('ImageReviews',function(table){
-        table.specificType('Id','CHAR(100)').notNullable().primary()
-        table.specificType('IdProductReviews','CHAR(100)').notNullable();
+    .createTable('Image_Reviews',function(table){
+        table.specificType('id','CHAR(100)').notNullable().primary();
+        table.specificType('productReviewsId','CHAR(100)').notNullable();
         table.json('Image').notNullable();
-        table.timestamp('CreateDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
-        table.timestamp('UpDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-        table.foreign("IdProductReviews").references("Id").inTable("ProductReviews")
+        table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
+        table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
+        table.check('??>=??',['updatedDate','createdDate']);
+        table.foreign("productReviewsId").references("Id").inTable("Product_Reviews");
+
     })
-    .createTable('ProductComment',function(table){
-        table.specificType('Id','CHAR(100)').notNullable().primary();
+    /*.createTable('ProductComment',function(table){
+        table.specificType('id','CHAR(100)').notNullable().primary();
+        table.specificType('userId','CHAR(100)').notNullable();
         table.specificType('IdProduct','CHAR(100)').notNullable();
         table.text('Comment').notNullable();
-        table.timestamp('CreateDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
-        table.timestamp('UpDate',{  precision: 6  }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-        table.foreign("IdProduct").references("Id").inTable("Product")
-    })
+        table.check('??>=??',['updatedDate','createdDate']);
+        table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
+        table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
+        table.foreign("IdProduct").references("Id").inTable("Product");
+        table.foreign("userId").references("Id").inTable("User")
+    })*/
     };
 /**
  * @param { import("knex").Knex } knex
@@ -117,16 +139,14 @@
  */
     exports.down=(knex)=>{
       return knex.schema
-      .dropTable("ProductComment")
-      .dropTable("ImageReviews")
-      .dropTable("ProductReviews")
-      .dropTable("OrderProduct")
-      .dropTable("Shoppingcart")
+      .dropTable("Image_Reviews")
+      .dropTable("Product_Reviews")
+      .dropTable("Order_Product")
+      .dropTable("Shopping_Cart")
       .dropTable("Product")
-      .dropTable("Currencyunit")
-      .dropTable("Productcategory")
-      .dropTable("Bigproductcategory")
-      .dropTable("Gmail")
+      .dropTable("Product_category")
+      .dropTable("Field")
+      .dropTable("Register_Token")
       .dropTable("ToKen")
       .dropTable("User")
     };

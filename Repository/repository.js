@@ -7,12 +7,12 @@ module.exports=class KnexRepository{
 
     delete(id){
         return knex(this.tableName)
-            .where('Id', id)
+            .where('id', id)
             .del()
     }
 
     findAll() {
-        return knex(this.tableName).orderBy('UpDate', 'desc')
+        return knex(this.tableName).orderBy('updatedDate', 'desc')
             .select()
     }
 
@@ -22,19 +22,19 @@ module.exports=class KnexRepository{
     }
     update(id,item){
         return knex(this.tableName)
-            .where('Id', '=', id)
+            .where('id', '=', id)
             .update(item)
     }
     findOne(id) {
         return knex(this.tableName)
             .where({
-                Id: id
+                id: id
             })
             .select()
     }
     findItem(item) {
         return knex(this.tableName)
-            .where(item).orderBy('UpDate', 'desc')
+            .where(item).orderBy('updatedDate', 'desc')
             .select()
     }
 
