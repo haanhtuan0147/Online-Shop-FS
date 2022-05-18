@@ -1,5 +1,8 @@
 const Register_Token=require('../Repository/Register_Token')
 const Repository = new Register_Token();
+const dotenv=require('dotenv')
+dotenv.config()
+const nodemailer=require('nodemailer')
 
 
 module.exports =class Register_Token {
@@ -88,8 +91,7 @@ module.exports =class Register_Token {
     }
     CreateRegisterToken=  async (item) => {
         try {
-           var ram=this.ramdom();
-           item.NumberAcces=ram;
+           item.numberCheck=this.ramdom();
            var transporter = nodemailer.createTransport({
              service: 'gmail',
              auth: {
@@ -97,14 +99,12 @@ module.exports =class Register_Token {
                pass: process.env.pass
              }
            });
-            
            var mailOptions = {
              from: process.env.Gmail,
              to: item.Email,
              subject: 'Gửi email dùng Node.js --- dammio.com',
-             text: ram
+             text: item.numberCheck
            };
-           
             transporter.sendMail(mailOptions,function(error, info){
                 if(error){
                     console.log(error)
@@ -114,20 +114,41 @@ module.exports =class Register_Token {
                 }
    
            });
+           console.log(item)
           const rs=await Repository.create(item);
                if(rs) {
                    return Promise.resolve({
                    messager : "Sucsuess"
                })
                }
-               return Promise.reject({messager :"failed create gmail"} )
+          return Promise.reject({messager :"failed create gmail"} )
             
         } catch (error) {
-           return Promise.reject({messager :"failed send gmail"} )
+           return Promise.reject({messager :error} )
         }
 
                    
    }
+   CheckNumberRegisterToken=async (item) => {
+    try {
+       const rs = await Repository.findItem({Email:item.Email});
+       console.log(rs)
+       if (Object.keys(rs).length == 0) {
+           return Promise.reject({messager :"Not Found"} )
+       }
+       const Datecreate=new Date(rs[0].createdDate)
+       const Datenow=new Date()
+       console.log(Datecreate.getTime()-Datenow.getTime())
+       console.log(item.numberCheck==Number(rs[0].numberCheck))
+       if(Datecreate.getTime()-Datenow.getTime()>-300000&&item.numberCheck==Number(rs[0].numberCheck))
+       return Promise.resolve({result : rs})
+       return Promise.reject({messager :"Incorrect check number"})
+        
+    } catch (error) {
+       return Promise.reject({messager :error})
+    }
+
+}
 
 
 

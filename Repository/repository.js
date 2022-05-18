@@ -10,6 +10,9 @@ module.exports=class KnexRepository{
             .where('id', id)
             .del()
     }
+    deleteAll(item){
+        return knex(this.tableName).where(item).del()
+    }
 
     findAll() {
         return knex(this.tableName).orderBy('updatedDate', 'desc')

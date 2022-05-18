@@ -20,6 +20,9 @@
         table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
         table.check('??>=??',['updatedDate','createdDate']);
     })
+    .alterTable("User",function(table){
+        table.unique("Email")
+    })
     .createTable('ToKen', function (table) {
        table.specificType('id','CHAR(100)').notNullable().primary();
        table.specificType('userId','CHAR(100)').notNullable();
@@ -31,7 +34,7 @@
     })
     .createTable('Register_Token', function (table) {
        table.specificType('id','CHAR(100)').notNullable().primary();
-       table.specificType('Email','CHAR(100)').checkRegex('/([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@gmail([\.])com/g').notNullable();
+       table.specificType('Email','CHAR(100)').checkRegex('^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$').notNullable();
        table.integer('numberCheck').notNullable();
        table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
        table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
@@ -67,7 +70,7 @@
         table.specificType('id','CHAR(100)').notNullable().primary();
         table.string('ProductName',255).notNullable();
         table.text('DescribeProduct').notNullable();
-        table.json('Image').notNullable();
+        table.json('Image').notNullable().defaultTo(`["ImageProduct01.png"]`);
         table.integer('Money').notNullable().defaultTo(0)
         table.specificType('Currencyunit','CHAR(10)').notNullable().defaultTo("VND").checkIn(["VND"]);
         table.json("categoryId").notNullable();

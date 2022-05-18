@@ -110,10 +110,10 @@ module.exports =class ToKen {
    RoleRoot=async (token) => {
     try {
         //if(token==undefined) return Promise.reject({Message:"Token Rỗng"});
-        const select= await RepositoryUser.findItem({ToKen:token});
+        const select= await Repository.findItem({ToKen:token});
         if(Object.keys(select).length==0)
         return Promise.reject({Message:"Token Does Not Exist!"});
-        const checkToken=await Repository.findItem({id:select[0].id})
+        const checkToken=await RepositoryUser.findItem({id:select[0].userId})
            if(checkToken[0].AccountRights=="Root")
             return Promise.resolve();
             return Promise.reject({Message:"You Are Insufficient"});
@@ -124,10 +124,10 @@ module.exports =class ToKen {
     RoleAdmin=async (token) => {
         try {
             //if(token==undefined) return Promise.reject({Message:"Token Rỗng"});
-            const select= await RepositoryUser.findItem({ToKen:token});
+            const select= await Repository.findItem({ToKen:token});
             if(Object.keys(select).length==0)
             return Promise.reject({Message:"Token Does Not Exist!"});
-            const checkToken=await Repository.findItem({id:select[0].id})
+            const checkToken=await RepositoryUser.findItem({id:select[0].userId})
                if(checkToken[0].AccountRights=="Root"||checkToken[0].AccountRights=="Admin")
                 return Promise.resolve();
                 return Promise.reject({Message:"You Are Insufficient"});
@@ -138,10 +138,10 @@ module.exports =class ToKen {
     RoleUser=async (token) => {
             try {
                 //if(token==undefined) return Promise.reject({Message:"Token Rỗng"});
-                const select= await RepositoryUser.findItem({ToKen:token});
+                const select= await Repository.findItem({ToKen:token});
                 if(Object.keys(select).length==0)
                 return Promise.reject({Message:"Token Does Not Exist!"});
-                const checkToken=await Repository.findItem({id:select[0].id})
+                const checkToken=await RepositoryUser.findItem({id:select[0].userId})
                    if(checkToken[0].AccountRights=="Root"||checkToken[0].AccountRights=="Admin"||checkToken[0].AccountRights=="User")
                     return Promise.resolve();
                     return Promise.reject({Message:"You Are Insufficient"});

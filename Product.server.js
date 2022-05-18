@@ -5,6 +5,10 @@ const session = require('express-session');
 const dotenv = require('dotenv')
 dotenv.config();
 global.__basedir = __dirname;
+const routerProduct =require('./Router/Product')
+const routerField=require('./Router/Field')
+const routerProduct_Category=require('./Router/Product_Category')
+const routerProduct_Reviews=require('./Router/Product_Reviews')
 class Product{
     app;
     PORT=4002;
@@ -37,6 +41,10 @@ class Product{
         });
     }
     router(){
+        this.app.use('/Product',routerProduct)
+        .use('/Field',routerField)
+        .use('/Product_Category',routerProduct_Category)
+        .use('/Product_Reviews',routerProduct_Reviews)
     }
 }
 new Product();

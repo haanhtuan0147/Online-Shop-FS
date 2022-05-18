@@ -62,10 +62,20 @@ module.exports=class Register_Token {
 
     }
     CreateRegisterToken= (req, res, next) => {
-        const id = req.body;
-        service.CreateRegisterToken(id)
+        const item = req.body;
+        item.id=v4()
+        service.CreateRegisterToken(item)
             .then(result => {
                 baseController.sendResponse(result, req, res);
+            })
+            .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+
+    }
+    CheckNumberRegisterToken= (req, res, next) => {
+        const item = req.body;
+        service.CheckNumberRegisterToken(item)
+            .then(()=>{
+                next()
             })
             .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 

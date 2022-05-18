@@ -5,6 +5,7 @@ const session = require('express-session');
 const dotenv = require('dotenv')
 dotenv.config();
 global.__basedir = __dirname;
+const routershopingcart=require('./Router/Shopping_Cart')
 class order{
     app;
     PORT=4001;
@@ -37,6 +38,7 @@ class order{
         });
     }
     router(){
+        this.app.use("/Shopping_Cart",routershopingcart)
     }
 }
 new order();

@@ -1,5 +1,6 @@
 const Order_Product=require('../Repository/Order_Product')
 const Repository = new Order_Product();
+const {v4}=require('uuid')
 
 
 module.exports =class Order_Product {
@@ -23,6 +24,28 @@ module.exports =class Order_Product {
                 return Promise.resolve({
                 messager : "Sucsuess",
                 Item:item
+            })
+            }
+        return Promise.reject({messager : "Create Faild "});
+        } catch (error) {
+            return Promise.reject({messager : "Create Faild "});
+        }
+        
+    }
+    createarray= async (id,arrayitem) => {
+        try {
+            if(Object.keys(arrayitem).length==0)
+            return Promise.reject({ messager : "fail! createarray not item"});
+            arrayitem.forEach(function(it){
+                it.shoppingcartId=id
+                it.id=v4()
+            })
+            const rs = await Repository.create(arrayitem);
+            if(rs) {
+                console.log(rs)
+                return Promise.resolve({
+                messager : "Sucsuess",
+                Item:arrayitem
             })
             }
         return Promise.reject({messager : "Create Faild "});

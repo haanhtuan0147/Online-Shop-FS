@@ -4,9 +4,8 @@ const ServiceUser =require('../Service/User')
 const Service=new ServiceUser()
 const localStrategy = require('passport-local').Strategy;
  passport.use(new localStrategy(async (username, password, done) => {
-    let authenticated_user = await Service.findUser(username, password); //truy vấn db
+    let authenticated_user = await Service.findEmailPass(username, password).then(result=>{return result}).catch(()=>{return {}}); //truy vấn db
     if (Object.keys(authenticated_user).length == 0) { //object rỗng trả về false
-        //console.log(authenticated_user)
         return done(null, false);
     }
     else {

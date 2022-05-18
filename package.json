@@ -18,9 +18,12 @@
     "express-session": "^1.17.3",
     "jsonwebtoken": "^8.5.1",
     "knex": "^2.0.0",
+    "multer": "^1.4.4",
     "mysql": "^2.18.1",
+    "nodemailer": "^6.7.5",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
+    "util": "^0.12.4",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

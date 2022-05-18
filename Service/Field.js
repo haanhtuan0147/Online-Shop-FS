@@ -1,5 +1,7 @@
 const Field=require('../Repository/Field')
 const Repository = new Field();
+const Product_Category=require('../Repository/Product_Category')
+const RepositoryProduct_Category = new Product_Category();
 
 
 module.exports =class Field {
@@ -45,11 +47,12 @@ module.exports =class Field {
     }
      delete = async (id) => {
          try{
-        const rs = await Repository.delete(id)
-        if (rs == 0) {
-            return Promise.reject({ messager: "Delete Faild" })
-        }
-        return Promise.resolve({messager : "Sucsuess"})
+          await RepositoryProduct_Category.deletefield(id)
+           const rs = await Repository.delete(id)
+           if (rs == 0) {
+            return Promise.reject({ messager: "Delete Faild field" })
+            }
+           return Promise.resolve({messager : "Sucsuess"})
     } catch (error) {
         return Promise.reject({ messager: "Delete Faild" } )
     }
@@ -74,15 +77,28 @@ module.exports =class Field {
          try {
             const rs = await Repository.findItem(item);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({messager :"Not Found"} )
+                return Promise.reject({messager :"Not Found findItem"} )
             }
             return Promise.resolve({result : rs})
              
          } catch (error) {
-            return Promise.reject({messager :"Not Found"})
+            return Promise.reject({messager :"Not Found findItem"})
          }
 
     }
+    findcategory= async (id) => {
+        try {
+           const rs = await RepositoryProduct_Category.findItem({fieldId:id});
+           if (Object.keys(rs).length == 0) {
+               return Promise.reject({messager :"Not Found findcategory"} )
+           }
+           return Promise.resolve({result : rs})
+            
+        } catch (error) {
+           return Promise.reject({messager :"Not Found findcategory"})
+        }
+
+   }
 
 
 

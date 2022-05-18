@@ -23,6 +23,23 @@ module.exports=class Product_Reviews {
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
+    createimagereview=  (req, res, next) => {
+        const id = req.params.id;
+        const image=req.files
+        service.createimagereview(id,image)
+        .then(result => {
+            baseController.sendResponse(result, req, res);
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+    }
+    checknotreallyProductReiview= (req, res, next) => {
+        const item = req.body;
+        service.checknotreallyProductReiview(item)
+        .then(result => {
+            next()
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+    }
 
      update =  (req, res, next) => {
         const item = req.body;
@@ -45,6 +62,15 @@ module.exports=class Product_Reviews {
     findItem =  (req, res, next) => {
         const item = req.body;
         service.findItem(item)
+        .then(result => {
+            baseController.sendResponse(result, req, res);
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+
+    }
+    findimagereview=  (req, res, next) => {
+        const id = req.params.id;
+        service.findimagereview(id)
         .then(result => {
             baseController.sendResponse(result, req, res);
         })
