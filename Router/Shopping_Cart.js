@@ -13,6 +13,7 @@ Router.use(bodyParser.urlencoded({ extended: true }));
         Router.get('/findAll', Controller.findAll);
         Router.get('/findOne/:id', Controller.findOne);
         Router.get('/findItem', Controller.findItem);
+        Router.get('/findShoppingcart_totalmoney', Controller.findShoppingcart_totalmoney);
 
         Router.post('/create', Controller.create);
         Router.put('/Cancel_Confirm_Transport_Success/:id',ControllerToken.RoleUser,Controller.Cancel,Controller.Confirm_Transport_Success);
