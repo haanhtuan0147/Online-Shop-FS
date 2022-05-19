@@ -79,6 +79,15 @@ module.exports=class Shopping_Cart {
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
     }
+    findShoppingcart_totalmoney_detail=(req, res, next) => {
+        const id = req.params.id;
+        service.findShoppingcart_totalmoney_detail(id)
+        .then(result => {
+            baseController.sendResponse(result, req, res);
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+
+    }
 
     delete = (req, res, next) => {
         const id = req.params.id;

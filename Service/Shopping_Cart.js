@@ -4,6 +4,8 @@ const Tokens=require('../Repository/ToKen')
 const RepositoryTokens = new Tokens();
 const User=require('../Repository/User')
 const RepositoryUser = new User();
+const order_product=require('../Repository/Order_Product')
+const Repositoryorder_product=new order_product()
 
 
 module.exports =class Shopping_Cart {
@@ -100,6 +102,19 @@ module.exports =class Shopping_Cart {
         }
 
    }
+   findShoppingcart_totalmoney_detail= async (id) => {
+    try {
+       const rs = await Repositoryorder_product.findShoppingcart_totalmoney_detail(id);
+       if (Object.keys(rs).length == 0) {
+           return Promise.reject({messager :"Not Found"} )
+       }
+       return Promise.resolve({result : rs})
+        
+    } catch (error) {
+       return Promise.reject({messager :"Not Found"})
+    }
+
+}
     Cancel=async(req, res, next,baseController)=>{
         try {
         const item = req.body;
