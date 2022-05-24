@@ -8,11 +8,11 @@ const Controller = new Order_ProductController();
 Router.use(express.json());
 Router.use(bodyParser.urlencoded({ extended: true }));
 
-Router.get('/findAll', Controller.findAll);
-        Router.get('/findOne/:id', Controller.findOne);
+Router.get('/Order_Product', Controller.findAll);
+        Router.get('/Order_Product/:id', Controller.findOne);
         Router.get('/findItem', Controller.findItem);
 
-        Router.post('/create', Controller.create);
-        Router.put('/update/:id', Controller.update);
-        Router.delete('/delete/:id', Controller.delete);
+        Router.post('/Order_Product', Controller.create);
+        Router.put('/Order_Product/:id', Controller.update);
+        Router.delete('/Order_Product/:id', Controller.delete);
 module.exports= Router;

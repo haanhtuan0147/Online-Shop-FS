@@ -9,7 +9,7 @@ module.exports=class ToKen {
 
         service.findAll()
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 }
@@ -19,7 +19,7 @@ module.exports=class ToKen {
         item.Id = v4();
         service.create(item)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
@@ -29,7 +29,7 @@ module.exports=class ToKen {
         const id = req.params.id;
         service.update(id, item)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
@@ -38,7 +38,7 @@ module.exports=class ToKen {
         const id = req.params.id;
         service.findOne(id)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
@@ -46,7 +46,7 @@ module.exports=class ToKen {
         const item = req.body;
         service.findItem(item)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
@@ -56,7 +56,7 @@ module.exports=class ToKen {
         const id = req.params.id;
         service.delete(id)
             .then(result => {
-                baseController.sendResponse(result, req, res);
+                baseController.sendResponse(result, req, res.status(200));
             })
             .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
@@ -65,12 +65,23 @@ module.exports=class ToKen {
         const Email = req.user;
         service.CreateToken(Email)
             .then(result => {
-                baseController.sendResponse(result, req, res);
+                baseController.sendResponse(result, req, res.status(200));
+            })
+            .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+
+    }
+    CheckToKenTime=(req, res, next) => {
+        const author = req.headers['authorization'];
+        const token = author?.split(" ")[1];
+        service.CheckToKenTime(token)
+            .then(result => {
+                baseController.sendResponse(result, req, res.status(200));
             })
             .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
     }
     RoleRoot = (req,res,next) => {
+        console.log("123")
         const author = req.headers['authorization'];
         const token = author?.split(" ")[1];
         service.RoleRoot(token)
@@ -93,8 +104,10 @@ module.exports=class ToKen {
             })
     }
     RoleUser = (req,res,next) => {
+        console.log("123")
         const author = req.headers['authorization'];
         const token = author?.split(" ")[1];
+        console.log(token)
         service.RoleUser(token)
         .then(() => {
                 next();

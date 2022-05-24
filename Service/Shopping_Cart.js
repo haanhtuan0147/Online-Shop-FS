@@ -1,29 +1,52 @@
 const Shopping_Cart=require('../Repository/Shopping_Cart')
 const Repository = new Shopping_Cart();
-const Tokens=require('../Repository/ToKen')
-const RepositoryTokens = new Tokens();
-const User=require('../Repository/User')
-const RepositoryUser = new User();
 const order_product=require('../Repository/Order_Product')
 const Repositoryorder_product=new order_product()
-
+const dotenv=require('dotenv');
+dotenv.config();
+const jwt=require('jsonwebtoken')
 
 module.exports =class Shopping_Cart {
-    findAll = async () => {
+    findAll = async (token) => {
         try {
-        const rs = await Repository.findAll();
-        if (Object.keys(rs).length == 0) {
-            return Promise.reject({messager :"Not Found"} )
-        }
-        return Promise.resolve({result : rs})
+            if(!token)return Promise.reject({messager:"not token?"});
+            const select= await jwt.verify(token,process.env.ACCES_TOKENUSERID,(err,data)=>{
+                if(data)
+                return data;
+                return false;
+            });
+            if(!select) return Promise.reject({messager:"not user?"});
+            if(select.AccountRights=="User"){
+                const rs = await Repository.findItem({userId:select.userId});
+                if (Object.keys(rs).length == 0) {
+                    return Promise.reject({messager :"Not Found"} )
+                }
+                return Promise.resolve(rs)
+            }
+            else{
+                const rs = await Repository.findAll();
+                if (Object.keys(rs).length == 0) {
+                    return Promise.reject({messager :"Not Found"} )
+                }
+                return Promise.resolve(rs)
+            }
     } catch (error) {
         return Promise.reject({messager :error} )
     }
     }
-     create = async (item) => {
+     create = async (item,token) => {
         try {
+            if(!token)return Promise.reject({messager:"not token?"});
+            const select= await jwt.verify(token,process.env.ACCES_TOKENUSERID,(err,data)=>{
+                if(data)
+                return data;
+                return false;
+            });
+            console.log(select)
+            if(!select) return Promise.reject({messager:"not user?"});
             if(Object.keys(item).length==0)
             return Promise.reject({ messager : "fail! create",});
+            item.userId=select.userId
             const rs = await Repository.create(item);
             if(rs) {
                 return Promise.resolve({
@@ -50,7 +73,7 @@ module.exports =class Shopping_Cart {
     }
     }
      delete = async (id) => {
-         try{
+        try{
         const rs = await Repository.delete(id)
         if (rs == 0) {
             return Promise.reject({ messager: "Delete Faild" })
@@ -60,55 +83,87 @@ module.exports =class Shopping_Cart {
         return Promise.reject({ messager: "Delete Faild" } )
     }
     }
-
-     findOne = async (id) => {
+     findOne = async (id,token) => {
         try {
+            if(!token)return Promise.reject({messager:"not token?"});
+            const select= await jwt.verify(token,process.env.ACCES_TOKENUSERID,(err,data)=>{
+                if(data)
+                return data;
+                return false;
+            });
+            console.log(select)
+            if(!select) return Promise.reject({messager:"not user?"});
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
                 return Promise.reject({ messager: " Shopping_Cart not exists ! "  });
             }
-            if (rs) {
-                return Promise.resolve(rs)
-            }
+            if(select.AccountRights=="User"&&rs[0].userId!=select.userId)
+            return Promise.reject({ messager: " you do not have permission to view this user's shopping cart ! "  });
+            return Promise.resolve(rs)
         } catch (error) {
             return Promise.reject({ messager: " Shopping_Cart not exists ! "  } )
         }
     }
-
-
-     findItem = async (item) => {
+     findItem = async (item,token) => {
          try {
+            if(!token)return Promise.reject({messager:"not token?"});
+            const select= await jwt.verify(token,process.env.ACCES_TOKENUSERID,(err,data)=>{
+                if(data)
+                return data;
+                return false;
+            });
+            if(!select) return Promise.reject({messager:"not user?"});
+            if(select.AccountRights=="User")
+            item.userId=select.userId
             const rs = await Repository.findItem(item);
             if (Object.keys(rs).length == 0) {
                 return Promise.reject({messager :"Not Found"} )
             }
-            return Promise.resolve({result : rs})
+            return Promise.resolve(rs)
              
          } catch (error) {
             return Promise.reject({messager :"Not Found"})
          }
 
     }
-    findShoppingcart_totalmoney= async (item) => {
+    findShoppingcart_totalmoney= async (item,token) => {
         try {
+        if(!token)return Promise.reject({messager:"not token?"});
+        const select= await jwt.verify(token,process.env.ACCES_TOKENUSERID,(err,data)=>{
+            if(data)
+            return data;
+            return false;
+        });
+        if(!select) return Promise.reject({messager:"not user?"});
+        if(select.AccountRights=="User") item.userId=select.userId
            const rs = await Repository.findShoppingcart_totalmoney(item);
            if (Object.keys(rs).length == 0) {
                return Promise.reject({messager :"Not Found"} )
            }
-           return Promise.resolve({result : rs})
+           return Promise.resolve(rs)
             
         } catch (error) {
            return Promise.reject({messager :"Not Found"})
         }
 
    }
-   findShoppingcart_totalmoney_detail= async (id) => {
+   findShoppingcart_totalmoney_detail= async (id,token) => {
     try {
-       const rs = await Repositoryorder_product.findShoppingcart_totalmoney_detail(id);
-       if (Object.keys(rs).length == 0) {
+        if(!token)return Promise.reject({messager:"not token?"});
+        const select= await jwt.verify(token,process.env.ACCES_TOKENUSERID,(err,data)=>{
+            if(data)
+            return data;
+            return false;
+        });
+        if(!select) return Promise.reject({messager:"not user?"});
+        const rs1=await Repository.findOne(id)
+        if(Object.keys(rs1).length==0)return Promise.reject({messager:"not ShoppingCart?"});
+        if(select.AccountRights=="User"&&rs1[0].userId!=select.userId)return Promise.reject({messager:"not AccountRights?"});
+        const rs = await Repositoryorder_product.findShoppingcart_totalmoney_detail(id);
+        if (Object.keys(rs).length == 0) {
            return Promise.reject({messager :"Not Found"} )
-       }
-       return Promise.resolve({result : rs})
+        }
+        return Promise.resolve(rs)
         
     } catch (error) {
        return Promise.reject({messager :"Not Found"})
@@ -117,42 +172,42 @@ module.exports =class Shopping_Cart {
 }
     Cancel=async(req, res, next,baseController)=>{
         try {
-        const item = req.body;
-        const author = req.headers['authorization'];
-        const token = author?.split(" ")[1];
-        const id = req.params.id;
-        const rs=await RepositoryTokens.findItem({Token:token})
-        if(Object.keys(rs).length==0)return baseController.sendResponse({messager:"not token?"}, req, res.status(500));
-        const rs1=await RepositoryUser.findItem({id:rs[0].userId})
-        if(Object.keys(rs1).length==0) return baseController.sendResponse({messager:"not user?"}, req, res.status(500));
-        const rs3=await Repository.findOne(id)
-        if(Object.keys(rs3).length==0)return baseController.sendResponse({messager:"not Shopping cart?"}, req, res.status(500));
-        /*console.log(rs1[0].AccountRights=="User")
-        console.log(item.Status=="Cancel")
-        console.log(rs3[0].Status=="Wait")
-        console.log(rs3[0].userId==rs[0].userId)*/
-        if(rs1[0].AccountRights=="User"&&item.Status=="Cancel"&&rs3[0].Status=="Wait"&&rs3[0].userId==rs[0].userId)
-        {
-            const rs2=await Repository.update(id,{Status:"Cancel"})
-            console.log(rs2)
-            if(rs2)return baseController.sendResponse({messager:"successfully cancel the order!"}, req, res.status(200));
-            return baseController.sendResponse({messager:"this status cannot be saved!"}, req, res.status(500));
-        }
-        if(rs1[0].AccountRights=="User")
-        return baseController.sendResponse({messager:"you are not authorized!"}, req, res.status(500));
-        next()
-        } catch (error) {
-            baseController.sendResponse({messager:error}, req, res.status(500));
-        }
+            const item = req.body;
+            const author = req.headers['authorization'];
+            const token = author?.split(" ")[1];
+            const id = req.params.id;
+            if(!token)return baseController.sendResponse({messager:"not token?"}, req, res.status(500));
+            const select= await jwt.verify(token,process.env.ACCES_TOKENUSERID,(err,data)=>{
+                if(data)
+                return data;
+                return false;
+            });
+            if(!select) return baseController.sendResponse({messager:"not user?"}, req, res.status(500));
+            const rs3=await Repository.findOne(id)
+            if(Object.keys(rs3).length==0)return baseController.sendResponse({messager:"not Shopping cart?"}, req, res.status(500));
+            if(item.Status=="Cancel"&&rs3[0].Status=="Wait"&&rs3[0].userId==select.userId)
+            {
+                const rs2=await Repository.update(id,{Status:"Cancel"})
+                if(rs2)return baseController.sendResponse({messager:"successfully cancel the order!"}, req, res.status(200));
+                return baseController.sendResponse({messager:"this status cannot be saved!"}, req, res.status(500));
+            }
+            if(select.AccountRights=="User")
+            return baseController.sendResponse({messager:"you are not authorized!"}, req, res.status(500));
+            next()
+            } catch (error) {
+                 baseController.sendResponse({messager:error}, req, res.status(500));
+            }
         
     }
     Confirm_Transport_Success=async(id,item,token)=>{
         try {
-        const rs=await RepositoryTokens.findItem({Token:token})
-        if(Object.keys(rs).length==0)return Promise.reject({messager:"not token?"});
-        const rs1=await RepositoryUser.findItem({id:rs[0].userId})
-        console.log(rs1)
-        if(Object.keys(rs1).length==0) return Promise.reject({messager:"not user?"});
+        if(!token)return Promise.reject({messager:"not token?"});
+        const select= await jwt.verify(token,process.env.ACCES_TOKENUSERID,(err,data)=>{
+            if(data)
+            return data;
+            return false;
+        });
+        if(!select) return Promise.reject({messager:"not user?"});
         const rs3=await Repository.findOne(id)
         if(Object.keys(rs3).length==0) return Promise.reject({messager:"not Shopping cart?"});
         if((item.Status=="Cancel"&&rs3[0].Status=="Cancel")||item.Status=="Cancel"||rs3[0].Status=="Cancel"||rs3[0].Status=="Success"||item.Status=="Wait")

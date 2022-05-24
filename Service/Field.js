@@ -11,15 +11,13 @@ module.exports =class Field {
         if (Object.keys(rs).length == 0) {
             return Promise.reject({messager :"Not Found"} )
         }
-        return Promise.resolve({result : rs})
+        return Promise.resolve(rs)
     } catch (error) {
         return Promise.reject({messager :error} )
     }
     }
      create = async (item) => {
         try {
-            if(Object.keys(item).length==0)
-            return Promise.reject({ messager : "fail! create",});
             const rs = await Repository.create(item);
             if(rs) {
                 return Promise.resolve({
@@ -47,7 +45,9 @@ module.exports =class Field {
     }
      delete = async (id) => {
          try{
+            console.log(id)
           await RepositoryProduct_Category.deletefield(id)
+          console.log(id)
            const rs = await Repository.delete(id)
            if (rs == 0) {
             return Promise.reject({ messager: "Delete Faild field" })
@@ -79,7 +79,7 @@ module.exports =class Field {
             if (Object.keys(rs).length == 0) {
                 return Promise.reject({messager :"Not Found findItem"} )
             }
-            return Promise.resolve({result : rs})
+            return Promise.resolve(rs)
              
          } catch (error) {
             return Promise.reject({messager :"Not Found findItem"})
@@ -92,7 +92,7 @@ module.exports =class Field {
            if (Object.keys(rs).length == 0) {
                return Promise.reject({messager :"Not Found findcategory"} )
            }
-           return Promise.resolve({result : rs})
+           return Promise.resolve(rs)
             
         } catch (error) {
            return Promise.reject({messager :"Not Found findcategory"})

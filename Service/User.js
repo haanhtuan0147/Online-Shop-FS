@@ -11,15 +11,13 @@ module.exports =class User {
         if (Object.keys(rs).length == 0) {
             return Promise.reject({messager :"Not Found"} )
         }
-        return Promise.resolve({result : rs})
+        return Promise.resolve(rs)
     } catch (error) {
         return Promise.reject({messager :error} )
     }
     }
      create = async (item) => {
         try {
-            if(Object.keys(item).length==0)
-            return Promise.reject({ messager : "fail! create",});
             const rs = await Repository.create(item);
             delete item.Password
             if(rs) {
@@ -79,7 +77,7 @@ module.exports =class User {
             if (Object.keys(rs).length == 0) {
                 return Promise.reject({messager :"Not Found"} )
             }
-            return Promise.resolve({result : rs})
+            return Promise.resolve(rs)
              
          } catch (error) {
             return Promise.reject({messager :"Not Found"})
@@ -111,7 +109,7 @@ module.exports =class User {
         if (Object.keys(rs2).length == 0) {
             return Promise.reject({messager :"Not Found"} )
         }
-        return Promise.resolve({result:rs2}) 
+        return Promise.resolve(rs2) 
     } catch (error) {
        return Promise.reject({messager :error})
     }
@@ -161,7 +159,7 @@ module.exports =class User {
        }
        if(rs[0].AccountRights=="Root")
        return Promise.reject({messager :"this user cannot be deleted"} )
-       console.log(rs)
+       //console.log(rs)
        const rs1 = await Repository.delete(id)
        if (rs1 == 0) {
            return Promise.reject({ messager: "Delete Faild" })
@@ -179,6 +177,18 @@ module.exports =class User {
            return Promise.resolve({messager : "Sucsuess"})
        }
        return Promise.reject({messager :"Email already exists"} )
+    } catch (error) {
+       return Promise.reject({messager :error})
+    }
+
+   }
+   CheckUserReally=async (token) => {
+    try {
+        console.log(token)
+        const rs=await RepositoryToken.findItem({Token:token})
+        if(Object.keys(rs).length==0)
+        return Promise.reject({messager:"not token?"});
+        return Promise.resolve({rs:"the user is exist"})
     } catch (error) {
        return Promise.reject({messager :error})
     }

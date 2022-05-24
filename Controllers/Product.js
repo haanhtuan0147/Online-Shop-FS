@@ -9,7 +9,7 @@ module.exports=class Product {
 
         service.findAll()
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 }
@@ -17,47 +17,37 @@ module.exports=class Product {
      create =  (req, res, next) => {
         const item = req.body;
         item.Id = v4();
-        item.Image='[\"Image01.png\",\"Image02.png\"]'
         service.create(item)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
 
      update =  (req, res, next) => {
         const item = req.body;
+        console.log(req.body)
         const id = req.params.id;
-        delete item.Image
         service.update(id, item)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
-    updateimage =  (req, res, next) => {
-        const item = req.files;
-        const id = req.params.id;
-        service.updateimage(id, item)
-        .then(result => {
-            baseController.sendResponse(result, req, res);
-        })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
-    }
-
     findOne =  (req, res, next) => {
         const id = req.params.id;
         service.findOne(id)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
     findItem =  (req, res, next) => {
         const item = req.body;
+        console.log(req.body)
         service.findItem(item)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
@@ -66,7 +56,7 @@ module.exports=class Product {
         const price = req.params.price;
         service.searchbyprice(price)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
@@ -75,7 +65,7 @@ module.exports=class Product {
         const price = req.body;
         service.searchbypriceBetween(price.sart,price.end)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
@@ -84,7 +74,7 @@ module.exports=class Product {
         const name = req.params.name;
         service.searchbyname(name)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
@@ -93,7 +83,7 @@ module.exports=class Product {
         const category = req.body;
         service.searchbycategory(category.category)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
@@ -102,7 +92,7 @@ module.exports=class Product {
         const category = req.params.category;
         service.searchbyfield(category)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
@@ -112,7 +102,7 @@ module.exports=class Product {
         const id = req.params.id;
         service.delete(id)
             .then(result => {
-                baseController.sendResponse(result, req, res);
+                baseController.sendResponse(result, req, res.status(200));
             })
             .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 

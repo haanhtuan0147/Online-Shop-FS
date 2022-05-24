@@ -9,26 +9,30 @@ module.exports=class Product_Reviews {
 
         service.findAll()
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 }
 
      create =  (req, res, next) => {
         const item = req.body;
-        item.Id = v4();
-        service.create(item)
+        item.id = v4();
+        const author = req.headers['authorization'];
+        const token = author?.split(" ")[1];
+        service.create(item,token)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
     createimagereview=  (req, res, next) => {
         const id = req.params.id;
-        const image=req.files
-        service.createimagereview(id,image)
+        const image=req.body.Image
+        const author = req.headers['authorization'];
+        const token = author?.split(" ")[1];
+        service.createimagereview(id,image,token)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
@@ -44,9 +48,11 @@ module.exports=class Product_Reviews {
      update =  (req, res, next) => {
         const item = req.body;
         const id = req.params.id;
-        service.update(id, item)
+        const author = req.headers['authorization'];
+        const token = author?.split(" ")[1];
+        service.update(id, item,token)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
@@ -55,7 +61,7 @@ module.exports=class Product_Reviews {
         const id = req.params.id;
         service.findOne(id)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
@@ -63,7 +69,7 @@ module.exports=class Product_Reviews {
         const item = req.body;
         service.findItem(item)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
@@ -72,7 +78,7 @@ module.exports=class Product_Reviews {
         const id = req.params.id;
         service.findimagereview(id)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
@@ -82,7 +88,7 @@ module.exports=class Product_Reviews {
         const id = req.params.id;
         service.delete(id)
             .then(result => {
-                baseController.sendResponse(result, req, res);
+                baseController.sendResponse(result, req, res.status(200));
             })
             .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 

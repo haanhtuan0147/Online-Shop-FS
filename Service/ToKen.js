@@ -93,7 +93,7 @@ module.exports =class ToKen {
         try {
             const Acc=await RepositoryUser.findItem({Email:email});
             if(Object.keys(Acc).length==0) return Promise.reject({Message:"Token generation error"})
-            const token=await jwt.sign({Id:Acc[0].id,Email:email},process.env.ACCES_TOKENUSERID);
+            const token=await jwt.sign({userId:Acc[0].id,Email:email,AccountRights:Acc[0].AccountRights},process.env.ACCES_TOKENUSERID);
             const item={
                 id:v4(),
                 userId:Acc[0].id,
@@ -110,11 +110,13 @@ module.exports =class ToKen {
    RoleRoot=async (token) => {
     try {
         //if(token==undefined) return Promise.reject({Message:"Token Rỗng"});
-        const select= await Repository.findItem({ToKen:token});
-        if(Object.keys(select).length==0)
-        return Promise.reject({Message:"Token Does Not Exist!"});
-        const checkToken=await RepositoryUser.findItem({id:select[0].userId})
-           if(checkToken[0].AccountRights=="Root")
+        const select= await jwt.verify(token,process.env.ACCES_TOKENUSERID,(err,data)=>{
+            if(data)
+            return data;
+            return false;
+        });
+        if(!select)return Promise.reject({Message:"Token Does Not Exist!"})
+        if(select.AccountRights=="Root")
             return Promise.resolve();
             return Promise.reject({Message:"You Are Insufficient"});
         } catch (error) {
@@ -124,11 +126,14 @@ module.exports =class ToKen {
     RoleAdmin=async (token) => {
         try {
             //if(token==undefined) return Promise.reject({Message:"Token Rỗng"});
-            const select= await Repository.findItem({ToKen:token});
-            if(Object.keys(select).length==0)
-            return Promise.reject({Message:"Token Does Not Exist!"});
-            const checkToken=await RepositoryUser.findItem({id:select[0].userId})
-               if(checkToken[0].AccountRights=="Root"||checkToken[0].AccountRights=="Admin")
+            const select= await jwt.verify(token,process.env.ACCES_TOKENUSERID,(err,data)=>{
+                if(data)
+                return data;
+                return false;
+            });
+            console.log(token)
+            if(!select)return Promise.reject({Message:"Token Does Not Exist!"})
+               if(select.AccountRights=="Root"||select.AccountRights=="Admin")
                 return Promise.resolve();
                 return Promise.reject({Message:"You Are Insufficient"});
             } catch (error) {
@@ -136,19 +141,54 @@ module.exports =class ToKen {
             }
         }
     RoleUser=async (token) => {
-            try {
+        try {
+        //if(token==undefined) return Promise.reject({Message:"Token Rỗng"});
+        const select= await jwt.verify(token,process.env.ACCES_TOKENUSERID,(err,data)=>{
+            if(data)
+            return data;
+            return false;
+        });
+        if(!select)return Promise.reject({Message:"Token Does Not Exist!"})
+           if(select.AccountRights=="Root"||select.AccountRights=="Admin"||select.AccountRights=="User")
+            return Promise.resolve();
+            return Promise.reject({Message:"You Are Insufficient"});
+        } catch (error) {
+            return Promise.reject({Message:"You Are Insufficient"})
+        }
+    }
+    resfresh=async(select,date)=>{
+        try {
+            const update=await Repository.Update(select[0].Id,{UpDate:date})
+            if(update){
+                return Promise.resolve();
+            }
+            return Promise.reject();
+            
+        } catch (error) {
+            return Promise.reject();
+        }
+     
+    }
+    CheckToKenTime=async(token)=>{
+        try {
                 //if(token==undefined) return Promise.reject({Message:"Token Rỗng"});
                 const select= await Repository.findItem({ToKen:token});
                 if(Object.keys(select).length==0)
                 return Promise.reject({Message:"Token Does Not Exist!"});
-                const checkToken=await RepositoryUser.findItem({id:select[0].userId})
-                   if(checkToken[0].AccountRights=="Root"||checkToken[0].AccountRights=="Admin"||checkToken[0].AccountRights=="User")
-                    return Promise.resolve();
-                    return Promise.reject({Message:"You Are Insufficient"});
-                } catch (error) {
-                    return Promise.reject({Message:"You Are Insufficient"})
+                const date=new Date();
+                const date2=new Date(select.Update)    
+                if(date.getTime()>date2.getTime()+10800000)
+                return Promise.reject({Message:"Token Expired!"});
+                if(date.getTime()+7200000>date2.getTime()+10800000)
+                {
+                    return this.resfresh(select,date).then(()=>{return Promise.resolve()}).catch(()=>{return Promise.reject({Message:"Token Not Generated"})});
+                            
                 }
+                return Promise.resolve();
+            } catch (error) {
+                return Promise.reject({Message:"Token Does Not Exist!"})
             }
+    }
 
 
 }

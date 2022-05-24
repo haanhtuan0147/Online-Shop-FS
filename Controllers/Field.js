@@ -6,30 +6,31 @@ const service = new Service();
 module.exports=class Field {
 
     findAll = (req, res, next) => {
-
         service.findAll()
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 }
 
      create =  (req, res, next) => {
+         console.log(req.body)
         const item = req.body;
         item.Id = v4();
         service.create(item)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
 
      update =  (req, res, next) => {
         const item = req.body;
+        console.log(item)
         const id = req.params.id;
         service.update(id, item)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
@@ -38,7 +39,7 @@ module.exports=class Field {
         const id = req.params.id;
         service.findOne(id)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
@@ -46,7 +47,7 @@ module.exports=class Field {
         const item = req.body;
         service.findItem(item)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
@@ -55,7 +56,7 @@ module.exports=class Field {
         const id = req.params.id;
         service.findcategory(id)
         .then(result => {
-            baseController.sendResponse(result, req, res);
+            baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
@@ -64,7 +65,7 @@ module.exports=class Field {
         const id = req.params.id;
         service.delete(id)
             .then(result => {
-                baseController.sendResponse(result, req, res);
+                baseController.sendResponse(result, req, res.status(200));
             })
             .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 

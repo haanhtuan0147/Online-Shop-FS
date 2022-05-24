@@ -23,7 +23,7 @@ const localStrategy = require('passport-local').Strategy;
 exports.Authenticate =(req, res, next) => {
     passport.authenticate('local', async(err, user) => {
         
-    if (!user) return res.status(401).json({ message: "Wrong login information" });
+    if (!user) return res.status(500).json({ message: "Wrong login information" });
     else {
         //res.json(user.Email)
         req.user =user.Email;

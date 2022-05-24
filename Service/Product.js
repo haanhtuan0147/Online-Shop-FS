@@ -2,7 +2,6 @@ const Product=require('../Repository/Product')
 const Repository = new Product();
 const Rcategory=require('../Repository/Product_Category')
 const Repositorycategory = new Rcategory();
-const serviceimage=require('../Service/Uploadimage')
 
 
 
@@ -13,7 +12,7 @@ module.exports =class Product {
         if (Object.keys(rs).length == 0) {
             return Promise.reject({messager :"Not Found"} )
         }
-        return Promise.resolve({result : rs})
+        return Promise.resolve(rs)
     } catch (error) {
         return Promise.reject({messager :error} )
     }
@@ -40,23 +39,10 @@ module.exports =class Product {
         const rs = await Repository.update(id, item);
         if (rs) {
             return Promise.resolve({ messager: "Sucsess" })
-           
         }
         return Promise.reject({ messager: "Update Faild" })
     } catch (error) {
         return Promise.reject({ messager: "Update Faild" } )
-    }
-    }
-    updateimage= async (id, item) => {
-        try{
-        if(item.length==0)return Promise.reject({ messager: "updateimage Faild: not in image input?" })
-        const rs = await Repository.update(id, {Image:serviceimage.convertimage(item)});
-        if (rs) {
-            return Promise.resolve({ messager: "Sucsess" })
-        }
-        return Promise.reject({ messager: "updateimage Faild" })
-    } catch (error) {
-        return Promise.reject({ messager: "updateimage 1 Faild" } )
     }
     }
      delete = async (id) => {
@@ -92,7 +78,7 @@ module.exports =class Product {
             if (Object.keys(rs).length == 0) {
                 return Promise.reject({messager :"Not Found"} )
             }
-            return Promise.resolve({result : rs})
+            return Promise.resolve(rs)
              
          } catch (error) {
             return Promise.reject({messager :"Not Found"})
@@ -105,7 +91,7 @@ module.exports =class Product {
            if (Object.keys(rs).length == 0) {
                return Promise.reject({messager :"Not Found searchbyprice"} )
            }
-           return Promise.resolve({result :rs})
+           return Promise.resolve(rs)
             
         } catch (error) {
            return Promise.reject({messager :error})
@@ -118,7 +104,7 @@ module.exports =class Product {
        if (Object.keys(rs).length == 0) {
            return Promise.reject({messager :"Not Found searchbypriceBetween"} )
        }
-       return Promise.resolve({result : rs})
+       return Promise.resolve(rs)
         
     } catch (error) {
        return Promise.reject({messager :error})
@@ -130,7 +116,7 @@ module.exports =class Product {
            if (Object.keys(rs).length == 0) {
                return Promise.reject({messager :"Not Found searchbyname"} )
            }
-           return Promise.resolve({result : rs})
+           return Promise.resolve(rs)
             
         } catch (error) {
            return Promise.reject({messager :error})
@@ -152,7 +138,7 @@ module.exports =class Product {
            if (Object.keys(rs).length == 0) {
                return Promise.reject({messager :"Not Found searchbycategory"} )
            }
-           return Promise.resolve({result : rs})
+           return Promise.resolve(rs)
         } catch (error) {
            return Promise.reject({messager :error})
         }
@@ -175,7 +161,7 @@ module.exports =class Product {
            if (Object.keys(rs).length == 0) {
                return Promise.reject({messager :"Not Found searchbyfield"} )
            }
-           return Promise.resolve({result : rs})
+           return Promise.resolve(rs)
             
         } catch (error) {
            return Promise.reject({messager :"Not Found error"})

@@ -12,15 +12,13 @@ module.exports =class Register_Token {
         if (Object.keys(rs).length == 0) {
             return Promise.reject({messager :"Not Found"} )
         }
-        return Promise.resolve({result : rs})
+        return Promise.resolve(rs)
     } catch (error) {
         return Promise.reject({messager :error} )
     }
     }
      create = async (item) => {
         try {
-            if(Object.keys(item).length==0)
-            return Promise.reject({ messager : "fail! create",});
             const rs = await Repository.create(item);
             if(rs) {
                 return Promise.resolve({
@@ -79,7 +77,7 @@ module.exports =class Register_Token {
             if (Object.keys(rs).length == 0) {
                 return Promise.reject({messager :"Not Found"} )
             }
-            return Promise.resolve({result : rs})
+            return Promise.resolve(rs)
              
          } catch (error) {
             return Promise.reject({messager :"Not Found"})
@@ -138,10 +136,10 @@ module.exports =class Register_Token {
        }
        const Datecreate=new Date(rs[0].createdDate)
        const Datenow=new Date()
-       console.log(Datecreate.getTime()-Datenow.getTime())
-       console.log(item.numberCheck==Number(rs[0].numberCheck))
-       if(Datecreate.getTime()-Datenow.getTime()>-300000&&item.numberCheck==Number(rs[0].numberCheck))
-       return Promise.resolve({result : rs})
+       /*console.log(Datecreate.getTime()-Datenow.getTime())
+       console.log(item.numberCheck==Number(rs[0].numberCheck))*/
+       if(Datecreate.getTime()-(Datenow.getTime()+(1000*60*60*7))>-300000&&item.numberCheck==Number(rs[0].numberCheck))
+       return Promise.resolve(rs)
        return Promise.reject({messager :"Incorrect check number"})
         
     } catch (error) {

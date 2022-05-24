@@ -2,17 +2,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
-const dotenv = require('dotenv')
-const cors=require('cors')
+const dotenv = require('dotenv');
 dotenv.config();
 global.__basedir = __dirname;
-const routerProduct =require('./Router/Product')
-const routerField=require('./Router/Field')
-const routerProduct_Category=require('./Router/Product_Category')
-const routerProduct_Reviews=require('./Router/Product_Reviews')
-class Product{
+const ControllerUpload=require('./Router/Upload')
+class Upload{
     app;
-    PORT=4002;
+    PORT=4003;
     constructor(){
         this.app=express();
         this.conFig();
@@ -21,7 +17,7 @@ class Product{
     }
     conFig() {
         this.app.use(express.json())
-             .use(cors())
+             //.use(cors(corsOptions))
             .use(
                 session({
                     secret: "keyboard cat",
@@ -42,10 +38,7 @@ class Product{
         });
     }
     router(){
-        this.app.use('/Product',routerProduct)
-        .use('/Field',routerField)
-        .use('/Product_Category',routerProduct_Category)
-        .use('/Product_Reviews',routerProduct_Reviews)
+        this.app.use('/Uploads',ControllerUpload)
     }
 }
-new Product();
+new Upload();

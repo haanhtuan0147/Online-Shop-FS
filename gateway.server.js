@@ -3,16 +3,20 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
 const dotenv = require('dotenv')
-const cors=require('cors')
-dotenv.config();
 global.__basedir = __dirname;
-const routerProduct =require('./Router/Product')
-const routerField=require('./Router/Field')
-const routerProduct_Category=require('./Router/Product_Category')
-const routerProduct_Reviews=require('./Router/Product_Reviews')
-class Product{
+dotenv.config();
+const routerfield=require('./Router/gateway/Field')
+const routerProduct=require('./Router/gateway/Product')
+const routerProduct_Category=require('./Router/gateway/Product_Category')
+const routerProduct_Reviews=require('./Router/gateway/Product_Reviews')
+const routerShopping_Cart=require('./Router/gateway/Shopping_Cart')
+const routerUser=require('./Router/gateway/User')
+
+
+
+class gateway{
     app;
-    PORT=4002;
+    PORT=5000;
     constructor(){
         this.app=express();
         this.conFig();
@@ -21,7 +25,7 @@ class Product{
     }
     conFig() {
         this.app.use(express.json())
-             .use(cors())
+             //.use(cors(corsOptions))
             .use(
                 session({
                     secret: "keyboard cat",
@@ -42,10 +46,12 @@ class Product{
         });
     }
     router(){
-        this.app.use('/Product',routerProduct)
-        .use('/Field',routerField)
+        this.app.use('/Field',routerfield)
+        .use('/Product',routerProduct)
         .use('/Product_Category',routerProduct_Category)
         .use('/Product_Reviews',routerProduct_Reviews)
+        .use('/Shopping_Cart',routerShopping_Cart)
+        .use('/User',routerUser)
     }
 }
-new Product();
+new gateway();

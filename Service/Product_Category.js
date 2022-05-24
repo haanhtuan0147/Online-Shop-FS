@@ -9,15 +9,13 @@ module.exports =class Product_Category {
         if (Object.keys(rs).length == 0) {
             return Promise.reject({messager :"Not Found"} )
         }
-        return Promise.resolve({result : rs})
+        return Promise.resolve(rs)
     } catch (error) {
         return Promise.reject({messager :error} )
     }
     }
      create = async (item) => {
         try {
-            if(Object.keys(item).length==0)
-            return Promise.reject({ messager : "fail! create",});
             const rs = await Repository.create(item);
             if(rs) {
                 return Promise.resolve({
@@ -76,7 +74,7 @@ module.exports =class Product_Category {
             if (Object.keys(rs).length == 0) {
                 return Promise.reject({messager :"Not Found"} )
             }
-            return Promise.resolve({result : rs})
+            return Promise.resolve(rs)
              
          } catch (error) {
             return Promise.reject({messager :"Not Found"})
