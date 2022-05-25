@@ -1,5 +1,5 @@
-const Product_Category=require('../Repository/Product_Category')
-const Repository = new Product_Category();
+const Product_CategoryRepository=require('../Repository/Product_Category')
+const Repository = new Product_CategoryRepository();
 
 
 module.exports =class Product_Category {
@@ -59,9 +59,7 @@ module.exports =class Product_Category {
             if (Object.keys(rs).length == 0) {
                 return Promise.reject({ messager: " Product_Category not exists ! "  });
             }
-            if (rs) {
-                return Promise.resolve(rs)
-            }
+            return Promise.resolve(rs)
         } catch (error) {
             return Promise.reject({ messager: " Product_Category not exists ! "  } )
         }

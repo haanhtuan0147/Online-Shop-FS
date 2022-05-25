@@ -23,6 +23,7 @@
     "form-data": "^4.0.0",
     "formidable": "^2.0.1",
     "http-proxy-middleware": "^2.0.6",
+    "image-to-base64": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^2.0.0",
     "multer": "^1.4.4",

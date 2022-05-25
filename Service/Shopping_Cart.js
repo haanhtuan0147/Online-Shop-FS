@@ -1,7 +1,7 @@
-const Shopping_Cart=require('../Repository/Shopping_Cart')
-const Repository = new Shopping_Cart();
-const order_product=require('../Repository/Order_Product')
-const Repositoryorder_product=new order_product()
+const Shopping_CartRepository=require('../Repository/Shopping_Cart')
+const Repository = new Shopping_CartRepository();
+const order_productRepository=require('../Repository/Order_Product')
+const Repositoryorder_product=new order_productRepository()
 const dotenv=require('dotenv');
 dotenv.config();
 const jwt=require('jsonwebtoken')

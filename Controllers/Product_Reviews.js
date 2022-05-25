@@ -74,16 +74,6 @@ module.exports=class Product_Reviews {
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
     }
-    findimagereview=  (req, res, next) => {
-        const id = req.params.id;
-        service.findimagereview(id)
-        .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
-        })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
-
-    }
-
     delete = (req, res, next) => {
         const id = req.params.id;
         service.delete(id)

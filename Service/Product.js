@@ -1,17 +1,40 @@
-const Product=require('../Repository/Product')
-const Repository = new Product();
-const Rcategory=require('../Repository/Product_Category')
-const Repositorycategory = new Rcategory();
-
+const ProductRepository=require('../Repository/Product')
+const Repository = new ProductRepository();
+const imageToBase64=require('image-to-base64')
+const dotenv=require('dotenv');
+dotenv.config()
 
 
 module.exports =class Product {
-    findAll = async () => {
+    ConverJsonimage_tobase64=async(item)=>{
+        var listimage=[]    
+        for(var i=0;i<item.length;i++)
+        {
+            
+           await imageToBase64(process.env.Uploaps+item[i]) 
+                .then(
+                    (response) => {
+                        var mity=item[i].split('.')
+                        listimage.push(`data:image/${mity[1]};base64,`+response)
+                    }
+                )
+                .catch(
+                    (error) => {
+                    }
+                )
+        }
+        return listimage
+    }
+    findAll = async (page) => {
         try {
-        const rs = await Repository.findAll();
+        if(!Number(page))
+        return Promise.reject({messager :"Not page is number"} )
+        const rs = await Repository.findAll(Number(page)-1);
         if (Object.keys(rs).length == 0) {
             return Promise.reject({messager :"Not Found"} )
         }
+        for(var i=0;i<Object.keys(rs).length;i++)
+        rs[i].Image=await this.ConverJsonimage_tobase64(JSON.parse(rs[i].Image))
         return Promise.resolve(rs)
     } catch (error) {
         return Promise.reject({messager :error} )
@@ -19,7 +42,8 @@ module.exports =class Product {
     }
      create = async (item) => {
         try {
-            if(Object.keys(item).length==0)
+            const rs1 = await Repository.findItem({ProductName:item.ProductName});
+            if(Object.keys(rs1).length>0)
             return Promise.reject({ messager : "fail! create",});
             const rs = await Repository.create(item);
             if(rs) {
@@ -36,6 +60,12 @@ module.exports =class Product {
     }
      update = async (id, item) => {
         try{
+        const rs2 = await Repository.findOne(id);
+        if(Object.keys(rs2).length==0)
+        return Promise.reject({ messager : "fail! Not Product"});
+        const rs1 = await Repository.findItem({ProductName:item.ProductName});
+        if(Object.keys(rs1).length>0)
+        return Promise.reject({ messager : "fail! Update exist Name Product"});
         const rs = await Repository.update(id, item);
         if (rs) {
             return Promise.resolve({ messager: "Sucsess" })
@@ -47,6 +77,9 @@ module.exports =class Product {
     }
      delete = async (id) => {
      try{
+        const rs1 = await Repository.findOne(id);
+        if(Object.keys(rs1).length==0)
+        return Promise.reject({ messager : "fail! Not Product"});
         const rs = await Repository.delete(id)
         if (rs == 0) {
             return Promise.reject({ messager: "Delete Faild" })
@@ -63,21 +96,24 @@ module.exports =class Product {
             if (Object.keys(rs).length == 0) {
                 return Promise.reject({ messager: " Product not exists ! "  });
             }
-            if (rs) {
-                return Promise.resolve(rs)
-            }
+            rs[i].Image=await this.ConverJsonimage_tobase64(JSON.parse(rs[i].Image))
+            return Promise.resolve(rs)
         } catch (error) {
             return Promise.reject({ messager: " Product not exists ! "  } )
         }
     }
 
 
-     findItem = async (item) => {
+     findItem = async (item,page) => {
          try {
-            const rs = await Repository.findItem(item);
+            if(!Number(page))
+            return Promise.reject({messager :"Not page is number"} )
+            const rs = await Repository.findItem(item,Number(page)-1);
             if (Object.keys(rs).length == 0) {
                 return Promise.reject({messager :"Not Found"} )
             }
+            for(var i=0;i<Object.keys(rs).length;i++)
+            rs[i].Image=await this.ConverJsonimage_tobase64(JSON.parse(rs[i].Image))
             return Promise.resolve(rs)
              
          } catch (error) {
@@ -85,12 +121,16 @@ module.exports =class Product {
          }
 
     }
-    searchbyprice= async (price) => {
+    searchbyprice= async (price,page) => {
         try {
-           const rs = await Repository.searchbyprice(price);
+           if(!Number(page))
+           return Promise.reject({messager :"Not page is number"} )
+           const rs = await Repository.searchbyprice(price,Number(page)-1);
            if (Object.keys(rs).length == 0) {
                return Promise.reject({messager :"Not Found searchbyprice"} )
            }
+           for(var i=0;i<Object.keys(rs).length;i++)
+           rs[i].Image=await this.ConverJsonimage_tobase64(JSON.parse(rs[i].Image))
            return Promise.resolve(rs)
             
         } catch (error) {
@@ -98,32 +138,44 @@ module.exports =class Product {
         }
 
    }
-   searchbypriceBetween= async (sart,end) => {
+   searchbypriceBetween= async (sart,end,page) => {
     try {
-       const rs = await Repository.searchbypriceBetween(sart,end);
+        if(!Number(page))
+        return Promise.reject({messager :"Not page is number"} )
+       const rs = await Repository.searchbypriceBetween(sart,end,Number(page)-1);
        if (Object.keys(rs).length == 0) {
            return Promise.reject({messager :"Not Found searchbypriceBetween"} )
        }
+       for(var i=0;i<Object.keys(rs).length;i++)
+       rs[i].Image=await this.ConverJsonimage_tobase64(JSON.parse(rs[i].Image))
        return Promise.resolve(rs)
         
     } catch (error) {
        return Promise.reject({messager :error})
     }
     }
-    searchbyname= async (name) => {
+    searchbyname= async (name,page) => {
         try {
-           const rs = await Repository.searchbyname(name);
+            console.log(name)
+           if(!Number(page))
+           return Promise.reject({messager :"Not page is number"} )
+           const rs = await Repository.searchbyname(name,Number(page)-1);
            if (Object.keys(rs).length == 0) {
                return Promise.reject({messager :"Not Found searchbyname"} )
            }
+           console.log(rs)
+           for(var i=0;i<Object.keys(rs).length;i++)
+           rs[i].Image=await this.ConverJsonimage_tobase64(JSON.parse(rs[i].Image))
+           console.log(rs)
            return Promise.resolve(rs)
-            
         } catch (error) {
            return Promise.reject({messager :error})
         }
         }
-     searchbycategory= async (category) => {
+     searchbycategory= async (category,page) => {
         try {
+            if(!Number(page))
+            return Promise.reject({messager :"Not page is number"} )
             if(category.length==0)
             return Promise.reject({messager :"Not Found searchbycategory"} )
             var scategory=""
@@ -134,37 +186,15 @@ module.exports =class Product {
                 else
                 scategory=scategory+` or JSON_SEARCH(\`categoryId\`, 'one','${category[i]}') is not null`
             }
-           const rs = await Repository.searchbycategory(scategory);
+           const rs = await Repository.searchbycategory(scategory,Number(page)-1);
            if (Object.keys(rs).length == 0) {
                return Promise.reject({messager :"Not Found searchbycategory"} )
            }
+           for(var i=0;i<Object.keys(rs).length;i++)
+           rs[i].Image=await this.ConverJsonimage_tobase64(JSON.parse(rs[i].Image))
            return Promise.resolve(rs)
         } catch (error) {
            return Promise.reject({messager :error})
-        }
-        }
-        
-    searchbyfield= async (category) => {
-        try {
-            const rs1= await Repositorycategory.findItem({fieldId:category})
-            if(Object.keys(rs1).length==0)
-            return Promise.reject({messager :"Not Found searchbyfield"} )
-            var scategory=""
-            for(var i=0;i<Object.keys(rs1).length;i++)
-            {
-                if(i==0)
-                scategory=`JSON_SEARCH(\`categoryId\`, 'one','${rs1[i].id}') is not null`
-                else
-                scategory=scategory+` or JSON_SEARCH(\`categoryId\`, 'one','${rs1[i].id}') is not null`
-            }
-           const rs = await Repository.searchbycategory(scategory);
-           if (Object.keys(rs).length == 0) {
-               return Promise.reject({messager :"Not Found searchbyfield"} )
-           }
-           return Promise.resolve(rs)
-            
-        } catch (error) {
-           return Promise.reject({messager :"Not Found error"})
         }
         }
 

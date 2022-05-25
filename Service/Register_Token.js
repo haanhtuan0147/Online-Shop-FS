@@ -1,5 +1,5 @@
-const Register_Token=require('../Repository/Register_Token')
-const Repository = new Register_Token();
+const Register_TokenRepository=require('../Repository/Register_Token')
+const Repository = new Register_TokenRepository();
 const dotenv=require('dotenv')
 dotenv.config()
 const nodemailer=require('nodemailer')
@@ -62,9 +62,7 @@ module.exports =class Register_Token {
             if (Object.keys(rs).length == 0) {
                 return Promise.reject({ messager: " Register_Token not exists ! "  });
             }
-            if (rs) {
-                return Promise.resolve(rs)
-            }
+            return Promise.resolve(rs)
         } catch (error) {
             return Promise.reject({ messager: " Register_Token not exists ! "  } )
         }

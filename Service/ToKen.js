@@ -1,7 +1,7 @@
-const ToKen=require('../Repository/ToKen')
-const Repository = new ToKen();
-const User=require('../Repository/User')
-const RepositoryUser= new User();
+const ToKenRepository=require('../Repository/ToKen')
+const Repository = new ToKenRepository();
+const UserRepository=require('../Repository/User')
+const RepositoryUser= new UserRepository();
 const dotenv=require('dotenv');
 dotenv.config();
 const {v4} =require('uuid')
@@ -67,9 +67,7 @@ module.exports =class ToKen {
             if (Object.keys(rs).length == 0) {
                 return Promise.reject({ messager: " ToKen not exists ! "  });
             }
-            if (rs) {
-                return Promise.resolve(rs)
-            }
+            return Promise.resolve(rs)
         } catch (error) {
             return Promise.reject({ messager: " ToKen not exists ! "  } )
         }

@@ -23,4 +23,29 @@ module.exports=class Product extends KnexRepository{
         return knex(this.tableName).where(knex.raw(category)).orderBy('updatedDate', 'desc')
         .select()
     }
+    searchbypriceBetween(sart,end,page){
+        return knex(this.tableName).whereBetween('Money', [sart,end]).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
+            .select()
+    }
+    searchbyprice(price,page){
+        return knex(this.tableName).where('Money','>=',price).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
+        .select()
+    }
+    searchbyname(name,page){
+        return knex(this.tableName).whereLike('ProductName',`%${name}%`).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
+        .select()
+    }
+    searchbycategory(category,page){
+        return knex(this.tableName).where(knex.raw(category)).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
+        .select()
+    }
+    findAll(page) {
+        return knex(this.tableName).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
+            .select()
+    }
+    findItem(item,page) {
+        return knex(this.tableName)
+            .where(item).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
+            .select()
+    }
 }

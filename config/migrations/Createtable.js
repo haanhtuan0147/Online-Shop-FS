@@ -16,6 +16,7 @@
         table.string('Address',255).notNullable();
         table.text('Avatar').notNullable().defaultTo("User.png");
         table.specificType('AccountRights','CHAR(10)').checkIn(['Root','Admin','User']).notNullable();
+        table.integer('isDeleteUser').checkIn([0,1]).notNullable().defaultTo(0);
         table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
         table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
         table.check('??>=??',['updatedDate','createdDate']);
@@ -75,6 +76,7 @@
         table.specificType('Currencyunit','CHAR(10)').notNullable().defaultTo("VND").checkIn(["VND"]);
         table.json("categoryId").notNullable();
         table.json("DetailsProduct").notNullable();
+        table.integer('isDeleteProduct').checkIn([0,1]).notNullable().defaultTo(0);
         table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
         table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
         table.check('??>=??',['updatedDate','createdDate']);

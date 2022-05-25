@@ -7,4 +7,7 @@ module.exports=class Image_Reviews extends KnexRepository{
     constructor(){
         super(Image_Reviews01.tableName)
     }
+    findimagereview_Product(listimage){
+        return knex(this.tableName).whereIn('productReviewsId',listimage)
+    }
 }

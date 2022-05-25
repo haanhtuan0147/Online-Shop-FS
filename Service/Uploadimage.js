@@ -1,6 +1,9 @@
 
 const util = require("util");
 const multer = require("multer");
+const dotenv=require("dotenv")
+dotenv.config()
+const imageToBase64 = require('image-to-base64');
 const maxSize = 20 * 1024 * 1024;
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -45,7 +48,21 @@ const upload = async (req, res) => {
       if (req.file == undefined) {
         return Promise.reject({ message: "Please upload a file!" });
       }
-      return Promise.resolve({result:req.file.filename})
+      var filenames
+      await imageToBase64(process.env.Uploaps+req.file.filename) 
+          .then(
+              (response) => {
+                  filenames=`data:${req.file.mimetype};base64,`+response
+              }
+          )
+          .catch(
+              (error) => {
+                filenames=false
+              }
+          )
+      if(!filenames)
+      return Promise.reject({ message: "not to base64 file!" });
+      return Promise.resolve({result:filenames})
     } catch (err) {
       return Promise.reject({
         message: `Could not upload the file: ${req.file.originalname}. ${err}`,
@@ -60,7 +77,8 @@ const UploadVi = async (req, res) => {
     if (req.files == undefined) {
       return Promise.reject({ message: "Please upload a file!" });
     }
-    return Promise.resolve({result:convertimage(req.files)})
+    var image= await convertimage(req.files)
+    return Promise.resolve({result: image})
   } catch (err) {
     return Promise.reject({
       message: `Could not upload the file: ${req.file.originalname}. ${err}`,
@@ -77,11 +95,22 @@ exports.UploadArray = UploadVi;
     }
 
 }*/
-convertimage=(images)=>{
+convertimage= async(images)=>{
   var image=[]
   for(var i=0;i<images.length;i++)
   {
-      image.push(images[i].filename)
+    await imageToBase64(process.env.Uploaps+images[i].filename) 
+    .then(
+          (response) => {
+          image.push(`data:${images.mimetype||"image/png"};base64,`+response)
+        }
+    )
+    .catch(
+        (error) => {
+          console.log(error)
+        }
+    )
+      
   }
   return JSON.stringify(image)
 }

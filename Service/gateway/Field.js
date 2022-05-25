@@ -4,104 +4,143 @@ const apiAdapter = require('./axioserver')
 const BASE_URL_Product = process.env.Product
 const api = apiAdapter(BASE_URL_Product)
 module.exports =class Field {
-    findAll = async (req, res, next,baseController) => {
-        await  api.get('/Field'+req.path).then((resxp) => {
-            baseController.sendResponse({result : resxp.data}, req, res.status(200));
-        }).catch((err) => {
-            baseController.sendResponse({message : "NOT FIND FIELD"}, req, res.status(500));
-        });
-    }
-     create = async (req, res, next,baseController) => {
-        if(Object.keys(req.body).length==0)
-        return baseController.sendResponse({message : "NOT ITEM"}, req, res.status(500));
-        await api.post('/Field'+req.path,req.body,{headers: {
-            'authorization': req.headers['authorization'],
-            'Content-Type': 'application/json;charset=utf-8'
-          }}).then((resxp) => {
-            baseController.sendResponse(resxp.data, req, res.status(200));
-        }).catch((err) => {
-            baseController.sendResponse({message : "NOT CREATE FIELD"}, req, res.status(500));
-        });
-    }
-
-     update = async (req, res, next,baseController) => {
-        if(Object.keys(req.body).length==0)
-        return baseController.sendResponse({message : "NOT ITEM"}, req, res.status(500));
-        await api.put('/Field'+req.path,req.body,{headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            'authorization': req.headers['authorization']
-          }}).then((resxp) => {
-            baseController.sendResponse(resxp.data, req, res.status(200));
-        }).catch((err) => {
-            baseController.sendResponse({message : "NOT UPDATE FIELD"}, req, res.status(500));
-        });
-    }
-     delete = async (req, res, next,baseController) => {
-        await api.delete('/Field'+req.path,{headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            'authorization': req.headers['authorization']
-          }}).then((resxp) => {
-            baseController.sendResponse(resxp.data, req, res.status(200));
-        }).catch((err) => {
-            baseController.sendResponse({message : "NOT DELETE FIELD"}, req, res.status(500));
-        });
-    }
-
-
-     findOne = async (req, res, next,baseController) => {
-        await api.get('/Field'+req.path,{headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-          }}).then((resxp) => {
-            baseController.sendResponse({result : resxp.data}, req, res.status(200));
-        }).catch((err) => {
-            baseController.sendResponse({message : "NOT FIND FIELD"}, req, res.status(500));
-        });
-    }
-
-
-     findItem = async (req, res, next,baseController) => {
-        if(Object.keys(req.body).length==0)
-        return baseController.sendResponse({message : "NOT ITEM"}, req, res.status(500));
-        await api.get('/Field'+req.path,{data:req.body,headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-          }}).then((resxp) => {
-            baseController.sendResponse({result : resxp.data}, req, res.status(200));
-        }).catch((err) => {
-            baseController.sendResponse({message : "NOT FIND FIELD"}, req, res.status(500));
-        });
-    }
-
-    findcategory= async (req, res, next,baseController) => {
-        await api.get('/Field'+req.path,{headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-          }}).then((resxp) => {
-            baseController.sendResponse({result : resxp.data}, req, res.status(200));
-        }).catch((err) => {
-            baseController.sendResponse({message : "NOT FIND FIELD"}, req, res.status(500));
-        });
-    }
-   findProduct_field= async (req, res, next,baseController) => {
-    await api.get('/Field/findcategory/'+req.params.id,{headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      }}).then(async(resxp) => {
-            var category=[]
-            for(var i=0;i<resxp.data.length;i++)
+    findAll = async (req) => {
+        try {
+            const rs= await  api.get('/Field'+req.path)
+            if(rs.status!=200)
             {
-                category.push(resxp.data[i].id)
+                return Promise.reject({Message:"Not Find Field"})
             }
-            await api.get('/Product/searchbycategory',{data:{"category":category},headers: {
+            return Promise.resolve({result : rs.data})
+        } catch (error) {
+            return Promise.reject({Message:"Not Find Field"})
+        }
+        
+    }
+     create = async (req) => {
+         try {
+            if(Object.keys(req.body).length==0)
+            return Promise.reject({Message:"Not item"})
+            const rs=await api.post('/Field'+req.path,req.body,{headers: {
+                'authorization': req.headers['authorization'],
                 'Content-Type': 'application/json;charset=utf-8'
-              }}).then((resxp) => {
-                baseController.sendResponse({result : resxp.data}, req, res.status(200));
-            }).catch((err) => {
-                 baseController.sendResponse({message : "NOT FIND PRODUCT"}, req, res.status(500));
-            });
-    }).catch((err) => {
-        baseController.sendResponse({message : "NOT FIND FIELD"}, req, res.status(500));
-   });
+              }})
+              if(rs.status!=200)
+              {
+                  return Promise.reject({Message:"Not create Field"})
+              }
+              return Promise.resolve({result : rs.data})      
+         } catch (error) {
+            return Promise.reject({Message:"Not create Field"})
+         }
 
-   }
+    }
+
+     update = async (req) => {
+        try {
+            if(Object.keys(req.body).length==0)
+            return Promise.reject({Message:"Not item"})
+            const rs=await api.put('/Field'+req.path,req.body,{headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'authorization': req.headers['authorization']
+              }})
+              if(rs.status!=200)
+              {
+                  return Promise.reject({Message:"Not update Field"})
+              }
+              return Promise.resolve({result : rs.data})      
+         } catch (error) {
+            return Promise.reject({Message:"Not update Field"})
+         }
+    }
+     delete = async (req) => {
+        try {
+            const rs= await api.delete('/Field'+req.path,{headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'authorization': req.headers['authorization']
+              }})
+              if(rs.status!=200)
+              {
+                  return Promise.reject({Message:"Not delete Field"})
+              }
+              return Promise.resolve({result : rs.data})      
+         } catch (error) {
+            return Promise.reject({Message:"Not delete Field"})
+         }
+    }
 
 
+     findOne = async (req) => {
+        try {
+            const rs=await api.get('/Field'+req.path,{headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+              }})
+              if(rs.status!=200)
+              {
+                  return Promise.reject({Message:"Not find Field"})
+              }
+              return Promise.resolve({result : rs.data})      
+         } catch (error) {
+            return Promise.reject({Message:"Not find Field"})
+         }
+    }
 
+
+     findItem = async (req) => {
+        try {
+            if(Object.keys(req.body).length==0)
+            return Promise.reject({Message:"Not item"})
+            const rs=await api.get('/Field'+req.path,{data:req.body,headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              }})
+              if(rs.status!=200)
+              {
+                  return Promise.reject({Message:"Not find Field"})
+              }
+              return Promise.resolve({result : rs.data})      
+         } catch (error) {
+            return Promise.reject({Message:"Not find Field"})
+         }
+    }
+
+    findcategory= async (req) => {
+        try {
+            const rs= await api.get('/Field'+req.path,{headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              }})
+              if(rs.status!=200)
+              {
+                  return Promise.reject({Message:"Not find findcategory"})
+              }
+              return Promise.resolve({result : rs.data})      
+         } catch (error) {
+            return Promise.reject({Message:"Not find findcategory"})
+         }
+    }
+   findProduct_field= async (req) => {
+    try {
+        const rs= await api.get('/Field/findcategory/'+req.params.id,{headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          }})
+          if(rs.status!=200)
+          {
+              return Promise.reject({Message:"Not find findcategory"})
+          }
+          var category=[]
+          for(var i=0;i<resxp.data.length;i++)
+          {
+              category.push(resxp.data[i].id)
+          }
+          const rs1=await api.get('/Product/Product/searchbycategory'+req.body.page,{data:{"category":category},headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          }})
+          if(rs1.status!=200)
+          {
+              return Promise.reject({Message:"Not find findProduct_field"})
+          }
+          return Promise.resolve({result : rs1.data})      
+     } catch (error) {
+        return Promise.reject({Message:"Not find findProduct_field"})
+     }
+    }
 }

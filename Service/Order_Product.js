@@ -1,6 +1,7 @@
-const Order_Product=require('../Repository/Order_Product')
-const Repository = new Order_Product();
+const Order_ProductRepository=require('../Repository/Order_Product')
+const Repository = new Order_ProductRepository();
 const {v4}=require('uuid')
+
 
 
 module.exports =class Order_Product {
@@ -82,9 +83,7 @@ module.exports =class Order_Product {
             if (Object.keys(rs).length == 0) {
                 return Promise.reject({ messager: " Order_Product not exists ! "  });
             }
-            if (rs) {
-                return Promise.resolve(rs)
-            }
+            return Promise.resolve(rs)
         } catch (error) {
             return Promise.reject({ messager: " Order_Product not exists ! "  } )
         }

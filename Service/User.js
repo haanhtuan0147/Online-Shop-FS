@@ -1,7 +1,10 @@
-const User=require('../Repository/User')
-const Repository = new User();
-const Token=require('../Repository/ToKen')
-const RepositoryToken = new Token();
+const UserRepository=require('../Repository/User')
+const Repository = new UserRepository();
+const TokenRepository=require('../Repository/ToKen')
+const RepositoryToken = new TokenRepository();
+const dotenv=require('dotenv')
+dotenv.config()
+const imageToBase64=require('image-to-base64')
 
 
 module.exports =class User {
@@ -62,9 +65,18 @@ module.exports =class User {
             if (Object.keys(rs).length == 0) {
                 return Promise.reject({ messager: " User not exists ! "  });
             }
-            if (rs) {
-                return Promise.resolve(rs)
-            }
+            await imageToBase64(process.env.Uploaps+rs[0].Avatar) 
+               .then(
+                   (response) => {
+                       rs[0].Avatar=`data:image/png;base64,`+response
+                   }
+               )
+               .catch(
+                   (error) => {
+                    rs[0].Avatar=""
+                   }
+               )
+            return Promise.resolve(rs)
         } catch (error) {
             return Promise.reject({ messager: " User not exists ! "  } )
         }

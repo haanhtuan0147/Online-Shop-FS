@@ -1,12 +1,11 @@
-const Product_Reviews=require('../Repository/Product_Reviews')
-const Repository = new Product_Reviews();
-const Image_Reviews=require('../Repository/Image_Reviews')
-const RepositoryImage_Reviews = new Image_Reviews();
+const Product_ReviewsRepository=require('../Repository/Product_Reviews')
+const Repository = new Product_ReviewsRepository();
+const Image_ReviewsRepository=require('../Repository/Image_Reviews')
+const RepositoryImage_Reviews = new Image_ReviewsRepository();
 const {v4}=require('uuid')
 const dotenv=require('dotenv');
 dotenv.config();
 const jwt=require('jsonwebtoken')
-
 
 module.exports =class Product_Reviews {
     findAll = async () => {
@@ -134,9 +133,7 @@ module.exports =class Product_Reviews {
             if (Object.keys(rs).length == 0) {
                 return Promise.reject({ messager: " Product_Reviews not exists ! "  });
             }
-            if (rs) {
-                return Promise.resolve(rs)
-            }
+            return Promise.resolve(rs)
         } catch (error) {
             return Promise.reject({ messager: " Product_Reviews not exists ! "  } )
         }
@@ -154,18 +151,6 @@ module.exports =class Product_Reviews {
          }
 
     }
-    findimagereview= async (id) => {
-        try {
-           const rs = await RepositoryImage_Reviews.findItem({productReviewsId:id});
-           if (Object.keys(rs).length == 0) {
-               return Promise.reject({messager :"Not Found"} )
-           }
-           return Promise.resolve(rs)
-            
-        } catch (error) {
-           return Promise.reject({messager :"Not Found"})
-        }
 
-   }
    
 }

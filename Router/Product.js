@@ -10,12 +10,11 @@ Router.use(bodyParser.urlencoded({ extended: true }));
 
         Router.get('/Product', Controller.findAll);
         Router.get('/Product/:id', Controller.findOne);
-        Router.get('/findItem', Controller.findItem);
-        Router.get('/searchbyprice/:price', Controller.searchbyprice);
-        Router.get('/searchbypriceBetween', Controller.searchbypriceBetween);
-        Router.get('/searchbyname/:name', Controller.searchbyname);
-        Router.get('/searchbycategory', Controller.searchbycategory);
-        Router.get('/searchbyfield/:category', Controller.searchbyfield);
+        Router.get('/findItem/:page', Controller.findItem);
+        Router.get('/Product/searchbyprice/:page', Controller.searchbyprice);
+        Router.get('/Product/searchbypriceBetween/:page', Controller.searchbypriceBetween);
+        Router.get('/Product/searchbyname/:page', Controller.searchbyname);
+        Router.get('/Product/searchbycategory/:page', Controller.searchbycategory);
 
         Router.post('/Product',ControllerToken.RoleAdmin,Controller.create);
         Router.put('/Product/:id',ControllerToken.RoleAdmin,Controller.update);

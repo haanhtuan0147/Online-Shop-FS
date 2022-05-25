@@ -1,5 +1,6 @@
-const Image_Reviews=require('../Repository/Image_Reviews')
-const Repository = new Image_Reviews();
+const Image_ReviewsRepository=require('../Repository/Image_Reviews')
+const Repository = new Image_ReviewsRepository();
+const imageToBase64=require('image-to-base64')
 
 
 module.exports =class Image_Reviews {
@@ -59,9 +60,7 @@ module.exports =class Image_Reviews {
             if (Object.keys(rs).length == 0) {
                 return Promise.reject({ messager: " Image_Reviews not exists ! "  });
             }
-            if (rs) {
-                return Promise.resolve(rs)
-            }
+            return Promise.resolve(rs)
         } catch (error) {
             return Promise.reject({ messager: " Image_Reviews not exists ! "  } )
         }
@@ -81,6 +80,56 @@ module.exports =class Image_Reviews {
          }
 
     }
+    ConverJsonimage_tobase64=async(item)=>{
+        var listimage=[]
+        item.forEach((item)=>{
+            var it=JSON.parse(item.Image)
+            for(var i=0;i<it.length;i++)
+            await imageToBase64(process.env.Uploaps+it[i]) 
+                .then(
+                    (response) => {
+                      listimage.push(`data:image/png;base64,`+response)
+                    }
+                )
+                .catch(
+                    (error) => {
+                    }
+                )
+           })
+        return listimage
+    }
+    findimagereview= async (id) => {
+        try {
+           const rs = await Repository.findItem({productReviewsId:id});
+           if (Object.keys(rs).length == 0) {
+               return Promise.reject({messager :"Not Found"} )
+           }
+           var listimage=await this.ConverJsonimage_tobase64(rs)
+          if(listimage.length==0)
+          return Promise.reject({messager :"Not to base64 image"} )
+          return Promise.resolve({ListImageReview:listimage})
+            
+        } catch (error) {
+           return Promise.reject({messager :"Not Found"})
+        }
+
+   }
+   findimagereview_Product= async (listItem) => {
+    try {
+       const rs = await Repository.findimagereview_Product(listItem);
+       if (Object.keys(rs).length == 0) {
+           return Promise.reject({messager :"Not Found"} )
+       }
+      var listimage= ConverJsonimage_tobase64(rs)
+      if(listimage.length==0)
+      return Promise.reject({messager :"Not to base64 image"} )
+      return Promise.resolve({ListImageReview:listimage})
+        
+    } catch (error) {
+       return Promise.reject({messager :"Not Found"})
+    }
+
+   }
 
 
 

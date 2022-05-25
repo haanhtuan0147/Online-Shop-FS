@@ -8,7 +8,7 @@ module.exports=class Field {
     findAll = (req, res, next) => {
         service.findAll()
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res.status(500));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 }

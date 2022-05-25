@@ -61,4 +61,21 @@ module.exports=class Image_Reviews {
             .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
     }
+    findimagereview=  (req, res, next) => {
+        const id = req.params.id;
+        service.findimagereview(id)
+        .then(result => {
+            baseController.sendResponse(result, req, res.status(200));
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+    }
+    findimagereview_Product=  (req, res, next) => {
+        const LitsItem = req.body.ListReviewProduct;
+        service.findimagereview_Product(ListReviewProduct)
+        .then(result => {
+            baseController.sendResponse(result, req, res.status(200));
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+
+    }
 }

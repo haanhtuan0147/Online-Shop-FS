@@ -6,8 +6,8 @@ const service = new Service();
 module.exports=class Product {
 
     findAll = (req, res, next) => {
-
-        service.findAll()
+        var page=req.body.page
+        service.findAll(page)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
         })
@@ -43,6 +43,7 @@ module.exports=class Product {
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
     findItem =  (req, res, next) => {
+        var page=req.params.page
         const item = req.body;
         console.log(req.body)
         service.findItem(item)
@@ -53,8 +54,9 @@ module.exports=class Product {
 
     }
     searchbyprice=  (req, res, next) => {
-        const price = req.params.price;
-        service.searchbyprice(price)
+        var page=req.params.page
+        const price = req.body.price;
+        service.searchbyprice(price,page)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
         })
@@ -62,8 +64,9 @@ module.exports=class Product {
 
     }
     searchbypriceBetween=  (req, res, next) => {
+        var page=req.params.page
         const price = req.body;
-        service.searchbypriceBetween(price.sart,price.end)
+        service.searchbypriceBetween(price.sart,price.end,page)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
         })
@@ -71,8 +74,9 @@ module.exports=class Product {
 
     }
     searchbyname=  (req, res, next) => {
-        const name = req.params.name;
-        service.searchbyname(name)
+        var page=req.params.page
+        const name = req.body.name;
+        service.searchbyname(name,page)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
         })
@@ -80,17 +84,9 @@ module.exports=class Product {
 
     }
     searchbycategory=  (req, res, next) => {
+        var page=req.params.page
         const category = req.body;
-        service.searchbycategory(category.category)
-        .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
-        })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
-
-    }
-    searchbyfield=  (req, res, next) => {
-        const category = req.params.category;
-        service.searchbyfield(category)
+        service.searchbycategory(category.category,page)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
         })

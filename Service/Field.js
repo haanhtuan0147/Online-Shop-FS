@@ -1,7 +1,7 @@
-const Field=require('../Repository/Field')
-const Repository = new Field();
-const Product_Category=require('../Repository/Product_Category')
-const RepositoryProduct_Category = new Product_Category();
+const FieldRepository=require('../Repository/Field')
+const Repository = new FieldRepository();
+const Product_CategoryRepository=require('../Repository/Product_Category')
+const RepositoryProduct_Category = new Product_CategoryRepository();
 
 
 module.exports =class Field {
@@ -64,9 +64,7 @@ module.exports =class Field {
             if (Object.keys(rs).length == 0) {
                 return Promise.reject({ messager: " Field not exists ! "  });
             }
-            if (rs) {
-                return Promise.resolve(rs)
-            }
+            return Promise.resolve(rs)
         } catch (error) {
             return Promise.reject({ messager: " Field not exists ! "  } )
         }
