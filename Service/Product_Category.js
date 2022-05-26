@@ -7,7 +7,7 @@ module.exports =class Product_Category {
         try {
         const rs = await Repository.findAll();
         if (Object.keys(rs).length == 0) {
-            return Promise.reject({messager :"Not Found"} )
+            return Promise.resolve([])
         }
         return Promise.resolve(rs)
     } catch (error) {
@@ -57,7 +57,7 @@ module.exports =class Product_Category {
         try {
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({ messager: " Product_Category not exists ! "  });
+                return Promise.resolve([])
             }
             return Promise.resolve(rs)
         } catch (error) {
@@ -70,7 +70,7 @@ module.exports =class Product_Category {
          try {
             const rs = await Repository.findItem(item);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({messager :"Not Found"} )
+                return Promise.resolve([])
             }
             return Promise.resolve(rs)
              

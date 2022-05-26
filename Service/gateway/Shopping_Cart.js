@@ -3,8 +3,12 @@ dotenv.config()
 const apiAdapter = require('./axioserver')
 const BASE_URL_Order = process.env.Order
 const BASE_URL_User = process.env.Identity
+const BASE_URL_Product = process.env.Product
+
 const api = apiAdapter(BASE_URL_Order)
 const apiUser = apiAdapter(BASE_URL_User)
+const apiProduct = apiAdapter(BASE_URL_Product)
+
 module.exports =class Shopping_Cart {
     findAll = async (req) => {
         try {
@@ -122,9 +126,29 @@ module.exports =class Shopping_Cart {
             return Promise.reject({message : "NOT Change status Shopping_Cart"})
         }  
     }
+    CheckProduct= async (req) => {
+        try {
+            const item=req.body.item
+            var items=[]
+            item.forEach((it)=>{
+                items.push(it.productId)
+            })
+            const rs= await apiProduct.post('/Product/CheckProduct',{data:{"item":items},headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'authorization': req.headers['authorization']
+              }})
+            if(rs.status!=200)
+            {
+                return Promise.reject({message : "Shopping_Cart exist"})
+            }
+            return Promise.resolve({result : rs.data})
+        } catch (error) {
+            return Promise.reject({message : "Shopping_Cart exist"})
+        }  
+    }
     CheckUserReally= async (req) => {
         try {
-            const rs= await apiUser.post('/User/CheckUserReally',req.body,{headers: {
+            const rs= await apiUser.get(`/User/findUser`,{headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 'authorization': req.headers['authorization']
               }})

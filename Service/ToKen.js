@@ -13,7 +13,7 @@ module.exports =class ToKen {
         try {
         const rs = await Repository.findAll();
         if (Object.keys(rs).length == 0) {
-            return Promise.reject({messager :"Not Found"} )
+            return Promise.resolve([])
         }
         return Promise.resolve({result : rs})
     } catch (error) {
@@ -65,7 +65,7 @@ module.exports =class ToKen {
         try {
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({ messager: " ToKen not exists ! "  });
+                return Promise.resolve([])
             }
             return Promise.resolve(rs)
         } catch (error) {
@@ -78,7 +78,7 @@ module.exports =class ToKen {
          try {
             const rs = await Repository.findItem(item);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({messager :"Not Found"} )
+                return Promise.resolve([])
             }
             return Promise.resolve({result : rs})
              
@@ -91,12 +91,13 @@ module.exports =class ToKen {
         try {
             const Acc=await RepositoryUser.findItem({Email:email});
             if(Object.keys(Acc).length==0) return Promise.reject({Message:"Token generation error"})
-            const token=await jwt.sign({userId:Acc[0].id,Email:email,AccountRights:Acc[0].AccountRights},process.env.ACCES_TOKENUSERID);
+            const token=await jwt.sign({userId:Acc[0].id,Email:email,AccountRights:Acc[0].AccountRights,Date:new Date()},process.env.ACCES_TOKENUSERID);
             const item={
                 id:v4(),
                 userId:Acc[0].id,
                 Token:token
             }
+            //console.log(token)
             const createToken= await Repository.create(item);
             if(createToken)
             return Promise.resolve({Message:"Success",ToKen:token});
@@ -154,34 +155,20 @@ module.exports =class ToKen {
             return Promise.reject({Message:"You Are Insufficient"})
         }
     }
-    resfresh=async(select,date)=>{
-        try {
-            const update=await Repository.Update(select[0].Id,{UpDate:date})
-            if(update){
-                return Promise.resolve();
-            }
-            return Promise.reject();
-            
-        } catch (error) {
-            return Promise.reject();
-        }
-     
-    }
     CheckToKenTime=async(token)=>{
         try {
-                //if(token==undefined) return Promise.reject({Message:"Token Rỗng"});
-                const select= await Repository.findItem({ToKen:token});
-                if(Object.keys(select).length==0)
-                return Promise.reject({Message:"Token Does Not Exist!"});
+                const select= await jwt.verify(token,process.env.ACCES_TOKENUSERID,(err,data)=>{
+                    if(data)
+                    return data;
+                    return false;
+                });
+                if(!select)return Promise.reject({Message:"Token Does Not Exist!"})
                 const date=new Date();
-                const date2=new Date(select.Update)    
+                const date2=new Date(select.Date)
+                //console.log(date)
+                //console.log(date2)    
                 if(date.getTime()>date2.getTime()+10800000)
                 return Promise.reject({Message:"Token Expired!"});
-                if(date.getTime()+7200000>date2.getTime()+10800000)
-                {
-                    return this.resfresh(select,date).then(()=>{return Promise.resolve()}).catch(()=>{return Promise.reject({Message:"Token Not Generated"})});
-                            
-                }
                 return Promise.resolve();
             } catch (error) {
                 return Promise.reject({Message:"Token Does Not Exist!"})

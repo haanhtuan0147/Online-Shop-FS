@@ -15,7 +15,7 @@ Router.get('/Product_Category', Controller.findAll);
         Router.get('/Product_Category/:id', Controller.findOne);
         Router.get('/findItem', Controller.findItem);
 
-        Router.post('/Product_Category',ControllerToken.RoleAdmin, Controller.create);
-        Router.put('/Product_Category/:id',ControllerToken.RoleAdmin, Controller.update);
-        Router.delete('/Product_Category/:id',ControllerToken.RoleAdmin, Controller.delete);
+        Router.post('/Product_Category',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.create);
+        Router.put('/Product_Category/:id',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.update);
+        Router.delete('/Product_Category/:id',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.delete);
 module.exports= Router;

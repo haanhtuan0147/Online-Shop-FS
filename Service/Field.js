@@ -9,7 +9,7 @@ module.exports =class Field {
         try {
         const rs = await Repository.findAll();
         if (Object.keys(rs).length == 0) {
-            return Promise.reject({messager :"Not Found"} )
+            return Promise.resolve([])
         }
         return Promise.resolve(rs)
     } catch (error) {
@@ -62,7 +62,7 @@ module.exports =class Field {
         try {
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({ messager: " Field not exists ! "  });
+                return Promise.resolve([])
             }
             return Promise.resolve(rs)
         } catch (error) {
@@ -75,7 +75,7 @@ module.exports =class Field {
          try {
             const rs = await Repository.findItem(item);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({messager :"Not Found findItem"} )
+                return Promise.resolve([])
             }
             return Promise.resolve(rs)
              
@@ -88,7 +88,7 @@ module.exports =class Field {
         try {
            const rs = await RepositoryProduct_Category.findItem({fieldId:id});
            if (Object.keys(rs).length == 0) {
-               return Promise.reject({messager :"Not Found findcategory"} )
+            return Promise.resolve([])
            }
            return Promise.resolve(rs)
             

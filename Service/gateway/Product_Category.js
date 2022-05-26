@@ -116,5 +116,21 @@ module.exports =class Product_Category {
             return Promise.reject({message : "NOT FIND findProduct_category"})
          }
     }
+    countpagefindProduct_category = async (req) => {
+        try {
+            if(Object.keys(req.body).length==0)
+            return Promise.reject({message : "NOT ITEM"})
+            const rs= await api.get('/Product/Product/countpagesearchbycategory/',{data:req.body,headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              }})
+              if(rs.status!=200)
+              {
+                  return Promise.reject({message : "NOT FIND findProduct_category"})
+              }
+              return Promise.resolve(rs.data)      
+         } catch (error) {
+            return Promise.reject({message : "NOT FIND findProduct_category"})
+         }
+    }
 
 }

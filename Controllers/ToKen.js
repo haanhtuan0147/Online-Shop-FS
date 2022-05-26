@@ -75,8 +75,8 @@ module.exports=class ToKen {
         const token = author?.split(" ")[1];
         service.CheckToKenTime(token)
             .then(result => {
-                baseController.sendResponse(result, req, res.status(200));
-            })
+                next()
+                        })
             .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
     }

@@ -56,8 +56,6 @@ module.exports =class User {
     }
      delete = async (req) => {
         try {
-            if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"})
             const rs= await api.delete('/User'+req.path,{headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 'authorization': req.headers['authorization']
@@ -94,7 +92,7 @@ module.exports =class User {
         try {
             if(Object.keys(req.body).length==0)
             return Promise.reject({message : "NOT ITEM"})
-            const rs= await api.get('/User'+req.path,{headers: {
+            const rs= await api.get('/User'+req.path,{data:req.body,headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 'authorization': req.headers['authorization']
               }})

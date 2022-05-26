@@ -28,6 +28,13 @@ module.exports=class User {
              baseController.sendResponse({message : err}, req, res.status(500));
         });
     }
+    delete=  (req, res, next) => {
+        service.delete(req).then((result) => {
+            baseController.sendResponse(result, req, res.status(200));
+        }).catch((err) => {
+             baseController.sendResponse({message : err}, req, res.status(500));
+        });
+    }
 
     findOne =  (req, res, next) => {
         service.findOne(req).then((result) => {

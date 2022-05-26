@@ -12,6 +12,13 @@ module.exports=class Product {
              baseController.sendResponse({message : err}, req, res.status(500));
         });
      }
+     pagecountfindAll = (req, res, next) => {
+        service.pagecountfindAll(req).then((result) => {
+            baseController.sendResponse(result, req, res.status(200));
+        }).catch((err) => {
+             baseController.sendResponse({message : err}, req, res.status(500));
+        });
+     }
 
     create =  (req, res, next) => {
         service.create(req).then((result) => {
@@ -23,6 +30,13 @@ module.exports=class Product {
 
     update =  (req, res, next) => {
         service.update(req).then((result) => {
+            baseController.sendResponse(result, req, res.status(200));
+        }).catch((err) => {
+             baseController.sendResponse({message : err}, req, res.status(500));
+        });
+    }
+    delete=  (req, res, next) => {
+        service.delete(req).then((result) => {
             baseController.sendResponse(result, req, res.status(200));
         }).catch((err) => {
              baseController.sendResponse({message : err}, req, res.status(500));
@@ -43,8 +57,22 @@ module.exports=class Product {
              baseController.sendResponse({message : err}, req, res.status(500));
         });
     }
+    pagecountfindItem =  (req, res, next) => {
+        service.pagecountfindItem(req).then((result) => {
+            baseController.sendResponse(result, req, res.status(200));
+        }).catch((err) => {
+             baseController.sendResponse({message : err}, req, res.status(500));
+        });
+    }
     searchbyname =  (req, res, next) => {
         service.searchbyname(req).then((result) => {
+            baseController.sendResponse(result, req, res.status(200));
+        }).catch((err) => {
+             baseController.sendResponse({message : err}, req, res.status(500));
+        });
+    }
+    pagecountsearchbyname =  (req, res, next) => {
+        service.pagecountsearchbyname(req).then((result) => {
             baseController.sendResponse(result, req, res.status(200));
         }).catch((err) => {
              baseController.sendResponse({message : err}, req, res.status(500));
@@ -57,6 +85,13 @@ module.exports=class Product {
              baseController.sendResponse({message : err}, req, res.status(500));
         });
     }
+    pagecountsearchbyprice =  (req, res, next) => {
+        service.pagecountsearchbyprice(req).then((result) => {
+            baseController.sendResponse(result, req, res.status(200));
+        }).catch((err) => {
+             baseController.sendResponse({message : err}, req, res.status(500));
+        });
+    }
     searchbypriceBetween =  (req, res, next) => {
         service.searchbypriceBetween(req).then((result) => {
             baseController.sendResponse(result, req, res.status(200));
@@ -64,4 +99,12 @@ module.exports=class Product {
              baseController.sendResponse({message : err}, req, res.status(500));
         });
     }
+    pagecountsearchbypriceBetween =  (req, res, next) => {
+        service.pagecountsearchbypriceBetween(req).then((result) => {
+            baseController.sendResponse(result, req, res.status(200));
+        }).catch((err) => {
+             baseController.sendResponse({message : err}, req, res.status(500));
+        });
+    }
+    
 }

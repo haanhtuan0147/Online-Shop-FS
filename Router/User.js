@@ -14,19 +14,18 @@ const RegisterToken=new ControllerRegisterToken()
 Router.use(express.json());
 Router.use(bodyParser.urlencoded({ extended: true }));
 
-        Router.get('/User',ControllerToken.RoleRoot,Controller.findAll);
-        Router.get('/User/:id',ControllerToken.RoleRoot,Controller.findOne);
-        Router.get('/findItem',ControllerToken.RoleRoot,Controller.findItem);
-        Router.get('/findUser',ControllerToken.RoleUser,Controller.findUser)
+        Router.get('/User',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.findAll);
+        Router.get('/User/:id',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.findOne);
+        Router.get('/findItem',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.findItem);
+        Router.get('/findUser',ControllerToken.RoleUser,ControllerToken.CheckToKenTime,Controller.findUser)
 
         Router.post('/RegisterToken',Controller.CheckEmail,RegisterToken.CreateRegisterToken);
         Router.post('/RegisterUser',RegisterToken.CheckNumberRegisterToken,Controller.createUser)
-        Router.post('/RegisterAdmin',ControllerToken.RoleRoot,RegisterToken.CheckNumberRegisterToken,Controller.createAdmin)
+        Router.post('/RegisterAdmin',ControllerToken.RoleRoot,ControllerToken.CheckToKenTime,RegisterToken.CheckNumberRegisterToken,Controller.createAdmin)
         Router.post('/Login',login.Authenticate,ControllerToken.CreateToken)
-        Router.post('/CheckUserReally',ControllerToken.RoleUser,Controller.CheckUserReally)
 
-        Router.put('/User/:id',ControllerToken.RoleUser,Controller.updateUser);
+        Router.put('/User/:id',ControllerToken.RoleUser,ControllerToken.CheckToKenTime,Controller.updateUser);
         
-        //Router.delete('/User/:id',ControllerToken.RoleRoot,Controller.deleteUser);
+        Router.delete('/User/:id',ControllerToken.RoleRoot,ControllerToken.CheckToKenTime,Controller.deleteUser);
 
 module.exports= Router;

@@ -17,7 +17,8 @@ const {v4} = require('uuid');
              PhoneNumber:"0358970771",
              Identitycard:"068200009380",
              Address:"70/5/13 Quang Trung Tổ 11 Thị Trấn Liên Nghĩa Huyện Đức Trọng Tỉnh Lâm Đồng",
-             AccountRights:"Root"
+             AccountRights:"Root",
+             Avatar:"1653388616406-306847562-ei.png"
          },
          {
             id:v4(),
@@ -27,7 +28,8 @@ const {v4} = require('uuid');
             PhoneNumber:"0358970771",
             Identitycard:"068200009380",
             Address:"70/5/13 Quang Trung Tổ 11 Thị Trấn Liên Nghĩa Huyện Đức Trọng Tỉnh Lâm Đồng",
-            AccountRights:"Admin"
+            AccountRights:"Admin",
+            Avatar:"1653388616406-306847562-ei.png"
         },
         {
             id:user1,
@@ -37,7 +39,9 @@ const {v4} = require('uuid');
             PhoneNumber:"0358970771",
             Identitycard:"068200009380",
             Address:"70/5/13 Quang Trung Tổ 11 Thị Trấn Liên Nghĩa Huyện Đức Trọng Tỉnh Lâm Đồng",
-            AccountRights:"User"
+            AccountRights:"User",
+            Avatar:"1653388616406-306847562-ei.png"
+
         },
         {
             id:user2,
@@ -47,7 +51,9 @@ const {v4} = require('uuid');
             PhoneNumber:"0358970771",
             Identitycard:"068200009380",
             Address:"70/5/13 Quang Trung Tổ 11 Thị Trấn Liên Nghĩa Huyện Đức Trọng Tỉnh Lâm Đồng",
-            AccountRights:"User"
+            AccountRights:"User",
+            Avatar:"1653388616406-306847562-ei.png"
+
         },
         {
             id:user3,
@@ -57,7 +63,9 @@ const {v4} = require('uuid');
             PhoneNumber:"0358970771",
             Identitycard:"068200009380",
             Address:"70/5/13 Quang Trung Tổ 11 Thị Trấn Liên Nghĩa Huyện Đức Trọng Tỉnh Lâm Đồng",
-            AccountRights:"User"
+            AccountRights:"User",
+            Avatar:"1653388616406-306847562-ei.png"
+
         }
      ])
      var Field1=v4()
@@ -120,7 +128,7 @@ const {v4} = require('uuid');
             id:Product[0],
             ProductName:"Apple MacBook Air M1 2020 - 13 Inchs (8GB / 16GB - 256GB / 512GB) - Hàng Chính Hãng",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["Image01.png","Image02.png"]',
+            Image:'["1653388616406-306847562-ei.png"]',
             Money:10000,
             categoryId:`["${category3}"]`,
             DetailsProduct:`{"Cpu":"i3-9100F","Ram":"8GB","Hard Drive":"256GB SSD"}`
@@ -129,7 +137,7 @@ const {v4} = require('uuid');
             id:Product[1],
             ProductName:"Apple MacBook Pro M1 PRO 2021 - 16 Inchs (M1 PRO - 16GB / 32GB - 512GB / 1TB) - Hàng Chính Hãng",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["Image01.png","Image02.png"]',
+            Image:'["1653388616406-306847562-ei.png"]',
             Money:15000,
             categoryId:`["${category3}"]`,
             DetailsProduct:`{"Cpu":"i3-9100F","Ram":"8GB","Hard Drive":"256GB SSD"}`
@@ -138,7 +146,7 @@ const {v4} = require('uuid');
             id:Product[2],
             ProductName:"Apple MacBook Pro M1 PRO 2021 - 16 Inchs (M1 PRO - 16GB / 32GB - 512GB / 1TB) - Hàng Chính Hãng",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["Image01.png","Image02.png"]',
+            Image:'["1653388616406-306847562-ei.png"]',
             Money:20000,
             categoryId:`["${category3}"]`,
             DetailsProduct:`{"Cpu":"i3-9101F","Ram":"16GB","Hard Drive":"200GB SSD"}`
@@ -147,7 +155,7 @@ const {v4} = require('uuid');
             id:Product[3],
             ProductName:"USB Wi-Fi chuẩn N tốc độ 300Mbps N300UM-TG - Hàng chính hãng",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["Image01.png","Image02.png"]',
+            Image:'["1653388616406-306847562-ei.png"]',
             Money:10000,
             categoryId:`["${category1}"]`,
             DetailsProduct:`{"Model":"N300UM"}`
@@ -156,7 +164,7 @@ const {v4} = require('uuid');
             id:Product[4],
             ProductName:"USB Wi-Fi chuẩn N tốc độ 300Mbps N300UM-TG - Hàng chính hãng",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["Image01.png","Image02.png"]',
+            Image:'["1653388616406-306847562-ei.png"]',
             Money:15000,
             categoryId:`["${category1}"]`,
             DetailsProduct:`{"Model":"N300UM"}`
@@ -165,7 +173,7 @@ const {v4} = require('uuid');
             id:Product[5],
             ProductName:"Bộ Phát Wifi TP-Link Archer C54 Băng Tần Kép Chuẩn AC1200 - Hàng Chính Hãng",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["Image01.png","Image02.png"]',
+            Image:'["1653388616406-306847562-ei.png"]',
             Money:20000,
             categoryId:`["${category1}"]`,
             DetailsProduct:`{"Model":"Archer C54"}`
@@ -174,7 +182,7 @@ const {v4} = require('uuid');
             id:Product[6],
             ProductName:"RAM PC DDR3L Samsung 4GB Bus 1600 – Hàng Nhập Khẩu",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["Image01.png","Image02.png"]',
+            Image:'["1653388616406-306847562-ei.png"]',
             Money:10000,
             categoryId:`["${category2}"]`,
             DetailsProduct:`{"RAM":"4GB"}`
@@ -183,7 +191,7 @@ const {v4} = require('uuid');
             id:Product[7],
             ProductName:"RAM PC DDR3L Samsung 8GB Bus 1600 – Hàng Nhập Khẩu",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["Image01.png","Image02.png"]',
+            Image:'["1653388616406-306847562-ei.png"]',
             Money:15000,
             categoryId:`["${category2}"]`,
             DetailsProduct:`{"RAM":"8GB"}`
@@ -192,7 +200,7 @@ const {v4} = require('uuid');
             id:Product[8],
             ProductName:"Bộ Phát Wifi TP-Link Archer C54 Băng Tần Kép Chuẩn AC1200 - Hàng Chính Hãng",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["Image01.png","Image02.png"]',
+            Image:'["1653388616406-306847562-ei.png"]',
             Money:20000,
             categoryId:`["${category2}"]`,
             DetailsProduct:`{"RAM":"16GB"}`
@@ -201,7 +209,7 @@ const {v4} = require('uuid');
             id:Product[9],
             ProductName:"Yêu Thầm Tập 1",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["Image01.png","Image02.png"]',
+            Image:'["1653388616406-306847562-ei.png"]',
             Money:10000,
             categoryId:`["${category4}","${category5}"]`,
             DetailsProduct:`{"Page":"260"}`
@@ -210,7 +218,7 @@ const {v4} = require('uuid');
             id:Product[10],
             ProductName:"Death Note Short Stories (Tặng Kèm Postcard Gập Cho 100% Phiên Bản Việt Nam)",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["Image01.png","Image02.png"]',
+            Image:'["1653388616406-306847562-ei.png"]',
             Money:10000,
             categoryId:`["${category4}","${category5}","${category6}"]`,
             DetailsProduct:`{"Page":"260"}`
@@ -219,7 +227,7 @@ const {v4} = require('uuid');
             id:Product[11],
             ProductName:"Chú Thuật Hồi Chiến Tập 1",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["Image01.png","Image02.png"]',
+            Image:'["1653388616406-306847562-ei.png"]',
             Money:10000,
             categoryId:`["${category5}","${category6}"]`,
             DetailsProduct:`{"Page":"270"}`
@@ -228,7 +236,7 @@ const {v4} = require('uuid');
             id:Product[12],
             ProductName:"Thám tử lừng danh Conan Tập 99",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["Image01.png","Image02.png"]',
+            Image:'["1653388616406-306847562-ei.png"]',
             Money:15000,
             categoryId:`["${category4}","${category5}"]`,
             DetailsProduct:`{"Page":"260"}`
@@ -237,7 +245,7 @@ const {v4} = require('uuid');
             id:Product[13],
             ProductName:"Thám tử lừng danh Conan Tập 1",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["Image01.png","Image02.png"]',
+            Image:'["1653388616406-306847562-ei.png"]',
             Money:15000,
             categoryId:`["${category4}","${category5}","${category6}"]`,
             DetailsProduct:`{"Page":"260"}`
@@ -246,7 +254,7 @@ const {v4} = require('uuid');
             id:Product[14],
             ProductName:"Thám tử lừng danh Conan Tập 2",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["Image01.png","Image02.png"]',
+            Image:'["1653388616406-306847562-ei.png"]',
             Money:15000,
             categoryId:`["${category5}","${category6}"]`,
             DetailsProduct:`{"Page":"270"}`
@@ -255,7 +263,7 @@ const {v4} = require('uuid');
             id:Product[15],
             ProductName:"Thám tử lừng danh Conan Tập 3",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["Image01.png","Image02.png"]',
+            Image:'["1653388616406-306847562-ei.png"]',
             Money:20000,
             categoryId:`["${category4}","${category5}"]`,
             DetailsProduct:`{"Page":"260"}`
@@ -264,7 +272,7 @@ const {v4} = require('uuid');
             id:Product[16],
             ProductName:"Thám tử lừng danh Conan Tập 4",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["Image01.png","Image02.png"]',
+            Image:'["1653388616406-306847562-ei.png"]',
             Money:20000,
             categoryId:`["${category4}","${category5}","${category6}"]`,
             DetailsProduct:`{"Page":"260"}`
@@ -273,7 +281,7 @@ const {v4} = require('uuid');
             id:Product[17],
             ProductName:"Thám tử lừng danh Conan Tập 5",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["Image01.png","Image02.png"]',
+            Image:'["1653388616406-306847562-ei.png"]',
             Money:20000,
             categoryId:`["${category5}","${category6}"]`,
             DetailsProduct:`{"Page":"270"}`
@@ -552,17 +560,17 @@ const {v4} = require('uuid');
         {
             id:v4(),
             productReviewsId:Product_Reviews[0].id,
-            Image:'["ImageReviews01.png","ImageReviews02.png"]'
+            Image:'["1653388616406-306847562-ei.png"]'
         },
         {
             id:v4(),
             productReviewsId:Product_Reviews[1].id,
-            Image:'["ImageReviews01.png","ImageReviews02.png"]'
+            Image:'["1653388616406-306847562-ei.png"]'
         },
         {
             id:v4(),
             productReviewsId:Product_Reviews[2].id,
-            Image:'["ImageReviews01.png","ImageReviews02.png"]'
+            Image:'["1653388616406-306847562-ei.png"]'
         }
     ])
  }

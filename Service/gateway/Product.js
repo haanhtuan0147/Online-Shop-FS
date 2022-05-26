@@ -15,6 +15,18 @@ module.exports =class Product {
             return Promise.reject({message : "NOT FIND Product"})
         }
     }
+    pagecountfindAll = async (req) => {
+        try {
+            const rs= await  api.get('/Product'+req.path)
+            if(rs.status!=200)
+            {
+                return Promise.reject({message : "NOT FIND Product"})
+            }
+            return Promise.resolve(rs.data)
+        } catch (error) {
+            return Promise.reject({message : "NOT FIND Product"})
+        }
+    }
      create = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
@@ -99,6 +111,22 @@ module.exports =class Product {
             return Promise.reject({message : "NOT FIND Product"})
         }
     }
+    pagecountfindItem = async (req) => {
+        try {
+            if(Object.keys(req.body).length==0)
+            return Promise.reject({message : "NOT ITEM"})
+            const rs=  await api.get('/Product'+req.path,{data:req.body,headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              }})
+            if(rs.status!=200)
+            {
+                return Promise.reject({message : "NOT FIND Product"})
+            }
+            return Promise.resolve(rs.data)
+        } catch (error) {
+            return Promise.reject({message : "NOT FIND Product"})
+        }
+    }
     searchbyprice=async (req) => {     
         try {
             const rs=  await api.get('/Product'+req.path,{data:req.body,headers: {
@@ -109,6 +137,20 @@ module.exports =class Product {
                 return Promise.reject({message : "NOT FIND Product"})
             }
             return Promise.resolve({result : rs.data})
+        } catch (error) {
+            return Promise.reject({message : "NOT FIND Product"})
+        }   
+    }
+    pagecountsearchbyprice=async (req) => {     
+        try {
+            const rs=  await api.get('/Product'+req.path,{data:req.body,headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              }})
+            if(rs.status!=200)
+            {
+                return Promise.reject({message : "NOT FIND Product"})
+            }
+            return Promise.resolve(rs.data)
         } catch (error) {
             return Promise.reject({message : "NOT FIND Product"})
         }   
@@ -129,6 +171,22 @@ module.exports =class Product {
             return Promise.reject({message : "NOT FIND Product"})
         }   
     }
+    pagecountsearchbypriceBetween= async (req) => {
+        try {
+            if(Object.keys(req.body).length==0)
+            return Promise.reject({message : "NOT ITEM"})
+            const rs=  await api.get('/Product'+req.path,{data:req.body,headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              }})
+            if(rs.status!=200)
+            {
+                return Promise.reject({message : "NOT FIND Product"})
+            }
+            return Promise.resolve(rs.data)
+        } catch (error) {
+            return Promise.reject({message : "NOT FIND Product"})
+        }   
+    }
     searchbyname= async (req) => {
         try {
             const rs=  await api.get('/Product'+req.path,{data:req.body,headers: {
@@ -139,6 +197,21 @@ module.exports =class Product {
                 return Promise.reject({message : "NOT FIND Product"})
             }
             return Promise.resolve({result : rs.data})
+        } catch (error) {
+            return Promise.reject({message : "NOT FIND Product"})
+        }   
+    }
+    
+    pagecountsearchbyname= async (req) => {
+        try {
+            const rs=  await api.get('/Product'+req.path,{data:req.body,headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              }})
+            if(rs.status!=200)
+            {
+                return Promise.reject({message : "NOT FIND Product"})
+            }
+            return Promise.resolve(rs.data)
         } catch (error) {
             return Promise.reject({message : "NOT FIND Product"})
         }   

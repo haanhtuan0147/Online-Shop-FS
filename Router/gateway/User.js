@@ -18,5 +18,7 @@ Router.post('/RegisterAdmin',Controller.RegisterAdmin)
 Router.post('/Login',Controller.Login)
 
 Router.put('/User/:id',Controller.update);
+Router.delete('/User/:id',Controller.delete);
+
 
 module.exports= Router;

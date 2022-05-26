@@ -7,36 +7,36 @@ module.exports=class Product extends KnexRepository{
     constructor(){
         super(Product01.tableName)
     }
-    searchbypriceBetween(sart,end){
-        return knex(this.tableName).whereBetween('Money', [sart,end]).orderBy('updatedDate', 'desc')
+    searchbypriceBetween(sart,end,isDelete){
+        return knex(this.tableName).whereBetween('Money', [sart,end]).andWhere("isDelete","=",isDelete).orderBy('updatedDate', 'desc')
             .select()
     }
-    searchbyprice(price){
-        return knex(this.tableName).where('Money','>=',price).orderBy('updatedDate', 'desc')
+    searchbyprice(price,isDelete){
+        return knex(this.tableName).where('Money','>=',price).andWhere("isDelete","=",isDelete).orderBy('updatedDate', 'desc')
         .select()
     }
-    searchbyname(name){
-        return knex(this.tableName).whereLike('ProductName',`%${name}%`).orderBy('updatedDate', 'desc')
+    searchbyname(name,isDelete){
+        return knex(this.tableName).whereLike('ProductName',`%${name}%`).andWhere("isDelete","=",isDelete).orderBy('updatedDate', 'desc')
         .select()
     }
-    searchbycategory(category){
-        return knex(this.tableName).where(knex.raw(category)).orderBy('updatedDate', 'desc')
+    searchbycategory(category,isDelete){
+        return knex(this.tableName).where(knex.raw(category)).andWhere("isDelete","=",isDelete).orderBy('updatedDate', 'desc')
         .select()
     }
-    searchbypriceBetween(sart,end,page){
-        return knex(this.tableName).whereBetween('Money', [sart,end]).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
+    searchbypriceBetween(sart,end,page,isDelete){
+        return knex(this.tableName).whereBetween('Money', [sart,end]).andWhere("isDelete","=",isDelete).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
             .select()
     }
-    searchbyprice(price,page){
-        return knex(this.tableName).where('Money','>=',price).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
+    searchbyprice(price,page,isDelete){
+        return knex(this.tableName).where('Money','>=',price).andWhere("isDelete","=",isDelete).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
         .select()
     }
-    searchbyname(name,page){
-        return knex(this.tableName).whereLike('ProductName',`%${name}%`).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
+    searchbyname(name,page,isDelete){
+        return knex(this.tableName).whereLike('ProductName',`%${name}%`).andWhere("isDelete","=",isDelete).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
         .select()
     }
-    searchbycategory(category,page){
-        return knex(this.tableName).where(knex.raw(category)).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
+    searchbycategory(category,page,isDelete){
+        return knex(this.tableName).where(knex.raw(category)).andWhere("isDelete","=",isDelete).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
         .select()
     }
     findAll(page) {

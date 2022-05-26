@@ -57,4 +57,11 @@ module.exports=class Product_Category {
              baseController.sendResponse({message : err}, req, res.status(500));
         });
     }
+    countpagefindProduct_category= (req, res, next) => {
+        service.countpagefindProduct_category(req).then((result) => {
+            baseController.sendResponse(result, req, res.status(200));
+        }).catch((err) => {
+             baseController.sendResponse({message : err}, req, res.status(500));
+        });
+    }
 }

@@ -8,7 +8,7 @@ module.exports =class Image_Reviews {
         try {
         const rs = await Repository.findAll();
         if (Object.keys(rs).length == 0) {
-            return Promise.reject({messager :"Not Found"} )
+            return Promise.resolve([])
         }
         return Promise.resolve(rs)
     } catch (error) {
@@ -58,7 +58,7 @@ module.exports =class Image_Reviews {
         try {
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({ messager: " Image_Reviews not exists ! "  });
+                return Promise.resolve([])
             }
             return Promise.resolve(rs)
         } catch (error) {
@@ -71,7 +71,7 @@ module.exports =class Image_Reviews {
          try {
             const rs = await Repository.findItem(item);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({messager :"Not Found"} )
+                return Promise.resolve([])
             }
             return Promise.resolve({result : rs})
              
@@ -80,30 +80,31 @@ module.exports =class Image_Reviews {
          }
 
     }
-    ConverJsonimage_tobase64=async(item)=>{
+    ConverJsonimage_tobase64=async(items)=>{
         var listimage=[]
-        item.forEach((item)=>{
-            var it=JSON.parse(item.Image)
+        for(var j=0;j<items.length;j++){
+            var it=JSON.parse(items[j].Image)
             for(var i=0;i<it.length;i++)
             await imageToBase64(process.env.Uploaps+it[i]) 
                 .then(
                     (response) => {
-                      listimage.push(`data:image/png;base64,`+response)
+                    var mity=it[i].split('.')
+                      listimage.push(`data:image/${mity[1]};base64,`+response)
                     }
                 )
                 .catch(
                     (error) => {
                     }
                 )
-           })
+        }
         return listimage
     }
     findimagereview= async (id) => {
         try {
            const rs = await Repository.findItem({productReviewsId:id});
            if (Object.keys(rs).length == 0) {
-               return Promise.reject({messager :"Not Found"} )
-           }
+            return Promise.resolve([])
+        }
            var listimage=await this.ConverJsonimage_tobase64(rs)
           if(listimage.length==0)
           return Promise.reject({messager :"Not to base64 image"} )
@@ -118,9 +119,9 @@ module.exports =class Image_Reviews {
     try {
        const rs = await Repository.findimagereview_Product(listItem);
        if (Object.keys(rs).length == 0) {
-           return Promise.reject({messager :"Not Found"} )
+           return Promise.resolve([])
        }
-      var listimage= ConverJsonimage_tobase64(rs)
+      var listimage= await this.ConverJsonimage_tobase64(rs)
       if(listimage.length==0)
       return Promise.reject({messager :"Not to base64 image"} )
       return Promise.resolve({ListImageReview:listimage})

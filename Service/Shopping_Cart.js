@@ -19,14 +19,14 @@ module.exports =class Shopping_Cart {
             if(select.AccountRights=="User"){
                 const rs = await Repository.findItem({userId:select.userId});
                 if (Object.keys(rs).length == 0) {
-                    return Promise.reject({messager :"Not Found"} )
+                    return Promise.resolve([])
                 }
                 return Promise.resolve(rs)
             }
             else{
                 const rs = await Repository.findAll();
                 if (Object.keys(rs).length == 0) {
-                    return Promise.reject({messager :"Not Found"} )
+                    return Promise.resolve([])
                 }
                 return Promise.resolve(rs)
             }
@@ -42,10 +42,7 @@ module.exports =class Shopping_Cart {
                 return data;
                 return false;
             });
-            console.log(select)
             if(!select) return Promise.reject({messager:"not user?"});
-            if(Object.keys(item).length==0)
-            return Promise.reject({ messager : "fail! create",});
             item.userId=select.userId
             const rs = await Repository.create(item);
             if(rs) {
@@ -91,11 +88,11 @@ module.exports =class Shopping_Cart {
                 return data;
                 return false;
             });
-            console.log(select)
+            //console.log(select)
             if(!select) return Promise.reject({messager:"not user?"});
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({ messager: " Shopping_Cart not exists ! "  });
+                return Promise.resolve([])
             }
             if(select.AccountRights=="User"&&rs[0].userId!=select.userId)
             return Promise.reject({ messager: " you do not have permission to view this user's shopping cart ! "  });
@@ -117,7 +114,7 @@ module.exports =class Shopping_Cart {
             item.userId=select.userId
             const rs = await Repository.findItem(item);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({messager :"Not Found"} )
+                return Promise.resolve([])
             }
             return Promise.resolve(rs)
              
@@ -138,8 +135,8 @@ module.exports =class Shopping_Cart {
         if(select.AccountRights=="User") item.userId=select.userId
            const rs = await Repository.findShoppingcart_totalmoney(item);
            if (Object.keys(rs).length == 0) {
-               return Promise.reject({messager :"Not Found"} )
-           }
+            return Promise.resolve([])
+          }
            return Promise.resolve(rs)
             
         } catch (error) {
@@ -157,11 +154,11 @@ module.exports =class Shopping_Cart {
         });
         if(!select) return Promise.reject({messager:"not user?"});
         const rs1=await Repository.findOne(id)
-        if(Object.keys(rs1).length==0)return Promise.reject({messager:"not ShoppingCart?"});
+        if(Object.keys(rs1).length==0)return Promise.resolve([]);
         if(select.AccountRights=="User"&&rs1[0].userId!=select.userId)return Promise.reject({messager:"not AccountRights?"});
         const rs = await Repositoryorder_product.findShoppingcart_totalmoney_detail(id);
         if (Object.keys(rs).length == 0) {
-           return Promise.reject({messager :"Not Found"} )
+            return Promise.resolve([])
         }
         return Promise.resolve(rs)
         
@@ -184,10 +181,12 @@ module.exports =class Shopping_Cart {
             });
             if(!select) return baseController.sendResponse({messager:"not user?"}, req, res.status(500));
             const rs3=await Repository.findOne(id)
-            if(Object.keys(rs3).length==0)return baseController.sendResponse({messager:"not Shopping cart?"}, req, res.status(500));
+            if(Object.keys(rs3).length==0)return baseController.sendResponse([], req, res.status(200));
             if(item.Status=="Cancel"&&rs3[0].Status=="Wait"&&rs3[0].userId==select.userId)
             {
-                const rs2=await Repository.update(id,{Status:"Cancel"})
+                var dates=new Date()
+                var datess=new Date(dates.getTime()+(1000*60*60*7))
+                const rs2=await Repository.update(id,{CompletionTime:datess,Status:"Cancel"})
                 if(rs2)return baseController.sendResponse({messager:"successfully cancel the order!"}, req, res.status(200));
                 return baseController.sendResponse({messager:"this status cannot be saved!"}, req, res.status(500));
             }
@@ -209,12 +208,14 @@ module.exports =class Shopping_Cart {
         });
         if(!select) return Promise.reject({messager:"not user?"});
         const rs3=await Repository.findOne(id)
-        if(Object.keys(rs3).length==0) return Promise.reject({messager:"not Shopping cart?"});
-        if((item.Status=="Cancel"&&rs3[0].Status=="Cancel")||item.Status=="Cancel"||rs3[0].Status=="Cancel"||rs3[0].Status=="Success"||item.Status=="Wait")
+        if(Object.keys(rs3).length==0) return Promise.resolve([]);
+        if((item.Status=="Cancel"&&rs3[0].Status=="Cancel")||rs3[0].Status=="Cancel"||rs3[0].Status=="Success"||item.Status=="Wait")
         {
             return Promise.reject({messager:"You can't change this status because you don't have permission!"});
         }
-        const rs2=await Repository.update(id,{CompletionTime:new Date(),Status:item.Status})
+        var dates=new Date()
+        var datess=new Date(dates.getTime()+(1000*60*60*7))
+        const rs2=await Repository.update(id,{CompletionTime:datess,Status:item.Status})
         if(rs2)return Promise.resolve({messager:"successfully Status the order!"});
         return Promise.reject({messager:"this status cannot be saved!"});
         } catch (error) {

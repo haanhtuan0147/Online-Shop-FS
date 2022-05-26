@@ -57,6 +57,13 @@ module.exports=class Field {
              baseController.sendResponse(err, req, res.status(500));
         });
     }
+    countpagefindProduct_field=  (req, res, next) => {
+        service.countpagefindProduct_field(req).then((result) => {
+            baseController.sendResponse(result, req, res.status(200));
+        }).catch((err) => {
+             baseController.sendResponse(err, req, res.status(500));
+        });
+    }
     delete = (req, res, next) => {
         service.delete(req).then((result) => {
             baseController.sendResponse(result, req, res.status(200));

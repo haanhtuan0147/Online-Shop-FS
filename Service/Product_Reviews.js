@@ -12,7 +12,7 @@ module.exports =class Product_Reviews {
         try {
         const rs = await Repository.findAll();
         if (Object.keys(rs).length == 0) {
-            return Promise.reject({messager :"Not Found"} )
+            return Promise.resolve([])
         }
         return Promise.resolve(rs)
     } catch (error) {
@@ -114,11 +114,11 @@ module.exports =class Product_Reviews {
                 return Promise.reject({messager :"Not Found Image_Reviews"} )
             }
             const rs2 = await RepositoryImage_Reviews.deleteAll({productReviewsId:id});
-            if (rs2 == 0) {
+            if (!rs2) {
                 return Promise.reject({ messager: "Delete Faild Image_Reviews." })
             }
             const rs = await Repository.delete(id)
-            if (rs == 0) {
+            if (!rs) {
                 return Promise.reject({ messager: "Delete Faild" })
             }
             return Promise.resolve({messager : "Sucsuess"})
@@ -131,7 +131,7 @@ module.exports =class Product_Reviews {
         try {
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({ messager: " Product_Reviews not exists ! "  });
+                return Promise.resolve([])
             }
             return Promise.resolve(rs)
         } catch (error) {
@@ -142,7 +142,7 @@ module.exports =class Product_Reviews {
          try {
             const rs = await Repository.findItem(item);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({messager :"Not Found"} )
+                return Promise.resolve([])
             }
             return Promise.resolve(rs)
              

@@ -48,21 +48,7 @@ const upload = async (req, res) => {
       if (req.file == undefined) {
         return Promise.reject({ message: "Please upload a file!" });
       }
-      var filenames
-      await imageToBase64(process.env.Uploaps+req.file.filename) 
-          .then(
-              (response) => {
-                  filenames=`data:${req.file.mimetype};base64,`+response
-              }
-          )
-          .catch(
-              (error) => {
-                filenames=false
-              }
-          )
-      if(!filenames)
-      return Promise.reject({ message: "not to base64 file!" });
-      return Promise.resolve({result:filenames})
+      return Promise.resolve({result:req.file.filename})
     } catch (err) {
       return Promise.reject({
         message: `Could not upload the file: ${req.file.originalname}. ${err}`,
@@ -99,18 +85,7 @@ convertimage= async(images)=>{
   var image=[]
   for(var i=0;i<images.length;i++)
   {
-    await imageToBase64(process.env.Uploaps+images[i].filename) 
-    .then(
-          (response) => {
-          image.push(`data:${images.mimetype||"image/png"};base64,`+response)
-        }
-    )
-    .catch(
-        (error) => {
-          console.log(error)
-        }
-    )
-      
+    image.push(images[i].filename)
   }
   return JSON.stringify(image)
 }

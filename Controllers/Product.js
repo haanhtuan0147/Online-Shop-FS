@@ -12,7 +12,15 @@ module.exports=class Product {
             baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
-}
+    }
+    pagecountfindAll = (req, res, next) => {
+        service.pagecountfindAll()
+        .then(result => {
+            baseController.sendResponse(result, req, res.status(200));
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+    }
+
 
      create =  (req, res, next) => {
         const item = req.body;
@@ -45,18 +53,36 @@ module.exports=class Product {
     findItem =  (req, res, next) => {
         var page=req.params.page
         const item = req.body;
-        console.log(req.body)
-        service.findItem(item)
+        //console.log(req.body)
+        service.findItem(item,page)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
     }
+    countpagefindItem =  (req, res, next) => {
+        const item = req.body;
+        //console.log(req.body)
+        service.countpagefindItem(item)
+        .then(result => {
+            baseController.sendResponse(result, req, res.status(200));
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500));});
+    }
     searchbyprice=  (req, res, next) => {
         var page=req.params.page
         const price = req.body.price;
         service.searchbyprice(price,page)
+        .then(result => {
+            baseController.sendResponse(result, req, res.status(200));
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+
+    }
+    countpagesearchbyprice=  (req, res, next) => {
+        const price = req.body.price;
+        service.countpagesearchbyprice(price)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
         })
@@ -73,10 +99,28 @@ module.exports=class Product {
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
     }
+    countpagesearchbypriceBetween=  (req, res, next) => {
+        const price = req.body;
+        service.countpagesearchbypriceBetween(price.sart,price.end)
+        .then(result => {
+            baseController.sendResponse(result, req, res.status(200));
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+
+    }
     searchbyname=  (req, res, next) => {
         var page=req.params.page
         const name = req.body.name;
         service.searchbyname(name,page)
+        .then(result => {
+            baseController.sendResponse(result, req, res.status(200));
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+
+    }
+    countpagesearchbyname=  (req, res, next) => {
+        const name = req.body.name;
+        service.countpagesearchbyname(name)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
         })
@@ -93,6 +137,15 @@ module.exports=class Product {
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
     }
+    countpagesearchbycategory=  (req, res, next) => {
+        const category = req.body;
+        service.countpagesearchbycategory(category.category)
+        .then(result => {
+            baseController.sendResponse(result, req, res.status(200));
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+
+    }
 
     delete = (req, res, next) => {
         const id = req.params.id;
@@ -102,5 +155,13 @@ module.exports=class Product {
             })
             .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
+    }
+    CheckProduct=(req, res, next)=>{
+        const item=req.body
+        service.CheckProduct(item)
+        .then(result => {
+            baseController.sendResponse(result, req, res.status(200));
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
 }

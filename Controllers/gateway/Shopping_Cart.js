@@ -62,4 +62,11 @@ module.exports=class Shopping_Cart {
              baseController.sendResponse({message : err}, req, res.status(500));
         });
     }
+    CheckProduct=  (req, res, next) => {
+        service.CheckProduct(req).then((result) => {
+            next()
+        }).catch((err) => {
+             baseController.sendResponse({message : err}, req, res.status(500));
+        });
+    }
 }

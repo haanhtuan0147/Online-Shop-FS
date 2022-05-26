@@ -6,8 +6,9 @@ const service = new Service();
 module.exports=class User {
 
     findAll = (req, res, next) => {
-
-        service.findAll()
+        const author = req.headers['authorization'];
+        const token = author?.split(" ")[1];
+        service.findAll(token)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
         })
@@ -16,7 +17,9 @@ module.exports=class User {
 
     findOne =  (req, res, next) => {
         const id = req.params.id;
-        service.findOne(id)
+        const author = req.headers['authorization'];
+        const token = author?.split(" ")[1];
+        service.findOne(id,token)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
         })
@@ -24,7 +27,10 @@ module.exports=class User {
     }
     findItem =  (req, res, next) => {
         const item = req.body;
-        service.findItem(item)
+        const author = req.headers['authorization'];
+        const token = author?.split(" ")[1];
+        console.log(item)
+        service.findItem(item,token)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
         })
@@ -86,13 +92,6 @@ module.exports=class User {
         const item = req.body;
         service.CheckEmail(item.Email)
         .then(()=>{next()})
-        .catch(err => { baseController.sendResponse(err, req, res.status(500));});
-    }
-    CheckUserReally=(req, res, next) => {
-        const author = req.headers['authorization'];
-        const token = author?.split(" ")[1];
-        service.CheckUserReally(token)
-        .then((result)=>{baseController.sendResponse(result, req, res.status(200));})
         .catch(err => { baseController.sendResponse(err, req, res.status(500));});
     }
 }

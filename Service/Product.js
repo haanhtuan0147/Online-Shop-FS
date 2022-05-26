@@ -31,11 +31,19 @@ module.exports =class Product {
         return Promise.reject({messager :"Not page is number"} )
         const rs = await Repository.findAll(Number(page)-1);
         if (Object.keys(rs).length == 0) {
-            return Promise.reject({messager :"Not Found"} )
+            return Promise.resolve([])
         }
         for(var i=0;i<Object.keys(rs).length;i++)
         rs[i].Image=await this.ConverJsonimage_tobase64(JSON.parse(rs[i].Image))
         return Promise.resolve(rs)
+    } catch (error) {
+        return Promise.reject({messager :error} )
+    }
+    }
+    countpagefindAll = async () => {
+        try {
+        const rs = await Repository.findAll();
+        return Promise.resolve({page:Math.ceil((Object.keys(rs).length)/10)})
     } catch (error) {
         return Promise.reject({messager :error} )
     }
@@ -80,7 +88,7 @@ module.exports =class Product {
         const rs1 = await Repository.findOne(id);
         if(Object.keys(rs1).length==0)
         return Promise.reject({ messager : "fail! Not Product"});
-        const rs = await Repository.delete(id)
+        const rs = await Repository.update(id,{isDelete:1})
         if (rs == 0) {
             return Promise.reject({ messager: "Delete Faild" })
         }
@@ -94,7 +102,7 @@ module.exports =class Product {
         try {
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({ messager: " Product not exists ! "  });
+                return Promise.resolve([])
             }
             rs[i].Image=await this.ConverJsonimage_tobase64(JSON.parse(rs[i].Image))
             return Promise.resolve(rs)
@@ -110,7 +118,7 @@ module.exports =class Product {
             return Promise.reject({messager :"Not page is number"} )
             const rs = await Repository.findItem(item,Number(page)-1);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({messager :"Not Found"} )
+                return Promise.resolve([])
             }
             for(var i=0;i<Object.keys(rs).length;i++)
             rs[i].Image=await this.ConverJsonimage_tobase64(JSON.parse(rs[i].Image))
@@ -121,13 +129,23 @@ module.exports =class Product {
          }
 
     }
+    countpagefindItem = async (item) => {
+        try {
+           const rs = await Repository.findItem(item);
+           return Promise.resolve({page:Math.ceil((Object.keys(rs).length)/10)})
+            
+        } catch (error) {
+           return Promise.reject({messager :"Not Found"})
+        }
+
+   }
     searchbyprice= async (price,page) => {
         try {
            if(!Number(page))
            return Promise.reject({messager :"Not page is number"} )
-           const rs = await Repository.searchbyprice(price,Number(page)-1);
+           const rs = await Repository.searchbyprice(price,Number(page)-1,0);
            if (Object.keys(rs).length == 0) {
-               return Promise.reject({messager :"Not Found searchbyprice"} )
+            return Promise.resolve([])
            }
            for(var i=0;i<Object.keys(rs).length;i++)
            rs[i].Image=await this.ConverJsonimage_tobase64(JSON.parse(rs[i].Image))
@@ -138,13 +156,23 @@ module.exports =class Product {
         }
 
    }
+   countpagesearchbyprice= async (price) => {
+    try {
+       const rs = await Repository.searchbyprice(price,0);
+       return Promise.resolve({page:Math.ceil((Object.keys(rs).length)/10)})
+        
+    } catch (error) {
+       return Promise.reject({messager :error})
+    }
+
+}
    searchbypriceBetween= async (sart,end,page) => {
     try {
         if(!Number(page))
-        return Promise.reject({messager :"Not page is number"} )
-       const rs = await Repository.searchbypriceBetween(sart,end,Number(page)-1);
+        return Promise.reject({messager :"Not page is number"})
+       const rs = await Repository.searchbypriceBetween(sart,end,Number(page)-1,0);
        if (Object.keys(rs).length == 0) {
-           return Promise.reject({messager :"Not Found searchbypriceBetween"} )
+        return Promise.resolve([])
        }
        for(var i=0;i<Object.keys(rs).length;i++)
        rs[i].Image=await this.ConverJsonimage_tobase64(JSON.parse(rs[i].Image))
@@ -154,16 +182,24 @@ module.exports =class Product {
        return Promise.reject({messager :error})
     }
     }
+    countpagesearchbypriceBetween= async (sart,end) => {
+        try {
+           const rs = await Repository.searchbypriceBetween(sart,end,0);
+           return Promise.resolve({page:Math.ceil((Object.keys(rs).length)/10)})
+        } catch (error) {
+           return Promise.reject({messager :error})
+        }
+        }
     searchbyname= async (name,page) => {
         try {
-            console.log(name)
+            //console.log(name)
            if(!Number(page))
            return Promise.reject({messager :"Not page is number"} )
-           const rs = await Repository.searchbyname(name,Number(page)-1);
+           const rs = await Repository.searchbyname(name,Number(page)-1,0);
            if (Object.keys(rs).length == 0) {
-               return Promise.reject({messager :"Not Found searchbyname"} )
-           }
-           console.log(rs)
+            return Promise.resolve([])
+        }
+           //console.log(rs)
            for(var i=0;i<Object.keys(rs).length;i++)
            rs[i].Image=await this.ConverJsonimage_tobase64(JSON.parse(rs[i].Image))
            console.log(rs)
@@ -172,6 +208,15 @@ module.exports =class Product {
            return Promise.reject({messager :error})
         }
         }
+    countpagesearchbyname= async (name) => {
+            try {
+                //console.log(name)
+               const rs = await Repository.searchbyname(name,0);
+               return Promise.resolve({page:Math.ceil((Object.keys(rs).length)/10)})
+            } catch (error) {
+               return Promise.reject({messager :error})
+            }
+            }
      searchbycategory= async (category,page) => {
         try {
             if(!Number(page))
@@ -186,9 +231,9 @@ module.exports =class Product {
                 else
                 scategory=scategory+` or JSON_SEARCH(\`categoryId\`, 'one','${category[i]}') is not null`
             }
-           const rs = await Repository.searchbycategory(scategory,Number(page)-1);
+           const rs = await Repository.searchbycategory(scategory,Number(page)-1,0);
            if (Object.keys(rs).length == 0) {
-               return Promise.reject({messager :"Not Found searchbycategory"} )
+            return Promise.resolve([])
            }
            for(var i=0;i<Object.keys(rs).length;i++)
            rs[i].Image=await this.ConverJsonimage_tobase64(JSON.parse(rs[i].Image))
@@ -197,5 +242,36 @@ module.exports =class Product {
            return Promise.reject({messager :error})
         }
         }
+        countpagesearchbycategory= async (category) => {
+            try {
+                if(category.length==0)
+                return Promise.reject({messager :"Not Found searchbycategory"} )
+                var scategory=""
+                for(var i=0;i<category.length;i++)
+                {
+                    if(i==0)
+                    scategory=`JSON_SEARCH(\`categoryId\`, 'one','${category[i]}') is not null`
+                    else
+                    scategory=scategory+` or JSON_SEARCH(\`categoryId\`, 'one','${category[i]}') is not null`
+                }
+               const rs = await Repository.searchbycategory(scategory,0);
+               return Promise.resolve({page:Math.ceil((Object.keys(rs).length)/10)})
+            } catch (error) {
+               return Promise.reject({messager :error})
+            }
+            }
+    CheckProduct=async(item)=>{
+        try {
+            for(var i=0;i<item.length;i++)
+            {
+                var rs= await Repository.findItem({id:item[i],isDelete:0})
+                if(Object.keys(rs)==0)
+                return Promise.reject({messager :`item ${item[i]} not Exist`})
+            }
+            return Promise.resolve({messager: "All item Exist"})
+        } catch (error) {
+            
+        }
 
+    }
 }

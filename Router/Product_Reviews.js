@@ -17,8 +17,8 @@ Router.use(bodyParser.urlencoded({ extended: true }));
         Router.get('/findimagereview/:id',ControllerImage.findimagereview);
         Router.get('/findimagereview_Product',ControllerImage.findimagereview_Product);
 
-        Router.post('/Product_Reviews',ControllerToken.RoleUser,Controller.checknotreallyProductReiview,Controller.create);
-        Router.post('/createimagereview/:id',ControllerToken.RoleUser,Controller.createimagereview);
-        Router.put('/Product_Reviews/:id',ControllerToken.RoleUser,Controller.update);
-        Router.delete('/Product_Reviews/:id',ControllerToken.RoleAdmin, Controller.delete);
+        Router.post('/Product_Reviews',ControllerToken.RoleUser,ControllerToken.CheckToKenTime,Controller.checknotreallyProductReiview,Controller.create);
+        Router.post('/createimagereview/:id',ControllerToken.RoleUser,ControllerToken.CheckToKenTime,Controller.createimagereview);
+        Router.put('/Product_Reviews/:id',ControllerToken.RoleUser,ControllerToken.CheckToKenTime,Controller.update);
+        Router.delete('/Product_Reviews/:id',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.delete);
 module.exports= Router;
