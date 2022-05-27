@@ -83,5 +83,13 @@ module.exports=class Product_Reviews {
             .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
     }
+    find_AVGNumberStar_ProductTop10 = (req, res, next) => {
+        service.find_AVGNumberStar_ProductTop10()
+            .then(result => {
+                baseController.sendResponse(result, req, res.status(200));
+            })
+            .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+
+    }
 
 }

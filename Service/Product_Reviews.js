@@ -151,6 +151,18 @@ module.exports =class Product_Reviews {
          }
 
     }
+    find_AVGNumberStar_ProductTop10= async () => {
+        try {
+           const rs = await Repository.AVGNumberStar_ProductTop10();
+           if (Object.keys(rs).length == 0) {
+               return Promise.resolve([])
+           }
+           return Promise.resolve(rs)
+            
+        } catch (error) {
+           return Promise.reject({messager :"Not Found"})
+        }
+   }
 
    
 }

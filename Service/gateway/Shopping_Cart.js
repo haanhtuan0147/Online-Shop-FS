@@ -31,16 +31,17 @@ module.exports =class Shopping_Cart {
             return Promise.reject({message : "NOT ITEM"})
             var body=req.body
             for(var i=0;i<body.item.length;i++){
-                const rs1=await apiProduct.get(`/Product/${body.item[i].productId}`,{headers: {
+                const rs1=await apiProduct.get(`/Product/Product/${body.item[i].productId}`,{headers: {
                     'Content-Type': 'application/json;charset=utf-8'
                   }})
                 if(rs1.status!=200)
                 return Promise.reject({message : "NOT CREATE Shopping_Cart"})
                 body.item[i].Money=rs1.data[0].Money
             }
-            const rs=  await api.post('/Shopping_Cart'+req.path,{data:body,headers: {
-                'authorization': req.headers['authorization'],
-                'Content-Type': 'application/json;charset=utf-8'
+            //console.log(req.headers['authorization'])
+            const rs=  await api.post('/Shopping_Cart'+req.path,body,{headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'authorization': req.headers['authorization']
               }})
             if(rs.status!=200)
             {
@@ -142,17 +143,18 @@ module.exports =class Shopping_Cart {
             item.forEach((it)=>{
                 items.push(it.productId)
             })
+            //console.log(items)
             const rs= await apiProduct.post('/Product/CheckProduct',{data:{"item":items},headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 'authorization': req.headers['authorization']
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "Shopping_Cart exist"})
+                return Promise.reject({message : "CheckProduct fail"})
             }
             return Promise.resolve({result : rs.data})
         } catch (error) {
-            return Promise.reject({message : "Shopping_Cart exist"})
+            return Promise.reject({message : "CheckProduct fail"})
         }  
     }
     CheckUserReally= async (req) => {
@@ -163,11 +165,11 @@ module.exports =class Shopping_Cart {
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "Shopping_Cart exist"})
+                return Promise.reject({message : "CheckUserReally fail"})
             }
             return Promise.resolve({result : rs.data})
         } catch (error) {
-            return Promise.reject({message : "Shopping_Cart exist"})
+            return Promise.reject({message : "CheckUserReally fail"})
         }  
     }
 

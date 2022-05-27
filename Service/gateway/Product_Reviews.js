@@ -156,5 +156,41 @@ module.exports =class Product_Reviews {
             return Promise.reject({message : "NOT FIND Product_Reviews"})
         }
     }
+    find_AVGNumberStar_ProductTop10= async (req) => {
+        try {
+            const rs= await api.get('/Product_Reviews'+req.path,{headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              }})
+              //console.log(rs.data)
+            if(rs.status!=200)
+            {
+                return Promise.reject({message : "NOT FIND Product_Reviews"})
+            }
+            var productIds=[]
+            rs.data.forEach((it)=>{
+                productIds.push(it.productId)
+            })
+            //console.log(productIds)
+            var rs1=await api.get('/Product/Products/findArrayProduct',{data:{"item":productIds},headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              }})
+              if(rs1.status!=200)
+              {
+                  return Promise.reject({message : "NOT FIND Product_Reviews"})
+              }
+            for(var i=0;i<rs1.data.length;i++)
+            {
+                rs.data.forEach((it)=>{
+                    if(it.productId==rs1.data[i].id)
+                    rs1.data[i].NumberStar=it.NumberStar
+                    //console.log(rs1.data[i].NumberStar=it.NumberStar)
+                })
+            }
+            //console.log(rs1.data)
+            return Promise.resolve({result : rs1.data})
+        } catch (error) {
+            return Promise.reject({message : "NOT FIND Product_Reviews"})
+        }
+    }
 
 }

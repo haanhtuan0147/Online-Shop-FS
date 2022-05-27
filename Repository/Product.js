@@ -7,6 +7,9 @@ module.exports=class Product extends KnexRepository{
     constructor(){
         super(Product01.tableName)
     }
+    findArrayProduct(array,isDelete){
+        return knex(this.tableName).whereIn('id',array).andWhere("isDelete","=",isDelete).select()
+    }
     searchbypriceBetween(sart,end,isDelete){
         return knex(this.tableName).whereBetween('Money', [sart,end]).andWhere("isDelete","=",isDelete).orderBy('updatedDate', 'desc')
             .select()

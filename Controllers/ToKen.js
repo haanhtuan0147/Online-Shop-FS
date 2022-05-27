@@ -107,7 +107,7 @@ module.exports=class ToKen {
         console.log("123")
         const author = req.headers['authorization'];
         const token = author?.split(" ")[1];
-        console.log(token)
+        console.log(req.headers['authorization'])
         service.RoleUser(token)
         .then(() => {
                 next();

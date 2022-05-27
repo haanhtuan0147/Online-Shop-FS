@@ -162,7 +162,17 @@ module.exports=class Product {
     }
     CheckProduct=(req, res, next)=>{
         const item=req.body
+        //console.log(item)
         service.CheckProduct(item)
+        .then(result => {
+            baseController.sendResponse(result, req, res.status(200));
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+    }
+    findArrayProduct=(req, res, next)=>{
+        const item=req.body.item
+        console.log(item)
+        service.findArrayProduct(item)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
         })

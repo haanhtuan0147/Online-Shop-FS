@@ -46,6 +46,7 @@ module.exports =class Shopping_Cart {
             if(select.AccountRights!="User")
             return Promise.reject({messager:"you not is a user?"});
             item.userId=select.userId
+            console.log(item)
             const rs = await Repository.create(item);
             if(rs) {
                 return Promise.resolve({

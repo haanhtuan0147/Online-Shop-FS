@@ -104,7 +104,7 @@ module.exports =class Product {
             if (Object.keys(rs).length == 0) {
                 return Promise.resolve([])
             }
-            rs[i].Image=await this.ConverJsonimage_tobase64(JSON.parse(rs[i].Image))
+            rs[0].Image=await this.ConverJsonimage_tobase64(JSON.parse(rs[0].Image))
             return Promise.resolve(rs)
         } catch (error) {
             return Promise.reject({ messager: " Product not exists ! "  } )
@@ -265,14 +265,27 @@ module.exports =class Product {
         try {
             for(var i=0;i<item.length;i++)
             {
+                //console.log(item.length)
                 var rs= await Repository.findItem({id:item[i],isDelete:0})
+                //console.log(rs)
                 if(Object.keys(rs)==0)
                 return Promise.reject({messager :`item ${item[i]} not Exist`})
             }
             return Promise.resolve({messager: "All item Exist"})
         } catch (error) {
-            return Promise.resolve({messager: "All item Exist"})
+            return Promise.reject({messager: "not item Exist"})
         }
 
+    }
+    findArrayProduct=async(array)=>{
+        try {
+            const rs= await Repository.findArrayProduct(array,0)
+            console.log(rs)
+            if(Object.keys(rs)==0)
+            return Promise.resolve([])
+            return Promise.resolve(rs)
+        } catch (error) {
+            return Promise.reject({messager: "not find item array "})
+        }
     }
 }

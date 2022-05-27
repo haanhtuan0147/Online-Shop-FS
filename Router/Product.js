@@ -21,9 +21,9 @@ Router.use(bodyParser.urlencoded({ extended: true }));
         Router.get('/Products/countpagesearchbyname',Controller.countpagesearchbyname);
         Router.get('/Products/searchbycategory/:page', Controller.searchbycategory);
         Router.get('/Products/countpagesearchbycategory',Controller.countpagesearchbycategory);
-        Router.get('/CheckProduct', Controller.CheckProduct);
-
+        Router.get('/Products/findArrayProduct',Controller.findArrayProduct);
         
+        Router.post('/CheckProduct', Controller.CheckProduct);
         Router.post('/Product',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.create);
         Router.put('/Product/:id',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.update);
         Router.delete('/delete/:id',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.delete);

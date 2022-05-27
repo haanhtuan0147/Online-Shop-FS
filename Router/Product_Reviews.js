@@ -16,6 +16,7 @@ Router.use(bodyParser.urlencoded({ extended: true }));
         Router.get('/findItem', Controller.findItem);
         Router.get('/findimagereview/:id',ControllerImage.findimagereview);
         Router.get('/findimagereview_Product',ControllerImage.findimagereview_Product);
+        Router.get('/find_AVGNumberStar_ProductTop10',Controller.find_AVGNumberStar_ProductTop10);
 
         Router.post('/Product_Reviews',ControllerToken.RoleUser,ControllerToken.CheckToKenTime,Controller.checknotreallyProductReiview,Controller.create);
         Router.post('/createimagereview/:id',ControllerToken.RoleUser,ControllerToken.CheckToKenTime,Controller.createimagereview);
