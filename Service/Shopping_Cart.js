@@ -157,7 +157,7 @@ module.exports =class Shopping_Cart {
         if(!select) return Promise.reject({messager:"not user?"});
         const rs1=await Repository.findOne(id)
         if(Object.keys(rs1).length==0)return Promise.resolve([]);
-        if(select.AccountRights=="User"&&rs1[0].userId!=select.userId)return Promise.reject({messager:"not AccountRights?"});
+        if(select.AccountRights=="User"&&rs1[0].userId!=select.userId)return Promise.resolve([]);
         const rs = await Repositoryorder_product.findShoppingcart_totalmoney_detail(id);
         if (Object.keys(rs).length == 0) {
             return Promise.resolve([])
@@ -211,7 +211,7 @@ module.exports =class Shopping_Cart {
         if(!select) return Promise.reject({messager:"not user?"});
         const rs3=await Repository.findOne(id)
         if(Object.keys(rs3).length==0) return Promise.resolve([]);
-        if((item.Status=="Cancel"&&rs3[0].Status=="Cancel")||rs3[0].Status=="Cancel"||rs3[0].Status=="Success"||item.Status=="Wait")
+        if(rs3[0].Status=="Cancel"||rs3[0].Status=="Success"||item.Status=="Wait")
         {
             return Promise.reject({messager:"You can't change this status because you don't have permission!"});
         }

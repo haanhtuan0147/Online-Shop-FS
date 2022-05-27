@@ -97,6 +97,7 @@
         table.specificType('id','CHAR(100)').notNullable().primary();
         table.specificType('shoppingcartId','CHAR(100)').notNullable();
         table.specificType('productId','CHAR(100)').notNullable();
+        table.integer('Money').notNullable()
         table.integer('numberProduct').notNullable();
         table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
         table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));

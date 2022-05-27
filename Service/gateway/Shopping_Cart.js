@@ -29,7 +29,16 @@ module.exports =class Shopping_Cart {
         try {
             if(Object.keys(req.body).length==0)
             return Promise.reject({message : "NOT ITEM"})
-            const rs=  await api.post('/Shopping_Cart'+req.path,req.body,{headers: {
+            var body=req.body
+            for(var i=0;i<body.item.length;i++){
+                const rs1=await apiProduct.get(`/Product/${body.item[i].productId}`,{headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  }})
+                if(rs1.status!=200)
+                return Promise.reject({message : "NOT CREATE Shopping_Cart"})
+                body.item[i].Money=rs1.data[0].Money
+            }
+            const rs=  await api.post('/Shopping_Cart'+req.path,{data:body,headers: {
                 'authorization': req.headers['authorization'],
                 'Content-Type': 'application/json;charset=utf-8'
               }})

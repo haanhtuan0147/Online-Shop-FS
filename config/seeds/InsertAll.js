@@ -372,162 +372,189 @@ const {v4} = require('uuid');
             id:v4(),
             shoppingcartId:Shopping_Cart[0],
             productId:Product[0],
+            Money:10000,
             numberProduct:5
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[0],
             productId:Product[1],
+            Money:15000,
             numberProduct:6
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[0],
             productId:Product[2],
+            Money:20000,
             numberProduct:7
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[1],
             productId:Product[3],
+            Money:10000,
             numberProduct:8
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[1],
             productId:Product[4],
+            Money:15000,
             numberProduct:9
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[1],
             productId:Product[5],
+            Money:20000,
             numberProduct:10
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[2],
             productId:Product[6],
+            Money:10000,
             numberProduct:11
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[2],
             productId:Product[7],
+            Money:15000,
             numberProduct:12
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[2],
             productId:Product[8],
+            Money:20000,
             numberProduct:12
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[3],
             productId:Product[9],
+            Money:10000,
             numberProduct:14
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[3],
             productId:Product[10],
+            Money:10000,
             numberProduct:15
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[3],
             productId:Product[11],
+            Money:10000,
             numberProduct:16
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[4],
             productId:Product[12],
+            Money:15000,
             numberProduct:17
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[4],
             productId:Product[13],
+            Money:15000,
             numberProduct:18
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[4],
             productId:Product[14],
+            Money:15000,
             numberProduct:19
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[5],
             productId:Product[15],
+            Money:20000,
             numberProduct:20
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[5],
             productId:Product[16],
+            Money:20000,
             numberProduct:21
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[5],
             productId:Product[17],
+            Money:20000,
             numberProduct:22
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[6],
             productId:Product[0],
+            Money:10000,
             numberProduct:23
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[6],
             productId:Product[1],
+            Money:15000,
             numberProduct:24
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[6],
             productId:Product[2],
+            Money:20000,
             numberProduct:25
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[7],
             productId:Product[3],
+            Money:10000,
             numberProduct:26
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[7],
             productId:Product[4],
+            Money:15000,
             numberProduct:27
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[7],
             productId:Product[5],
+            Money:20000,
             numberProduct:28
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[8],
             productId:Product[6],
+            Money:10000,
             numberProduct:29
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[8],
             productId:Product[7],
+            Money:15000,
             numberProduct:30
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[8],
             productId:Product[8],
+            Money:20000,
             numberProduct:31
         },
 

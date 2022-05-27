@@ -271,7 +271,7 @@ module.exports =class Product {
             }
             return Promise.resolve({messager: "All item Exist"})
         } catch (error) {
-            
+            return Promise.resolve({messager: "All item Exist"})
         }
 
     }
