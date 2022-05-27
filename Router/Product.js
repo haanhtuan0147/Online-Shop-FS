@@ -13,14 +13,14 @@ Router.use(bodyParser.urlencoded({ extended: true }));
         Router.get('/Product/:id', Controller.findOne);
         Router.get('/findItem/:page', Controller.findItem);
         Router.get('/countpagefindItem', Controller.countpagefindItem);
-        Router.get('/Product/searchbyprice/:page', Controller.searchbyprice);
-        Router.get('/Product/countpagesearchbyprice', Controller.countpagesearchbyprice);
-        Router.get('/Product/searchbypriceBetween/:page', Controller.searchbypriceBetween);
-        Router.get('/Product/countpagesearchbypriceBetween', Controller.countpagesearchbypriceBetween);
-        Router.get('/Product/searchbyname/:page', Controller.searchbyname);
-        Router.get('/Product/countpagesearchbyname',Controller.countpagesearchbyname);
-        Router.get('/Product/searchbycategory/:page', Controller.searchbycategory);
-        Router.get('/Product/countpagesearchbycategory', Controller.countpagesearchbycategory);
+        Router.get('/Products/searchbyprice/:page', Controller.searchbyprice);
+        Router.get('/Products/searchbyprice', Controller.countpagesearchbyprice);
+        Router.get('/Products/searchbypriceBetween/:page', Controller.searchbypriceBetween);
+        Router.get('/Products/countpagesearchbypriceBetween', Controller.countpagesearchbypriceBetween);
+        Router.get('/Products/searchbyname/:page', Controller.searchbyname);
+        Router.get('/Products/countpagesearchbyname',Controller.countpagesearchbyname);
+        Router.get('/Products/searchbycategory/:page', Controller.searchbycategory);
+        Router.get('/Products/countpagesearchbycategory',Controller.countpagesearchbycategory);
         Router.get('/CheckProduct', Controller.CheckProduct);
 
         

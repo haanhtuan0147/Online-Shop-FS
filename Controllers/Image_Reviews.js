@@ -71,7 +71,8 @@ module.exports=class Image_Reviews {
     }
     findimagereview_Product=  (req, res, next) => {
         const LitsItem = req.body.ListReviewProduct;
-        service.findimagereview_Product(ListReviewProduct)
+        console.log(LitsItem)
+        service.findimagereview_Product(LitsItem)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
         })

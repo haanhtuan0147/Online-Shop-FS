@@ -119,6 +119,7 @@ module.exports =class Field {
     }
    findProduct_field= async (req) => {
     try {
+        
         const rs= await api.get('/Field/findcategory/'+req.params.id,{headers: {
             'Content-Type': 'application/json;charset=utf-8'
           }})
@@ -127,11 +128,12 @@ module.exports =class Field {
               return Promise.reject({Message:"Not find findcategory"})
           }
           var category=[]
-          for(var i=0;i<resxp.data.length;i++)
+          for(var i=0;i<rs.data.length;i++)
           {
-              category.push(resxp.data[i].id)
+              category.push(rs.data[i].id)
           }
-          const rs1=await api.get('/Product/Product/searchbycategory'+req.body.page,{data:{"category":category},headers: {
+          
+          const rs1=await api.get('/Product/Products/searchbycategory/'+req.body.page,{data:{"category":category},headers: {
             'Content-Type': 'application/json;charset=utf-8'
           }})
           if(rs1.status!=200)
@@ -153,11 +155,11 @@ module.exports =class Field {
                   return Promise.reject({Message:"Not find findcategory"})
               }
               var category=[]
-              for(var i=0;i<resxp.data.length;i++)
+              for(var i=0;i<rs.data.length;i++)
               {
-                  category.push(resxp.data[i].id)
+                  category.push(rs.data[i].id)
               }
-              const rs1=await api.get('/Product/Product/countpagesearchbycategory',{data:{"category":category},headers: {
+              const rs1=await api.get('/Product/Products/countpagesearchbycategory',{data:{"category":category},headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }})
               if(rs1.status!=200)

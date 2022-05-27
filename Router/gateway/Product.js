@@ -11,12 +11,12 @@ Router.use(bodyParser.urlencoded({ extended: true,limit: '50mb' }));
         Router.get('/Product/:id',Controller.findOne);
         Router.get('/findItem/:page',Controller.findItem);
         Router.get('/countpagefindItem',Controller.pagecountfindItem);
-        Router.get('/Product/searchbyprice/:page',Controller.searchbyprice);
-        Router.get('/Product/countpagesearchbyprice',Controller.pagecountsearchbyprice);
-        Router.get('/Product/searchbypriceBetween/:page',Controller.searchbypriceBetween);
-        Router.get('/Product/countpagesearchbypriceBetween',Controller.pagecountsearchbypriceBetween);
-        Router.get('/Product/searchbyname/:page',Controller.searchbyname);
-        Router.get('/Product/countpagesearchbyname',Controller.pagecountsearchbyname);
+        Router.get('/Products/searchbyprice/:page',Controller.searchbyprice);
+        Router.get('/Products/countpagesearchbyprice',Controller.pagecountsearchbyprice);
+        Router.get('/Products/searchbypriceBetween/:page',Controller.searchbypriceBetween);
+        Router.get('/Products/countpagesearchbypriceBetween',Controller.pagecountsearchbypriceBetween);
+        Router.get('/Products/searchbyname/:page',Controller.searchbyname);
+        Router.get('/Products/countpagesearchbyname',Controller.pagecountsearchbyname);
 
 
         Router.post('/Product',Controller.create);

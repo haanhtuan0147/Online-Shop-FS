@@ -14,7 +14,7 @@ module.exports=class Product {
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
     pagecountfindAll = (req, res, next) => {
-        service.pagecountfindAll()
+        service.countpagefindAll()
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
         })
@@ -63,7 +63,7 @@ module.exports=class Product {
     }
     countpagefindItem =  (req, res, next) => {
         const item = req.body;
-        //console.log(req.body)
+        console.log(req.body)
         service.countpagefindItem(item)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
@@ -82,6 +82,7 @@ module.exports=class Product {
     }
     countpagesearchbyprice=  (req, res, next) => {
         const price = req.body.price;
+        console.log(price)
         service.countpagesearchbyprice(price)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
@@ -101,6 +102,7 @@ module.exports=class Product {
     }
     countpagesearchbypriceBetween=  (req, res, next) => {
         const price = req.body;
+        console.log(price)
         service.countpagesearchbypriceBetween(price.sart,price.end)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
@@ -120,6 +122,7 @@ module.exports=class Product {
     }
     countpagesearchbyname=  (req, res, next) => {
         const name = req.body.name;
+        console.log(name)
         service.countpagesearchbyname(name)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
@@ -139,6 +142,7 @@ module.exports=class Product {
     }
     countpagesearchbycategory=  (req, res, next) => {
         const category = req.body;
+        console.log("vào đây")
         service.countpagesearchbycategory(category.category)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));

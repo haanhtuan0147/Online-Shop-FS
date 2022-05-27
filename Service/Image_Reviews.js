@@ -107,7 +107,7 @@ module.exports =class Image_Reviews {
         }
            var listimage=await this.ConverJsonimage_tobase64(rs)
           if(listimage.length==0)
-          return Promise.reject({messager :"Not to base64 image"} )
+          return Promise.resolve([])
           return Promise.resolve({ListImageReview:listimage})
             
         } catch (error) {
@@ -117,13 +117,14 @@ module.exports =class Image_Reviews {
    }
    findimagereview_Product= async (listItem) => {
     try {
+        console.log(listItem)
        const rs = await Repository.findimagereview_Product(listItem);
        if (Object.keys(rs).length == 0) {
            return Promise.resolve([])
        }
       var listimage= await this.ConverJsonimage_tobase64(rs)
       if(listimage.length==0)
-      return Promise.reject({messager :"Not to base64 image"} )
+      return Promise.resolve([])
       return Promise.resolve({ListImageReview:listimage})
         
     } catch (error) {

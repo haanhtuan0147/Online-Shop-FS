@@ -20,30 +20,31 @@ module.exports=class Product extends KnexRepository{
         .select()
     }
     searchbycategory(category,isDelete){
+        console.log("vào đây 1")
         return knex(this.tableName).where(knex.raw(category)).andWhere("isDelete","=",isDelete).orderBy('updatedDate', 'desc')
         .select()
     }
-    searchbypriceBetween(sart,end,page,isDelete){
+    searchbypriceBetweenpage(sart,end,page,isDelete){
         return knex(this.tableName).whereBetween('Money', [sart,end]).andWhere("isDelete","=",isDelete).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
             .select()
     }
-    searchbyprice(price,page,isDelete){
+    searchbypricepage(price,page,isDelete){
         return knex(this.tableName).where('Money','>=',price).andWhere("isDelete","=",isDelete).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
         .select()
     }
-    searchbyname(name,page,isDelete){
+    searchbynamepage(name,page,isDelete){
         return knex(this.tableName).whereLike('ProductName',`%${name}%`).andWhere("isDelete","=",isDelete).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
         .select()
     }
-    searchbycategory(category,page,isDelete){
+    searchbycategorypage(category,page,isDelete){
         return knex(this.tableName).where(knex.raw(category)).andWhere("isDelete","=",isDelete).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
         .select()
     }
-    findAll(page) {
+    findAllpage(page) {
         return knex(this.tableName).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
             .select()
     }
-    findItem(item,page) {
+    findItempage(item,page) {
         return knex(this.tableName)
             .where(item).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
             .select()

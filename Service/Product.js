@@ -29,7 +29,7 @@ module.exports =class Product {
         try {
         if(!Number(page))
         return Promise.reject({messager :"Not page is number"} )
-        const rs = await Repository.findAll(Number(page)-1);
+        const rs = await Repository.findAllpage(Number(page)-1);
         if (Object.keys(rs).length == 0) {
             return Promise.resolve([])
         }
@@ -116,7 +116,7 @@ module.exports =class Product {
          try {
             if(!Number(page))
             return Promise.reject({messager :"Not page is number"} )
-            const rs = await Repository.findItem(item,Number(page)-1);
+            const rs = await Repository.findItempage(item,Number(page)-1);
             if (Object.keys(rs).length == 0) {
                 return Promise.resolve([])
             }
@@ -143,7 +143,7 @@ module.exports =class Product {
         try {
            if(!Number(page))
            return Promise.reject({messager :"Not page is number"} )
-           const rs = await Repository.searchbyprice(price,Number(page)-1,0);
+           const rs = await Repository.searchbypricepage(price,Number(page)-1,0);
            if (Object.keys(rs).length == 0) {
             return Promise.resolve([])
            }
@@ -170,7 +170,7 @@ module.exports =class Product {
     try {
         if(!Number(page))
         return Promise.reject({messager :"Not page is number"})
-       const rs = await Repository.searchbypriceBetween(sart,end,Number(page)-1,0);
+       const rs = await Repository.searchbypriceBetweenpage(sart,end,Number(page)-1,0);
        if (Object.keys(rs).length == 0) {
         return Promise.resolve([])
        }
@@ -195,7 +195,7 @@ module.exports =class Product {
             //console.log(name)
            if(!Number(page))
            return Promise.reject({messager :"Not page is number"} )
-           const rs = await Repository.searchbyname(name,Number(page)-1,0);
+           const rs = await Repository.searchbynamepage(name,Number(page)-1,0);
            if (Object.keys(rs).length == 0) {
             return Promise.resolve([])
         }
@@ -231,7 +231,7 @@ module.exports =class Product {
                 else
                 scategory=scategory+` or JSON_SEARCH(\`categoryId\`, 'one','${category[i]}') is not null`
             }
-           const rs = await Repository.searchbycategory(scategory,Number(page)-1,0);
+           const rs = await Repository.searchbycategorypage(scategory,Number(page)-1,0);
            if (Object.keys(rs).length == 0) {
             return Promise.resolve([])
            }
@@ -255,6 +255,7 @@ module.exports =class Product {
                     scategory=scategory+` or JSON_SEARCH(\`categoryId\`, 'one','${category[i]}') is not null`
                 }
                const rs = await Repository.searchbycategory(scategory,0);
+               //console.log(rs)
                return Promise.resolve({page:Math.ceil((Object.keys(rs).length)/10)})
             } catch (error) {
                return Promise.reject({messager :error})

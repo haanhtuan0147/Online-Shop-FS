@@ -104,7 +104,7 @@ module.exports =class Product_Category {
         try {
             if(Object.keys(req.body).length==0)
             return Promise.reject({message : "NOT ITEM"})
-            const rs= await api.get('/Product/Product/searchbycategory/'+req.params.page,{data:req.body,headers: {
+            const rs= await api.get('/Product/Products/searchbycategory/'+req.params.page,{data:req.body,headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }})
               if(rs.status!=200)
@@ -120,7 +120,7 @@ module.exports =class Product_Category {
         try {
             if(Object.keys(req.body).length==0)
             return Promise.reject({message : "NOT ITEM"})
-            const rs= await api.get('/Product/Product/countpagesearchbycategory/',{data:req.body,headers: {
+            const rs= await api.get('/Product/Products/countpagesearchbycategory/',{data:req.body,headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }})
               if(rs.status!=200)

@@ -43,6 +43,8 @@ module.exports =class Shopping_Cart {
                 return false;
             });
             if(!select) return Promise.reject({messager:"not user?"});
+            if(select.AccountRights!="User")
+            return Promise.reject({messager:"you not is a user?"});
             item.userId=select.userId
             const rs = await Repository.create(item);
             if(rs) {

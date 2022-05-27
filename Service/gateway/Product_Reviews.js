@@ -143,7 +143,8 @@ module.exports =class Product_Reviews {
             rs.data.forEach((item)=>{
                 ListItem.push(item.id)
             })
-            const rs1=await api.get('/Product_Reviews'+req.path,{data:{"ListReviewProduct":ListItem},headers: {
+            console.log(ListItem)
+            const rs1=await api.get('/Product_Reviews/findimagereview_Product',{data:{"ListReviewProduct":ListItem},headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }})
               if(rs1.status!=200)
