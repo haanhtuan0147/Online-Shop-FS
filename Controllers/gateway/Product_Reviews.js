@@ -64,15 +64,15 @@ module.exports=class Product_Reviews {
              baseController.sendResponse({message : err}, req, res.status(500));
         });
     }
-    findimagereview_Product= (req, res, next) => {
-        service.findimagereview_Product(req).then((result) => {
+    findimagereviewProduct= (req, res, next) => {
+        service.findimagereviewProduct(req).then((result) => {
             baseController.sendResponse(result, req, res.status(200));
         }).catch((err) => {
              baseController.sendResponse({message : err}, req, res.status(500));
         });
     }
-    find_AVGNumberStar_ProductTop10= (req, res, next) => {
-        service.find_AVGNumberStar_ProductTop10(req).then((result) => {
+    findAVGNumberStarProductTop10= (req, res, next) => {
+        service.findAVGNumberStarProductTop10(req).then((result) => {
             baseController.sendResponse(result, req, res.status(200));
         }).catch((err) => {
              baseController.sendResponse({message : err}, req, res.status(500));

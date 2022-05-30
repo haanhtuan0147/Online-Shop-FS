@@ -17,9 +17,9 @@ Router.use(bodyParser.urlencoded({ extended: true,limit: '50mb' }));
         Router.get('/Products/countpagesearchbypriceBetween',Controller.pagecountsearchbypriceBetween);
         Router.get('/Products/searchbyname/:page',Controller.searchbyname);
         Router.get('/Products/countpagesearchbyname',Controller.pagecountsearchbyname);
+        Router.get('/find_AVGNumberStar_Product/:id',Controller.findAVGNumberStarProduct);
 
-
-        Router.post('/Product',Controller.create);
+        Router.post('/Product',Controller.checkArrayCategory,Controller.create);
         Router.put('/Product/:id',Controller.update);
         Router.delete('/delete/:id',Controller.delete);
 module.exports= Router;

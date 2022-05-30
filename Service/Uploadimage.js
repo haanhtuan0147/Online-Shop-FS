@@ -10,8 +10,8 @@ let storage = multer.diskStorage({
     cb(null, __basedir + "/uploads/");
   },
   filename: (req, file, cb) => {
-    const filename = Date.now() + '-' + Math.round(Math.random() * 1E9) 
-      cb(null, filename + '-' + file.originalname )
+    const filename = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      cb(null, filename + '-' + file.originalname );
   },
 });
 let uploadFile = multer({
@@ -48,7 +48,7 @@ const upload = async (req, res) => {
       if (req.file == undefined) {
         return Promise.reject({ message: "Please upload a file!" });
       }
-      return Promise.resolve({result:req.file.filename})
+      return Promise.resolve({result:req.file.filename});
     } catch (err) {
       return Promise.reject({
         message: `Could not upload the file: ${req.file.originalname}. ${err}`,
@@ -63,7 +63,7 @@ const UploadVi = async (req, res) => {
     if (req.files == undefined) {
       return Promise.reject({ message: "Please upload a file!" });
     }
-    var image= await convertimage(req.files)
+    var image= await convertimage(req.files);
     return Promise.resolve({result: image})
   } catch (err) {
     return Promise.reject({
@@ -85,7 +85,7 @@ convertimage= async(images)=>{
   var image=[]
   for(var i=0;i<images.length;i++)
   {
-    image.push(images[i].filename)
+    image.push(images[i].filename);
   }
-  return JSON.stringify(image)
+  return JSON.stringify(image);
 }

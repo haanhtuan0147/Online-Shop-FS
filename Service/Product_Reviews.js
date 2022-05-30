@@ -12,11 +12,11 @@ module.exports =class Product_Reviews {
         try {
         const rs = await Repository.findAll();
         if (Object.keys(rs).length == 0) {
-            return Promise.resolve([])
+            return Promise.resolve([]);
         }
-        return Promise.resolve(rs)
+        return Promise.resolve(rs);
     } catch (error) {
-        return Promise.reject({messager :error} )
+        return Promise.reject({messager :error} );
     }
     }
      create = async (item,token) => {
@@ -26,18 +26,18 @@ module.exports =class Product_Reviews {
                 return data;
                 return false;
             });
-            console.log(select)
+            //console.log(select)
             if(!select)return Promise.reject({ messager: " Token not exists ! "  });
-            console.log(select.userId!=item.userId)
+            //console.log(select.userId!=item.userId)
             if(select.userId!=item.userId)return Promise.reject({ messager: " You have no right to create !"  });
-            console.log(item)
+            //console.log(item)
             const rs = await Repository.create(item);
-            console.log(rs)
+            //console.log(rs)
             if(rs) {
                 return Promise.resolve({
                 messager : "Sucsuess",
                 Item:item
-            })
+            });
             }
         return Promise.reject({messager : "Create Faild "});
         } catch (error) {
@@ -50,12 +50,12 @@ module.exports =class Product_Reviews {
             //console.log(item)
             if(Object.keys(item).length==0)
             return Promise.reject({ messager : "fail! not raelly any item",});
-            const rs1 = await Repository.findItem({productId:item.productId,userId:item.userId});
+            const rs = await Repository.findItem({productId:item.productId,userId:item.userId});
             //console.log(rs1)
-            if (Object.keys(rs1).length > 0) {
-                return Promise.reject({messager :"userId really exist therefore not create one new Product Reiview !"} )
+            if (Object.keys(rs).length > 0) {
+                return Promise.reject({messager :"userId really exist therefore not create one new Product Reiview !"} );
             }
-            return Promise.resolve()
+            return Promise.resolve();
         } catch (error) {
             return Promise.reject({messager : "checkreallyProductReiview Faild "});
         }
@@ -69,19 +69,19 @@ module.exports =class Product_Reviews {
                 return false;
             });
             if(!select)return Promise.reject({ messager: " Token not exists ! "  });
-            const rs1  = await Repository.findOne(id);
-            if (Object.keys(rs1).length == 0) {
+            const findoneproductreview  = await Repository.findOne(id);
+            if (Object.keys(findoneproductreview).length == 0) {
                 return Promise.reject({ messager: " Product_Reviews not exists ! "  });
             }
-            if(select.userId!=rs1[0].userId)return Promise.reject({ messager: " You have no right to change !"  });
+            if(select.userId!=findoneproductreview[0].userId)return Promise.reject({ messager: " You have no right to change !"  });
             const rs = await Repository.update(id, item);
             if (rs) {
-                return Promise.resolve({ messager: "Sucsess" })
+                return Promise.resolve({ messager: "Sucsess" });
             
             }
-            return Promise.reject({ messager: "Update Faild" })
+            return Promise.reject({ messager: "Update Faild" });
     } catch (error) {
-        return Promise.reject({ messager: "Update Faild" } )
+        return Promise.reject({ messager: "Update Faild" } );
     }
     }
     createimagereview= async (id,images,token) => {
@@ -92,38 +92,37 @@ module.exports =class Product_Reviews {
                 return false;
             });
             if(!select)return Promise.reject({ messager: " Token not exists ! "  });
-            const rs1  = await Repository.findOne(id);
+            const findoneproductreview  = await Repository.findOne(id);
             if (Object.keys(rs1).length == 0) {
                 return Promise.reject({ messager: " Product_Reviews not exists ! "  });
             }
-            console.log(select)
-            if(select.userId!=rs1[0].userId)return Promise.reject({ messager: " You have no right to change !"  });
-            const rs =await RepositoryImage_Reviews.create({id:v4(),productReviewsId:id,Image:images})
+            //console.log(select)
+            if(select.userId!=findoneproductreview[0].userId)return Promise.reject({ messager: " You have no right to change !"  });
+            const rs =await RepositoryImage_Reviews.create({id:v4(),productReviewsId:id,Image:images});
             if (rs) {
-                return Promise.resolve({ messager: "updateimagereview Sucsess" })
+                return Promise.resolve({ messager: "updateimagereview Sucsess" });
             }
-            return Promise.reject({ messager: "updateimagereview Faild" })
+            return Promise.reject({ messager: "updateimagereview Faild" });
     } catch (error) {
-        return Promise.reject({ messager: error } )
+        return Promise.reject({ messager: error } );
     }
     }
      delete = async (id) => {
          try{
-            const rs1 = await RepositoryImage_Reviews.findItem({productReviewsId:id});
-            if (Object.keys(rs1).length == 0) {
-                return Promise.reject({messager :"Not Found Image_Reviews"} )
+            const findproductReviewsId = await RepositoryImage_Reviews.findItem({productReviewsId:id});
+            if (Object.keys(findproductReviewsId).length > 0) {
+                const deleteAllRepositoryImage_Reviews = await RepositoryImage_Reviews.deleteAll({productReviewsId:id});
+                if (!deleteAllRepositoryImage_Reviews) {
+                    return Promise.reject({ messager: "Delete Faild Image_Reviews." });
+                }
             }
-            const rs2 = await RepositoryImage_Reviews.deleteAll({productReviewsId:id});
-            if (!rs2) {
-                return Promise.reject({ messager: "Delete Faild Image_Reviews." })
+            const deleteproductReviews = await Repository.delete(id)
+            if (!deleteproductReviews) {
+                return Promise.reject({ messager: "Delete Faild" });
             }
-            const rs = await Repository.delete(id)
-            if (!rs) {
-                return Promise.reject({ messager: "Delete Faild" })
-            }
-            return Promise.resolve({messager : "Sucsuess"})
+            return Promise.resolve({messager : "Sucsuess"});
     } catch (error) {
-        return Promise.reject({ messager: "Delete Faild" } )
+        return Promise.reject({ messager: "Delete Faild" } );
     }
     }
 
@@ -131,38 +130,52 @@ module.exports =class Product_Reviews {
         try {
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
-                return Promise.resolve([])
+                return Promise.resolve([]);
             }
-            return Promise.resolve(rs)
+            return Promise.resolve(rs);
         } catch (error) {
-            return Promise.reject({ messager: " Product_Reviews not exists ! "  } )
+            return Promise.reject({ messager: " Product_Reviews not exists ! "  } );
         }
     }
      findItem = async (item) => {
          try {
             const rs = await Repository.findItem(item);
             if (Object.keys(rs).length == 0) {
-                return Promise.resolve([])
+                return Promise.resolve([]);
             }
-            return Promise.resolve(rs)
+            return Promise.resolve(rs);
              
          } catch (error) {
-            return Promise.reject({messager :"Not Found"})
+            return Promise.reject({messager :"Not Found"});
          }
 
     }
-    find_AVGNumberStar_ProductTop10= async () => {
+    findAVGNumberStarProductTop10= async () => {
         try {
-           const rs = await Repository.AVGNumberStar_ProductTop10();
+           const rs = await Repository.AVGNumberStarProductTop10();
            if (Object.keys(rs).length == 0) {
-               return Promise.resolve([])
+               return Promise.resolve([]);
            }
-           return Promise.resolve(rs)
+           return Promise.resolve(rs);
             
         } catch (error) {
-           return Promise.reject({messager :"Not Found"})
+           return Promise.reject({messager :"Not Found"});
         }
    }
+   
+   findAVGNumberStarProduct= async (id) => {
+    try {
+       const rs = await Repository.AVGNumberStarProduct(id);
+       if (Object.keys(rs).length == 0) {
+           return Promise.resolve([]);
+       }
+       return Promise.resolve(rs);
+        
+    } catch (error) {
+       return Promise.reject({messager :"Not Found"});
+    }
+}
+
 
    
 }

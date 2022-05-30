@@ -2,10 +2,10 @@ const Connect =require('../config/connect')
 const knex = new Connect().knex;
 const KnexRepository=require('./repository');
 const Product=require('../Model/Product')
-const Product01=new Product();
+const Products=new Product();
 module.exports=class Product extends KnexRepository{
     constructor(){
-        super(Product01.tableName)
+        super(Products.tableName)
     }
     findArrayProduct(array,isDelete){
         return knex(this.tableName).whereIn('id',array).andWhere("isDelete","=",isDelete).select()

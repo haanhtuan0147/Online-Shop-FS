@@ -100,7 +100,7 @@ module.exports =class Product_Category {
             return Promise.reject({message : "NOT FIND Product_Category"})
          }
     }
-    findProduct_category = async (req) => {
+    findProductcategory = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
             return Promise.reject({message : "NOT ITEM"})
@@ -116,7 +116,7 @@ module.exports =class Product_Category {
             return Promise.reject({message : "NOT FIND findProduct_category"})
          }
     }
-    countpagefindProduct_category = async (req) => {
+    countpagefindProductcategory = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
             return Promise.reject({message : "NOT ITEM"})

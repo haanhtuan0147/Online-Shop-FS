@@ -12,8 +12,8 @@ Router.use(bodyParser.urlencoded({ extended: true }));
 Router.get('/Product_Category',Controller.findAll);
         Router.get('/Product_Category/:id',Controller.findOne);
         Router.get('/findItem',Controller.findItem);
-        Router.get('/findProduct_category/:page',Controller.findProduct_category);
-        Router.get('/countpagefindProduct_category',Controller.countpagefindProduct_category);
+        Router.get('/findProduct_category/:page',Controller.findProductcategory);
+        Router.get('/countpagefindProduct_category',Controller.countpagefindProductcategory);
 
 
         Router.post('/Product_Category',Controller.create);

@@ -57,6 +57,13 @@ module.exports=class User {
              baseController.sendResponse({message : err}, req, res.status(500));
         });
     }
+    customerreliability=  (req, res, next) => {
+        service.customerreliability(req).then((result) => {
+            baseController.sendResponse(result, req, res.status(200));
+        }).catch((err) => {
+             baseController.sendResponse({message : err}, req, res.status(500));
+        });
+    }
     RegisterToken=  (req, res, next) => {
         service.RegisterToken(req).then((result) => {
             baseController.sendResponse(result, req, res.status(200));

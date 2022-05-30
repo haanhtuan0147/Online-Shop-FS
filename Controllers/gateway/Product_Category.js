@@ -50,15 +50,15 @@ module.exports=class Product_Category {
              baseController.sendResponse({message : err}, req, res.status(500));
         });
     }
-    findProduct_category= (req, res, next) => {
-        service.findProduct_category(req).then((result) => {
+    findProductcategory= (req, res, next) => {
+        service.findProductcategory(req).then((result) => {
             baseController.sendResponse(result, req, res.status(200));
         }).catch((err) => {
              baseController.sendResponse({message : err}, req, res.status(500));
         });
     }
-    countpagefindProduct_category= (req, res, next) => {
-        service.countpagefindProduct_category(req).then((result) => {
+    countpagefindProductcategory= (req, res, next) => {
+        service.countpagefindProductcategory(req).then((result) => {
             baseController.sendResponse(result, req, res.status(200));
         }).catch((err) => {
              baseController.sendResponse({message : err}, req, res.status(500));

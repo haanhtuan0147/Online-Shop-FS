@@ -10,11 +10,12 @@ Router.use(bodyParser.urlencoded({ extended: true }));
 Router.get('/User',Controller.findAll);
 Router.get('/User/:id',Controller.findOne);
 Router.get('/findItem',Controller.findItem);
-Router.get('/findUser',Controller.findUser)
+Router.get('/findUser',Controller.findUser);
+Router.get('/customerreliability/:userId',Controller.customerreliability);
 
 Router.post('/RegisterToken',Controller.RegisterToken);
-Router.post('/RegisterUser',Controller.RegisterUser)
-Router.post('/RegisterAdmin',Controller.RegisterAdmin)
+Router.post('/RegisterUser',Controller.RegisterUser);
+Router.post('/RegisterAdmin',Controller.RegisterAdmin);
 Router.post('/Login',Controller.Login)
 
 Router.put('/User/:id',Controller.update);

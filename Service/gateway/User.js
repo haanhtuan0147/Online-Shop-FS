@@ -1,8 +1,10 @@
 const dotenv=require('dotenv')
 dotenv.config()
 const apiAdapter = require('./axioserver')
-const BASE_URL_Product = process.env.Identity
-const api = apiAdapter(BASE_URL_Product)
+const BASE_URL_User = process.env.Identity
+const BASE_URL_Order = process.env.Order
+const api = apiAdapter(BASE_URL_User)
+const apiOrder = apiAdapter(BASE_URL_Order)
 module.exports =class User {
     findAll = async (req) => {
         try {
@@ -118,6 +120,21 @@ module.exports =class User {
             return Promise.resolve({result : rs.data})
         } catch (error) {
             return Promise.reject({message : "NOT FIND User"})
+        } 
+    }
+    customerreliability= async (req) => {
+        try {
+            const rs= await apiOrder.get('/Shopping_Cart'+req.path,{headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'authorization': req.headers['authorization']
+              }})
+            if(rs.status!=200)
+            {
+                return Promise.reject({message : "NOT FIND customerreliability"})
+            }
+            return Promise.resolve({result : rs.data})
+        } catch (error) {
+            return Promise.reject({message : error})
         } 
     }
     RegisterToken= async (req) => {

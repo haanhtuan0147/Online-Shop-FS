@@ -50,15 +50,15 @@ module.exports=class Field {
              baseController.sendResponse(err, req, res.status(500));
         });
     }
-    findProduct_field=  (req, res, next) => {
-        service.findProduct_field(req).then((result) => {
+    findProductfield=  (req, res, next) => {
+        service.findProductfield(req).then((result) => {
             baseController.sendResponse(result, req, res.status(200));
         }).catch((err) => {
              baseController.sendResponse(err, req, res.status(500));
         });
     }
-    countpagefindProduct_field=  (req, res, next) => {
-        service.countpagefindProduct_field(req).then((result) => {
+    countpagefindProductfield=  (req, res, next) => {
+        service.countpagefindProductfield(req).then((result) => {
             baseController.sendResponse(result, req, res.status(200));
         }).catch((err) => {
              baseController.sendResponse(err, req, res.status(500));

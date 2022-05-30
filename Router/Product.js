@@ -23,8 +23,9 @@ Router.use(bodyParser.urlencoded({ extended: true }));
         Router.get('/Products/countpagesearchbycategory',Controller.countpagesearchbycategory);
         Router.get('/Products/findArrayProduct',Controller.findArrayProduct);
         
-        Router.post('/CheckProduct', Controller.CheckProduct);
+        Router.post('/CheckProduct',Controller.CheckProduct);
         Router.post('/Product',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.create);
         Router.put('/Product/:id',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.update);
+        Router.put('/UpdateQuantityArrayProduct',ControllerToken.RoleUser,ControllerToken.CheckToKenTime,Controller.UpdateQuantity);
         Router.delete('/delete/:id',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.delete);
 module.exports= Router;

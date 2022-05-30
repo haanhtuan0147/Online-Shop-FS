@@ -51,7 +51,15 @@ module.exports=class Product_Category {
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
     }
+    checkArrayCategory=  (req, res, next) => {
+        const item = req.body.category;
+        service.checkArrayCategory(item)
+        .then(result => {
+            baseController.sendResponse(result, req, res.status(200));
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
+    }
     delete = (req, res, next) => {
         const id = req.params.id;
         service.delete(id)

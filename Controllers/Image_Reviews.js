@@ -69,10 +69,10 @@ module.exports=class Image_Reviews {
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
-    findimagereview_Product=  (req, res, next) => {
+    findimagereviewProduct=  (req, res, next) => {
         const LitsItem = req.body.ListReviewProduct;
         console.log(LitsItem)
-        service.findimagereview_Product(LitsItem)
+        service.findimagereviewProduct(LitsItem)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
         })

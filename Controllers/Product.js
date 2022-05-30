@@ -42,6 +42,14 @@ module.exports=class Product {
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
+    UpdateQuantity =  (req, res, next) => {
+        const item = req.body;
+        service.UpdateQuantity(item)
+        .then(result => {
+            baseController.sendResponse(result, req, res.status(200));
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+    }
     findOne =  (req, res, next) => {
         const id = req.params.id;
         service.findOne(id)

@@ -13,11 +13,11 @@ module.exports =class ToKen {
         try {
         const rs = await Repository.findAll();
         if (Object.keys(rs).length == 0) {
-            return Promise.resolve([])
+            return Promise.resolve([]);
         }
-        return Promise.resolve({result : rs})
+        return Promise.resolve({result : rs});
     } catch (error) {
-        return Promise.reject({messager :error} )
+        return Promise.reject({messager :error} );
     }
     }
      create = async (item) => {
@@ -41,23 +41,23 @@ module.exports =class ToKen {
         try{
         const rs = await Repository.update(id, item);
         if (rs) {
-            return Promise.resolve({ messager: "Sucsess" })
+            return Promise.resolve({ messager: "Sucsess" });
            
         }
-        return Promise.reject({ messager: "Update Faild" })
+        return Promise.reject({ messager: "Update Faild" });
     } catch (error) {
-        return Promise.reject({ messager: "Update Faild" } )
+        return Promise.reject({ messager: "Update Faild" } );
     }
     }
      delete = async (id) => {
          try{
-        const rs = await Repository.delete(id)
+        const rs = await Repository.delete(id);
         if (rs == 0) {
-            return Promise.reject({ messager: "Delete Faild" })
+            return Promise.reject({ messager: "Delete Faild" });
         }
-        return Promise.resolve({messager : "Sucsuess"})
+        return Promise.resolve({messager : "Sucsuess"});
     } catch (error) {
-        return Promise.reject({ messager: "Delete Faild" } )
+        return Promise.reject({ messager: "Delete Faild" } );
     }
     }
 
@@ -65,11 +65,11 @@ module.exports =class ToKen {
         try {
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
-                return Promise.resolve([])
+                return Promise.resolve([]);
             }
-            return Promise.resolve(rs)
+            return Promise.resolve(rs);
         } catch (error) {
-            return Promise.reject({ messager: " ToKen not exists ! "  } )
+            return Promise.reject({ messager: " ToKen not exists ! "  } );
         }
     }
 
@@ -78,32 +78,32 @@ module.exports =class ToKen {
          try {
             const rs = await Repository.findItem(item);
             if (Object.keys(rs).length == 0) {
-                return Promise.resolve([])
+                return Promise.resolve([]);
             }
-            return Promise.resolve({result : rs})
+            return Promise.resolve({result : rs});
              
          } catch (error) {
-            return Promise.reject({messager :"Not Found"})
+            return Promise.reject({messager :"Not Found"});
          }
 
     }
     CreateToken= async (email) => {
         try {
             const Acc=await RepositoryUser.findItem({Email:email});
-            if(Object.keys(Acc).length==0) return Promise.reject({Message:"Token generation error"})
+            if(Object.keys(Acc).length==0) return Promise.reject({Message:"Token generation error"});
             const token=await jwt.sign({userId:Acc[0].id,Email:email,AccountRights:Acc[0].AccountRights,Date:new Date()},process.env.ACCES_TOKENUSERID);
             const item={
                 id:v4(),
                 userId:Acc[0].id,
                 Token:token
-            }
+            };
             //console.log(token)
             const createToken= await Repository.create(item);
             if(createToken)
             return Promise.resolve({Message:"Success",ToKen:token});
-            return Promise.reject({Message:"Add Defective Token"}) 
+            return Promise.reject({Message:"Add Defective Token"});
         } catch (error) {
-            return Promise.reject({Message:"Add Defective Token"})
+            return Promise.reject({Message:"Add Defective Token"});
         }
    }
    RoleRoot=async (token) => {
@@ -119,7 +119,7 @@ module.exports =class ToKen {
             return Promise.resolve();
             return Promise.reject({Message:"You Are Insufficient"});
         } catch (error) {
-            return Promise.reject({Message:"You Are Insufficient"})
+            return Promise.reject({Message:"You Are Insufficient"});
         }
     }
     RoleAdmin=async (token) => {
@@ -130,13 +130,13 @@ module.exports =class ToKen {
                 return data;
                 return false;
             });
-            console.log(token)
+            //console.log(token)
             if(!select)return Promise.reject({Message:"Token Does Not Exist!"})
                if(select.AccountRights=="Root"||select.AccountRights=="Admin")
                 return Promise.resolve();
                 return Promise.reject({Message:"You Are Insufficient"});
             } catch (error) {
-                return Promise.reject({Message:"You Are Insufficient"})
+                return Promise.reject({Message:"You Are Insufficient"});
             }
         }
     RoleUser=async (token) => {
@@ -152,7 +152,7 @@ module.exports =class ToKen {
             return Promise.resolve();
             return Promise.reject({Message:"You Are Insufficient"});
         } catch (error) {
-            return Promise.reject({Message:"You Are Insufficient"})
+            return Promise.reject({Message:"You Are Insufficient"});
         }
     }
     CheckToKenTime=async(token)=>{
@@ -162,16 +162,16 @@ module.exports =class ToKen {
                     return data;
                     return false;
                 });
-                if(!select)return Promise.reject({Message:"Token Does Not Exist!"})
+                if(!select)return Promise.reject({Message:"Token Does Not Exist!"});
                 const date=new Date();
-                const date2=new Date(select.Date)
+                const date2=new Date(select.Date);
                 //console.log(date)
                 //console.log(date2)    
                 if(date.getTime()>date2.getTime()+10800000)
                 return Promise.reject({Message:"Token Expired!"});
                 return Promise.resolve();
             } catch (error) {
-                return Promise.reject({Message:"Token Does Not Exist!"})
+                return Promise.reject({Message:"Token Does Not Exist!"});
             }
     }
 

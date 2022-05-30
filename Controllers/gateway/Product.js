@@ -106,5 +106,19 @@ module.exports=class Product {
              baseController.sendResponse({message : err}, req, res.status(500));
         });
     }
+    checkArrayCategory =  (req, res, next) => {
+        service.checkArrayCategory(req).then((result) => {
+            next()
+        }).catch((err) => {
+             baseController.sendResponse({message : err}, req, res.status(500));
+        });
+    }
+    findAVGNumberStarProduct=  (req, res, next) => {
+        service.findAVGNumberStarProduct(req).then((result) => {
+            baseController.sendResponse(result, req, res.status(200));
+        }).catch((err) => {
+             baseController.sendResponse({message : err}, req, res.status(500));
+        });
+    }
     
 }

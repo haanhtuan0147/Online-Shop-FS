@@ -34,22 +34,22 @@ module.exports=class Shopping_Cart {
              baseController.sendResponse({message : err}, req, res.status(500));
         });
     }
-    findShoppingcart_totalmoney=  (req, res, next) => {
+    findShoppingcarttotalmoney=  (req, res, next) => {
         service.findShoppingcart_totalmoney(req).then((result) => {
             baseController.sendResponse(result, req, res.status(200));
         }).catch((err) => {
              baseController.sendResponse({message : err}, req, res.status(500));
         });
     }
-    findShoppingcart_totalmoney_detail=  (req, res, next) => {
-        service.findShoppingcart_totalmoney_detail(req).then((result) => {
+    findShoppingcarttotalmoneydetail=  (req, res, next) => {
+        service.findShoppingcarttotalmoneydetail(req).then((result) => {
             baseController.sendResponse(result, req, res.status(200));
         }).catch((err) => {
              baseController.sendResponse({message : err}, req, res.status(500));
         });
     }
-    Cancel_Confirm_Transport_Success=  (req, res, next) => {
-        service.Cancel_Confirm_Transport_Success(req).then((result) => {
+    CancelConfirmTransportSuccess=  (req, res, next) => {
+        service.CancelConfirmTransportSuccess(req).then((result) => {
             baseController.sendResponse(result, req, res.status(200));
         }).catch((err) => {
              baseController.sendResponse({message : err}, req, res.status(500));

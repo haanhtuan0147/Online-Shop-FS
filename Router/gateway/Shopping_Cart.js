@@ -10,11 +10,11 @@ Router.use(bodyParser.urlencoded({ extended: true }));
         Router.get('/Shopping_Cart',Controller.findAll);
         Router.get('/Shopping_Cart/:id',Controller.findOne);
         Router.get('/findItem',Controller.findItem);
-        Router.get('/findShoppingcart_totalmoney',Controller.findShoppingcart_totalmoney);
-        Router.get('/findShoppingcart_totalmoney_detail/:id',Controller.findShoppingcart_totalmoney_detail);
+        Router.get('/findShoppingcart_totalmoney',Controller.findShoppingcarttotalmoney);
+        Router.get('/findShoppingcart_totalmoney_detail/:id',Controller.findShoppingcarttotalmoneydetail);
 
         Router.post('/Shopping_Cart',Controller.CheckUserReally,Controller.CheckProduct,Controller.create);
-        Router.put('/Cancel_Confirm_Transport_Success/:id',Controller.Cancel_Confirm_Transport_Success);
+        Router.put('/Cancel_Confirm_Transport_Success/:id',Controller.CancelConfirmTransportSuccess);
         //Router.put('/update/:id', Controller.update);
         //Router.delete('/delete/:id', Controller.delete);
 module.exports= Router;

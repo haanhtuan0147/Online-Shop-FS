@@ -76,10 +76,12 @@
         table.specificType('Currencyunit','CHAR(10)').notNullable().defaultTo("VND").checkIn(["VND"]);
         table.json("categoryId").notNullable();
         table.json("DetailsProduct").notNullable();
+        table.integer('Quantity').notNullable().defaultTo(1000);
         table.integer('isDelete').checkIn([0,1]).notNullable().defaultTo(0);
         table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
         table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
         table.check('??>=??',['updatedDate','createdDate']);
+        table.check('??>=??',['Quantity',0])
     })
     .createTable('Shopping_Cart',function(table){
         table.specificType('id','CHAR(100)').notNullable().primary();
@@ -102,6 +104,8 @@
         table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
         table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
         table.check('??>=??',['updatedDate','createdDate']);
+        table.check('??>=??',['Money',1000])
+        table.check('??>=??',['numberProduct',1])
         table.foreign("productId").references("Id").inTable("Product")
         table.foreign("shoppingcartId").references("Id").inTable("Shopping_Cart")
     })

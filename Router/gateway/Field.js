@@ -11,8 +11,8 @@ Router.use(bodyParser.urlencoded({ extended: true }));
         Router.get('/Field/:id', Controller.findOne);
         Router.get('/findItem', Controller.findItem);
         Router.get('/findcategory/:id', Controller.findcategory);
-        Router.get('/findProduct_field/:id', Controller.findProduct_field);
-        Router.get('/countpagefindProduct_field/:id', Controller.countpagefindProduct_field);
+        Router.get('/findProduct_field/:id', Controller.findProductfield);
+        Router.get('/countpagefindProduct_field/:id', Controller.countpagefindProductfield);
 
 
         Router.post('/Field',Controller.create);

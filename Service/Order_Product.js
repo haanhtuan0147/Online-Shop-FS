@@ -1,6 +1,8 @@
 const Order_ProductRepository=require('../Repository/Order_Product')
 const Repository = new Order_ProductRepository();
 const {v4}=require('uuid')
+const shoppingcartRepository=require('../Repository/Shopping_Cart')
+const Repositoryshoppingcart=new shoppingcartRepository()
 
 
 
@@ -41,13 +43,15 @@ module.exports =class Order_Product {
             })
             const rs = await Repository.create(arrayitem);
             if(rs) {
-                console.log(rs)
+                //console.log(rs)
                 return Promise.resolve({
                 messager : "Sucsuess",
                 Item:arrayitem
             })
             }
-        return Promise.reject({messager : "Create Faild "});
+            await Repositoryshoppingcart.delete(id);
+            await Repository.deleteAll({shoppingcartId:id});
+            return Promise.reject({messager : "Create Faild "});
         } catch (error) {
             return Promise.reject({messager : "Create Faild "});
         }

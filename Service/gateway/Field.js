@@ -117,56 +117,56 @@ module.exports =class Field {
             return Promise.reject({Message:"Not find findcategory"})
          }
     }
-   findProduct_field= async (req) => {
+   findProductfield= async (req) => {
     try {
         
-        const rs= await api.get('/Field/findcategory/'+req.params.id,{headers: {
+        const categoryfollowfield= await api.get('/Field/findcategory/'+req.params.id,{headers: {
             'Content-Type': 'application/json;charset=utf-8'
           }})
-          if(rs.status!=200)
+          if(categoryfollowfield.status!=200)
           {
               return Promise.reject({Message:"Not find findcategory"})
           }
           var category=[]
-          for(var i=0;i<rs.data.length;i++)
+          for(var i=0;i<categoryfollowfield.data.length;i++)
           {
-              category.push(rs.data[i].id)
+              category.push(categoryfollowfield.data[i].id)
           }
           
-          const rs1=await api.get('/Product/Products/searchbycategory/'+req.body.page,{data:{"category":category},headers: {
+          const productfollowfied=await api.get('/Product/Products/searchbycategory/'+req.body.page,{data:{"category":category},headers: {
             'Content-Type': 'application/json;charset=utf-8'
           }})
-          if(rs1.status!=200)
+          if(productfollowfied.status!=200)
           {
               return Promise.reject({Message:"Not find findProduct_field"})
           }
-          return Promise.resolve({result : rs1.data})      
+          return Promise.resolve({result : productfollowfied.data})      
      } catch (error) {
         return Promise.reject({Message:"Not find findProduct_field"})
      }
     }
-    countpagefindProduct_field= async (req) => {
+    countpagefindProductfield= async (req) => {
         try {
-            const rs= await api.get('/Field/findcategory/'+req.params.id,{headers: {
+            const categoryfollowfield= await api.get('/Field/findcategory/'+req.params.id,{headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }})
-              if(rs.status!=200)
+              if(categoryfollowfield.status!=200)
               {
                   return Promise.reject({Message:"Not find findcategory"})
               }
               var category=[]
-              for(var i=0;i<rs.data.length;i++)
+              for(var i=0;i<categoryfollowfield.data.length;i++)
               {
-                  category.push(rs.data[i].id)
+                  category.push(categoryfollowfield.data[i].id)
               }
-              const rs1=await api.get('/Product/Products/countpagesearchbycategory',{data:{"category":category},headers: {
+              const countpage=await api.get('/Product/Products/countpagesearchbycategory',{data:{"category":category},headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }})
-              if(rs1.status!=200)
+              if(countpage.status!=200)
               {
                   return Promise.reject({Message:"Not find findProduct_field"})
               }
-              return Promise.resolve(rs1.data)      
+              return Promise.resolve(countpage.data)      
          } catch (error) {
             return Promise.reject({Message:"Not find findProduct_field"})
          }

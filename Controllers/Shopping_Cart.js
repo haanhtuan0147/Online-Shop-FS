@@ -34,12 +34,12 @@ module.exports=class Shopping_Cart {
     Cancel=(req, res, next) => {
         service.Cancel(req, res, next,baseController)
     }
-    Confirm_Transport_Success= (req, res, next) => {
+    ConfirmTransportSuccess= (req, res, next) => {
         const item = req.body;
         const author = req.headers['authorization'];
         const token = author?.split(" ")[1];
         const id = req.params.id;
-        service.Confirm_Transport_Success(id,item,token)
+        service.ConfirmTransportSuccess(id,item,token)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
         })
@@ -77,22 +77,33 @@ module.exports=class Shopping_Cart {
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
     }
-    findShoppingcart_totalmoney =  (req, res, next) => {
+    findShoppingcarttotalmoney =  (req, res, next) => {
         const item = req.body;
         const author = req.headers['authorization'];
         const token = author?.split(" ")[1];
-        service.findShoppingcart_totalmoney(item,token)
+        service.findShoppingcarttotalmoney(item,token)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
     }
-    findShoppingcart_totalmoney_detail=(req, res, next) => {
+    findShoppingcarttotalmoneydetail=(req, res, next) => {
         const id = req.params.id;
         const author = req.headers['authorization'];
         const token = author?.split(" ")[1];
-        service.findShoppingcart_totalmoney_detail(id,token)
+        service.findShoppingcarttotalmoneydetail(id,token)
+        .then(result => {
+            baseController.sendResponse(result, req, res.status(200));
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+
+    }
+    customerreliability=(req, res, next) => {
+        const id = req.params.userId;
+        const author = req.headers['authorization'];
+        const token = author?.split(" ")[1];
+        service.customerreliability(id,token)
         .then(result => {
             baseController.sendResponse(result, req, res.status(200));
         })

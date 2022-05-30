@@ -14,6 +14,7 @@ Router.use(bodyParser.urlencoded({ extended: true }));
 Router.get('/Product_Category', Controller.findAll);
         Router.get('/Product_Category/:id', Controller.findOne);
         Router.get('/findItem', Controller.findItem);
+        Router.get('/checkArrayCategory', Controller.checkArrayCategory);
 
         Router.post('/Product_Category',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.create);
         Router.put('/Product_Category/:id',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.update);
