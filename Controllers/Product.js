@@ -186,4 +186,21 @@ module.exports=class Product {
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
+    findDetailsProduct=(req, res, next)=>{
+        const item=req.body
+        const page=req.params.page
+        service.findDetailsProduct(page,item)
+        .then(result => {
+            baseController.sendResponse(result, req, res.status(200));
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+    }
+    countpagefindDetailsProduct=(req, res, next)=>{
+        const item=req.body
+        service.countpagefindDetailsProduct(item)
+        .then(result => {
+            baseController.sendResponse(result, req, res.status(200));
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+    }
 }

@@ -13,11 +13,14 @@ module.exports =class Field {
         }
         return Promise.resolve(rs);
     } catch (error) {
-        return Promise.reject({messager :error} );
+        return Promise.reject({messager :"not find"} );
     }
     }
      create = async (item) => {
         try {
+            const checknamefield=await this.findItem({FieldName:item.FieldName})
+            if(Object.keys(checknamefield).length>0)
+            return Promise.reject({messager :  "Faild field name exits"});
             const rs = await Repository.create(item);
             if(rs) {
                 return Promise.resolve({
@@ -25,7 +28,7 @@ module.exports =class Field {
                 Item:item
             });
             }
-        return Promise.reject({messager : "Create Faild "});
+        return Promise.reject({messager : "Create Faild item not right"});
         } catch (error) {
             return Promise.reject({messager : "Create Faild "});
         }
@@ -33,6 +36,11 @@ module.exports =class Field {
     }
      update = async (id, item) => {
         try{
+        if(item.FieldName){
+            const checknamefield=await this.findItem({FieldName:item.FieldName})
+            if(Object.keys(checknamefield).length>0)
+            return Promise.reject({messager :  "Faild field name exits"});
+        }
         const rs = await Repository.update(id, item);
         if (rs) {
             return Promise.resolve({ messager: "Sucsess" });

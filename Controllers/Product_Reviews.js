@@ -38,7 +38,9 @@ module.exports=class Product_Reviews {
     }
     checknotreallyProductReiview= (req, res, next) => {
         const item = req.body;
-        service.checknotreallyProductReiview(item)
+        const author = req.headers['authorization'];
+        const token = author?.split(" ")[1];
+        service.checknotreallyProductReiview(item,token)
         .then(result => {
             next()
         })

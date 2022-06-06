@@ -52,4 +52,11 @@ module.exports=class Product extends KnexRepository{
             .where(item).orderBy('updatedDate', 'desc').limit(10).offset(page*10)
             .select()
     }
+    findDetailsProduct(field,content,isDelete,page) {
+        return knex(this.tableName).where("isDelete","=",isDelete).andWhere(knex.raw(`JSON_EXTRACT(\`DetailsProduct\`, '$.${field}')='${content}'`)).orderBy('updatedDate', 'desc').limit(10).offset(page*10).select()
+    }
+    findDetailsProduct(field,content,isDelete) {
+        return knex(this.tableName).where("isDelete","=",isDelete).andWhere(knex.raw(`JSON_EXTRACT(\`DetailsProduct\`, '$.${field}')='${content}'`)).orderBy('updatedDate', 'desc').select()
+    }
+   
 }

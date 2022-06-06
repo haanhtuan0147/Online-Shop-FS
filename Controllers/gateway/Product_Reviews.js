@@ -20,6 +20,13 @@ module.exports=class Product_Reviews {
              baseController.sendResponse({message : err}, req, res.status(500));
         });
     }
+    CheckProduct= (req, res, next) => {
+        service.CheckProduct(req).then((result) => {
+            next()
+        }).catch((err) => {
+             baseController.sendResponse({message : err}, req, res.status(500));
+        });
+    }
 
      update =  (req, res, next) => {
         service.update(req).then((result) => {

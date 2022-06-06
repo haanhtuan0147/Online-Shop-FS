@@ -85,7 +85,7 @@ module.exports =class Product {
     }
     UpdateQuantity= async (item) => {
         try{
-            console.log(item)
+            //console.log(item)
             for(var i=0;i<item.length;i++){
                 const rs = await Repository.update(item[i].id,{Quantity:item[i].Quantity});
                 if (!rs) {
@@ -139,6 +139,7 @@ module.exports =class Product {
             return Promise.resolve(rs);
              
          } catch (error) {
+             //console.log(error)
             return Promise.reject({messager :"Not Found"});
          }
 
@@ -299,6 +300,31 @@ module.exports =class Product {
             return Promise.resolve([]);
             return Promise.resolve(rs);
         } catch (error) {
+            return Promise.reject({messager: "not find item array "});
+        }
+    }
+    findDetailsProduct=async(page,item)=>{
+        try {
+            if(!Number(page))
+            return Promise.reject({messager :"Not page is number"} );
+            const rs= await Repository.findDetailsProduct(item.field,item.content,0,page);
+            //console.log(rs)
+            if(Object.keys(rs)==0)
+            return Promise.resolve([]);
+            for(var i=0;i<Object.keys(rs).length;i++)
+            rs[i].Image=await this.ConverJsonimagetobase64(JSON.parse(rs[i].Image));
+            return Promise.resolve(rs);
+        } catch (error) {
+            return Promise.reject({messager: "not find item array "});
+        }
+    }
+    countpagefindDetailsProduct=async(item)=>{
+        try {
+            const rs= await Repository.findDetailsProduct(item.field,item.content,0);
+            return Promise.resolve({page:Math.ceil((Object.keys(rs).length)/10)});
+        } catch (error) {
+            //console.log("vào đây")
+            console.log(error)
             return Promise.reject({messager: "not find item array "});
         }
     }

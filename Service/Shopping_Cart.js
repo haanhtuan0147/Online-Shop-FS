@@ -173,21 +173,21 @@ module.exports =class Shopping_Cart {
     customerreliability= async (id,token) => {
         try {
             if(!token)return Promise.reject({messager:"not token?"});
-            console.log(">>>>>>","vào customerreliability")
+            //console.log(">>>>>>","vào customerreliability")
             const select= await jwt.verify(token,process.env.ACCES_TOKENUSERID,(err,data)=>{
                 if(data)
                 return data;
                 return false;
             });
-            console.log(">>>>>>","giải mã token")
+            //console.log(">>>>>>","giải mã token")
             if(!select) return Promise.reject({messager:"not user?"});
             const checkshoppingcart=await Repository.findItem({userId:id});
-            console.log(">>>>>>","check shopping cart với id userId")
+            //console.log(">>>>>>","check shopping cart với id userId")
             if(Object.keys(checkshoppingcart).length==0)return Promise.resolve({Cancel:0,Success:0});
             //if(select.AccountRights=="User"&&checkshoppingcart[0].userId!=select.userId)return Promise.resolve({Cancel:0,Success:0});
             const rs = await Repository.customerreliability(id);
-            console.log(">>>>>>","tổng cancel và success")
-            console.log(rs)
+            //console.log(">>>>>>","tổng cancel và success")
+            //console.log(rs)
             if (Object.keys(rs).length == 0) {
                 return Promise.resolve({Cancel:0,Success:0});
             }

@@ -8,12 +8,12 @@
     return knex.schema
     .createTable("User",function(table){
         table.specificType('id','CHAR(100)').notNullable().primary();
-        table.specificType('Email','CHAR(100)').checkRegex('^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$').notNullable();
+        table.specificType('Email','CHAR(100)').checkRegex('^[a-z0-9](.?[a-z0-9]){5,}@g(oogle)?mail.com$').notNullable();
         table.specificType('Password','CHAR(100)').checkRegex('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$').notNullable();//ít nhất là 8 kí tự tối thiểu 1 chữ số và 1 chữ cái
-        table.string('UserName',255).notNullable();
+        table.string('UserName',255).checkLength('>', 0).notNullable();
         table.specificType('PhoneNumber','CHAR(10)').checkRegex('(84|0[3|5|7|8|9])+([0-9]{8})').notNullable();
         table.specificType('Identitycard','CHAR(12)').checkRegex('[0-9]{12}').notNullable();
-        table.string('Address',255).notNullable();
+        table.string('Address',255).checkLength('>', 0).notNullable();
         table.text('Avatar').notNullable().defaultTo("1653388616406-306847562-ei.png");
         table.specificType('AccountRights','CHAR(10)').checkIn(['Root','Admin','User']).notNullable();
         table.integer('isDelete').checkIn([0,1]).notNullable().defaultTo(0);
@@ -43,7 +43,7 @@
     })
     .createTable('Field',function(table){
         table.specificType('id','CHAR(100)').notNullable().primary();
-        table.string('FieldName',255).notNullable();
+        table.string('FieldName',255).checkLength('>', 0).notNullable();
         table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
         table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
         table.check('??>=??',['updatedDate','createdDate']);
@@ -51,7 +51,7 @@
     })
     .createTable('Product_Category',function(table){
         table.specificType('id','CHAR(100)').notNullable().primary();
-        table.string('CategoryName',255).notNullable();
+        table.string('CategoryName',255).checkLength('>', 0).notNullable();
         table.specificType('fieldId','CHAR(100)').notNullable();
         table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
         table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
@@ -69,7 +69,7 @@
     })*/
     .createTable('Product',function(table){
         table.specificType('id','CHAR(100)').notNullable().primary();
-        table.string('ProductName',255).notNullable();
+        table.string('ProductName',255).checkLength('>', 0).notNullable();
         table.text('DescribeProduct').notNullable();
         table.json('Image').notNullable().defaultTo(`["ImageProduct01.png"]`);
         table.integer('Money').notNullable().defaultTo(0)
@@ -87,7 +87,7 @@
         table.specificType('id','CHAR(100)').notNullable().primary();
         table.specificType('userId','CHAR(100)').notNullable();
         table.specificType('Status','CHAR(100)').checkIn(["Cancel","Wait","Transport","Confirm","Success"]).notNullable();
-        table.string('Address',255).notNullable();
+        table.string('Address',255).checkLength('>', 0).notNullable();
         table.date('IntendTime').notNullable();
         table.date('CompletionTime');
         table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));

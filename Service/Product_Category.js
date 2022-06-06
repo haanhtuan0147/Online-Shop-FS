@@ -21,6 +21,9 @@ module.exports =class Product_Category {
             const onefield =await RepositoryField.findOne(item.fieldId);
             if(Object.keys(onefield).length==0)
             return Promise.reject({messager : "not is fieldid Exist"});
+            const checknamecategory=await this.findItem({CategoryName:item.CategoryName});
+            if(Object.keys(checknamecategory).length>0)
+            return Promise.reject({messager :  "Faild category name exits"});
             const rs = await Repository.create(item);
             if(rs) {
                 return Promise.resolve({
@@ -36,6 +39,16 @@ module.exports =class Product_Category {
     }
      update = async (id, item) => {
         try{
+            if(item.fieldId){
+                const onefield =await RepositoryField.findOne(item.fieldId);
+                if(Object.keys(onefield).length==0)
+                return Promise.reject({messager : "not is fieldid Exist"});
+            }
+            if(item.CategoryName){
+                const checknamecategory=await this.findItem({CategoryName:item.CategoryName});
+                if(Object.keys(checknamecategory).length>0)
+                return Promise.reject({messager :  "Faild category name exits"});
+            }
         const rs = await Repository.update(id, item);
         if (rs) {
             return Promise.resolve({ messager: "Sucsess" });

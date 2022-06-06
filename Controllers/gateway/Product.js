@@ -120,5 +120,19 @@ module.exports=class Product {
              baseController.sendResponse({message : err}, req, res.status(500));
         });
     }
+    countpagefindDetailsProduct=  (req, res, next) => {
+        service.countpagefindDetailsProduct(req).then((result) => {
+            baseController.sendResponse(result, req, res.status(200));
+        }).catch((err) => {
+             baseController.sendResponse({message : err}, req, res.status(500));
+        });
+    }
+    findDetailsProduct=  (req, res, next) => {
+        service.findDetailsProduct(req).then((result) => {
+            baseController.sendResponse(result, req, res.status(200));
+        }).catch((err) => {
+             baseController.sendResponse({message : err}, req, res.status(500));
+        });
+    }
     
 }

@@ -18,6 +18,8 @@ Router.use(bodyParser.urlencoded({ extended: true,limit: '50mb' }));
         Router.get('/Products/searchbyname/:page',Controller.searchbyname);
         Router.get('/Products/countpagesearchbyname',Controller.pagecountsearchbyname);
         Router.get('/find_AVGNumberStar_Product/:id',Controller.findAVGNumberStarProduct);
+        Router.get('/Products/countpagefindDetailsProduct',Controller.countpagefindDetailsProduct);
+        Router.get('/Products/findDetailsProduct/:page',Controller.findDetailsProduct);
 
         Router.post('/Product',Controller.checkArrayCategory,Controller.create);
         Router.put('/Product/:id',Controller.update);

@@ -245,4 +245,32 @@ module.exports =class Product {
             return Promise.reject({message : "NOT FIND Product"});
         }   
     }
+    countpagefindDetailsProduct= async (req) => {
+        try {
+            const rs=  await api.get('/Product'+req.path,{data:req.body,headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              }});
+            if(rs.status!=200)
+            {
+                return Promise.reject({message : "NOT FIND Product"});
+            }
+            return Promise.resolve(rs.data);
+        } catch (error) {
+            return Promise.reject({message : "NOT FIND Product"});
+        }   
+    }
+    findDetailsProduct= async (req) => {
+        try {
+            const rs=  await api.get('/Product'+req.path,{data:req.body,headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              }});
+            if(rs.status!=200)
+            {
+                return Promise.reject({message : "NOT FIND Product"});
+            }
+            return Promise.resolve(rs.data);
+        } catch (error) {
+            return Promise.reject({message : "NOT FIND Product"});
+        }   
+    }
 }

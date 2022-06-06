@@ -32,6 +32,23 @@ module.exports =class Product_Reviews {
             return Promise.reject({message : "NOT CREATE Product_Reviews"});
         }
     }
+    CheckProduct= async (req) => {
+        try {
+            if(Object.keys(req.body).length==0)
+            return Promise.reject({message : "NOT input productId"});
+            const rs=  await api.get('/Product/Product/'+req.body.productId,{headers: {
+                'authorization': req.headers['authorization'],
+                'Content-Type': 'application/json;charset=utf-8'
+              }});
+            if(rs.status!=200)
+            {
+                return Promise.reject({message : "NOT FIND Product"});
+            }
+            return Promise.resolve({result : rs.data});
+        } catch (error) {
+            return Promise.reject({message : "NOT FIND Product"});
+        }
+    }
 
      update = async (req) => {
         try {

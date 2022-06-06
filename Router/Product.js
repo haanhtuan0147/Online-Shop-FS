@@ -14,7 +14,7 @@ Router.use(bodyParser.urlencoded({ extended: true }));
         Router.get('/findItem/:page', Controller.findItem);
         Router.get('/countpagefindItem', Controller.countpagefindItem);
         Router.get('/Products/searchbyprice/:page', Controller.searchbyprice);
-        Router.get('/Products/searchbyprice', Controller.countpagesearchbyprice);
+        Router.get('/Products/countpagesearchbyprice', Controller.countpagesearchbyprice);
         Router.get('/Products/searchbypriceBetween/:page', Controller.searchbypriceBetween);
         Router.get('/Products/countpagesearchbypriceBetween', Controller.countpagesearchbypriceBetween);
         Router.get('/Products/searchbyname/:page', Controller.searchbyname);
@@ -22,6 +22,8 @@ Router.use(bodyParser.urlencoded({ extended: true }));
         Router.get('/Products/searchbycategory/:page', Controller.searchbycategory);
         Router.get('/Products/countpagesearchbycategory',Controller.countpagesearchbycategory);
         Router.get('/Products/findArrayProduct',Controller.findArrayProduct);
+        Router.get('/Products/countpagefindDetailsProduct',Controller.countpagefindDetailsProduct);
+        Router.get('/Products/findDetailsProduct/:page',Controller.findDetailsProduct);
         
         Router.post('/CheckProduct',Controller.CheckProduct);
         Router.post('/Product',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.create);

@@ -29,7 +29,8 @@ module.exports =class Product_Reviews {
             //console.log(select)
             if(!select)return Promise.reject({ messager: " Token not exists ! "  });
             //console.log(select.userId!=item.userId)
-            if(select.userId!=item.userId)return Promise.reject({ messager: " You have no right to create !"  });
+            if(select.AccountRights!='User')return Promise.reject({ messager: " You have no right to create !"  });
+            item.userId=select.userId
             //console.log(item)
             const rs = await Repository.create(item);
             //console.log(rs)
@@ -45,12 +46,18 @@ module.exports =class Product_Reviews {
         }
         
     }
-    checknotreallyProductReiview= async (item) => {
+    checknotreallyProductReiview= async (item,token) => {
         try {
             //console.log(item)
+            const select= await jwt.verify(token,process.env.ACCES_TOKENUSERID,(err,data)=>{
+                if(data)
+                return data;
+                return false;
+            });
+            if(!select)return Promise.reject({ messager: " Token not exists ! "  });
             if(Object.keys(item).length==0)
             return Promise.reject({ messager : "fail! not raelly any item",});
-            const rs = await Repository.findItem({productId:item.productId,userId:item.userId});
+            const rs = await Repository.findItem({productId:item.productId,userId:select.userId});
             //console.log(rs1)
             if (Object.keys(rs).length > 0) {
                 return Promise.reject({messager :"userId really exist therefore not create one new Product Reiview !"} );
@@ -74,7 +81,7 @@ module.exports =class Product_Reviews {
                 return Promise.reject({ messager: " Product_Reviews not exists ! "  });
             }
             if(select.userId!=findoneproductreview[0].userId)return Promise.reject({ messager: " You have no right to change !"  });
-            const rs = await Repository.update(id, item);
+            const rs = await Repository.update(id, {NumberStar:item.NumberStar});
             if (rs) {
                 return Promise.resolve({ messager: "Sucsess" });
             
@@ -100,9 +107,9 @@ module.exports =class Product_Reviews {
             if(select.userId!=findoneproductreview[0].userId)return Promise.reject({ messager: " You have no right to change !"  });
             const rs =await RepositoryImage_Reviews.create({id:v4(),productReviewsId:id,Image:images});
             if (rs) {
-                return Promise.resolve({ messager: "updateimagereview Sucsess" });
+                return Promise.resolve({ messager: "createimagereview Sucsess" });
             }
-            return Promise.reject({ messager: "updateimagereview Faild" });
+            return Promise.reject({ messager: "createimagereview Faild" });
     } catch (error) {
         return Promise.reject({ messager: error } );
     }

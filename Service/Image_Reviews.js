@@ -1,5 +1,7 @@
 const Image_ReviewsRepository=require('../Repository/Image_Reviews')
 const Repository = new Image_ReviewsRepository();
+const Product_ReviewsRepository=require('../Repository/Product_Reviews')
+const RepositoryProduct_Reviews = new Product_ReviewsRepository();
 const imageToBase64=require('image-to-base64')
 
 
@@ -17,6 +19,9 @@ module.exports =class Image_Reviews {
     }
      create = async (item) => {
         try {
+            const checkProductReview = await RepositoryProduct_Reviews.findOne(item.productReviewsId)
+            if(Object.keys(checkProductReview).length==0)
+            return Promise.reject({messager : "Create Faild  ProductReview not exits"});
             const rs = await Repository.create(item);
             if(rs) {
                 return Promise.resolve({
