@@ -9,6 +9,8 @@ module.exports= class Connect {
             charset: 'utf8',
             timezone: 'UTC',
         },
-        useNullAsDefault: true
+        useNullAsDefault: true,
+        pool: { min: 0, max: 10 }
+
     })
 }

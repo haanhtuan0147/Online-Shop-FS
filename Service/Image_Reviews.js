@@ -1,5 +1,8 @@
-const Image_Reviews=require('../Repository/Image_Reviews')
-const Repository = new Image_Reviews();
+const Image_ReviewsRepository=require('../Repository/Image_Reviews')
+const Repository = new Image_ReviewsRepository();
+const Product_ReviewsRepository=require('../Repository/Product_Reviews')
+const RepositoryProduct_Reviews = new Product_ReviewsRepository();
+const imageToBase64=require('image-to-base64')
 
 
 module.exports =class Image_Reviews {
@@ -7,23 +10,24 @@ module.exports =class Image_Reviews {
         try {
         const rs = await Repository.findAll();
         if (Object.keys(rs).length == 0) {
-            return Promise.reject({messager :"Not Found"} )
+            return Promise.resolve([]);
         }
-        return Promise.resolve({result : rs})
+        return Promise.resolve(rs);
     } catch (error) {
-        return Promise.reject({messager :error} )
+        return Promise.reject({messager :error} );
     }
     }
      create = async (item) => {
         try {
-            if(Object.keys(item).length==0)
-            return Promise.reject({ messager : "fail! create",});
+            const checkProductReview = await RepositoryProduct_Reviews.findOne(item.productReviewsId)
+            if(Object.keys(checkProductReview).length==0)
+            return Promise.reject({messager : "Create Faild  ProductReview not exits"});
             const rs = await Repository.create(item);
             if(rs) {
                 return Promise.resolve({
                 messager : "Sucsuess",
                 Item:item
-            })
+            });
             }
         return Promise.reject({messager : "Create Faild "});
         } catch (error) {
@@ -35,23 +39,23 @@ module.exports =class Image_Reviews {
         try{
         const rs = await Repository.update(id, item);
         if (rs) {
-            return Promise.resolve({ messager: "Sucsess" })
+            return Promise.resolve({ messager: "Sucsess" });
            
         }
-        return Promise.reject({ messager: "Update Faild" })
+        return Promise.reject({ messager: "Update Faild" });
     } catch (error) {
-        return Promise.reject({ messager: "Update Faild" } )
+        return Promise.reject({ messager: "Update Faild" } );
     }
     }
      delete = async (id) => {
          try{
-        const rs = await Repository.delete(id)
+        const rs = await Repository.delete(id);
         if (rs == 0) {
-            return Promise.reject({ messager: "Delete Faild" })
+            return Promise.reject({ messager: "Delete Faild" });
         }
-        return Promise.resolve({messager : "Sucsuess"})
+        return Promise.resolve({messager : "Sucsuess"});
     } catch (error) {
-        return Promise.reject({ messager: "Delete Faild" } )
+        return Promise.reject({ messager: "Delete Faild" } );
     }
     }
 
@@ -59,13 +63,11 @@ module.exports =class Image_Reviews {
         try {
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({ messager: " Image_Reviews not exists ! "  });
+                return Promise.resolve([]);
             }
-            if (rs) {
-                return Promise.resolve(rs)
-            }
+            return Promise.resolve(rs);
         } catch (error) {
-            return Promise.reject({ messager: " Image_Reviews not exists ! "  } )
+            return Promise.reject({ messager: " Image_Reviews not exists ! "  } );
         }
     }
 
@@ -74,15 +76,67 @@ module.exports =class Image_Reviews {
          try {
             const rs = await Repository.findItem(item);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({messager :"Not Found"} )
+                return Promise.resolve([]);
             }
-            return Promise.resolve({result : rs})
+            return Promise.resolve({result : rs});
              
          } catch (error) {
-            return Promise.reject({messager :"Not Found"})
+            return Promise.reject({messager :"Not Found"});
          }
 
     }
+    ConverJsonimagetobase64=async(items)=>{
+        var listimage=[];
+        for(var j=0;j<items.length;j++){
+            var it=JSON.parse(items[j].Image);
+            for(var i=0;i<it.length;i++)
+            await imageToBase64(process.env.Uploaps+it[i]) 
+                .then(
+                    (response) => {
+                    var mity=it[i].split('.');
+                      listimage.push(`data:image/${mity[1]};base64,`+response);
+                    }
+                )
+                .catch(
+                    (error) => {
+                    }
+                )
+        }
+        return listimage
+    }
+    findimagereview= async (id) => {
+        try {
+           const rs = await Repository.findItem({productReviewsId:id});
+           if (Object.keys(rs).length == 0) {
+            return Promise.resolve([]);
+        }
+           var listimage=await this.ConverJsonimagetobase64(rs);
+          if(listimage.length==0)
+          return Promise.resolve([]);
+          return Promise.resolve({ListImageReview:listimage});
+            
+        } catch (error) {
+           return Promise.reject({messager :"Not Found"});
+        }
+
+   }
+   findimagereviewProduct= async (listItem) => {
+    try {
+        //console.log(listItem)
+       const rs = await Repository.findimagereviewProduct(listItem);
+       if (Object.keys(rs).length == 0) {
+           return Promise.resolve([]);
+       }
+      var listimage= await this.ConverJsonimagetobase64(rs);
+      if(listimage.length==0)
+      return Promise.resolve([]);
+      return Promise.resolve({ListImageReview:listimage});
+        
+    } catch (error) {
+       return Promise.reject({messager :"Not Found"});
+    }
+
+   }
 
 
 

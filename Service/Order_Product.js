@@ -1,6 +1,9 @@
-const Order_Product=require('../Repository/Order_Product')
-const Repository = new Order_Product();
+const Order_ProductRepository=require('../Repository/Order_Product')
+const Repository = new Order_ProductRepository();
 const {v4}=require('uuid')
+const shoppingcartRepository=require('../Repository/Shopping_Cart')
+const Repositoryshoppingcart=new shoppingcartRepository()
+
 
 
 module.exports =class Order_Product {
@@ -8,17 +11,15 @@ module.exports =class Order_Product {
         try {
         const rs = await Repository.findAll();
         if (Object.keys(rs).length == 0) {
-            return Promise.reject({messager :"Not Found"} )
+            return Promise.resolve([])
         }
-        return Promise.resolve({result : rs})
+        return Promise.resolve(rs)
     } catch (error) {
         return Promise.reject({messager :error} )
     }
     }
      create = async (item) => {
         try {
-            if(Object.keys(item).length==0)
-            return Promise.reject({ messager : "fail! create",});
             const rs = await Repository.create(item);
             if(rs) {
                 return Promise.resolve({
@@ -42,13 +43,15 @@ module.exports =class Order_Product {
             })
             const rs = await Repository.create(arrayitem);
             if(rs) {
-                console.log(rs)
+                //console.log(rs)
                 return Promise.resolve({
                 messager : "Sucsuess",
                 Item:arrayitem
             })
             }
-        return Promise.reject({messager : "Create Faild "});
+            await Repositoryshoppingcart.delete(id);
+            await Repository.deleteAll({shoppingcartId:id});
+            return Promise.reject({messager : "Create Faild "});
         } catch (error) {
             return Promise.reject({messager : "Create Faild "});
         }
@@ -82,11 +85,9 @@ module.exports =class Order_Product {
         try {
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({ messager: " Order_Product not exists ! "  });
+                return Promise.resolve([])
             }
-            if (rs) {
-                return Promise.resolve(rs)
-            }
+            return Promise.resolve(rs)
         } catch (error) {
             return Promise.reject({ messager: " Order_Product not exists ! "  } )
         }
@@ -97,9 +98,9 @@ module.exports =class Order_Product {
          try {
             const rs = await Repository.findItem(item);
             if (Object.keys(rs).length == 0) {
-                return Promise.reject({messager :"Not Found"} )
+                return Promise.resolve([])
             }
-            return Promise.resolve({result : rs})
+            return Promise.resolve(rs)
              
          } catch (error) {
             return Promise.reject({messager :"Not Found"})

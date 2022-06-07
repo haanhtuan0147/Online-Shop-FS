@@ -8,28 +8,24 @@ const ControllerToken=new Token();
 const login=require('../Controllers/passport');
 const ControllerRegisterToken=require('../Controllers/Register_Token')
 const RegisterToken=new ControllerRegisterToken()
-const ControllerUploadimage=require('../Controllers/Uploadimage')
+//const ControllerUploadimage=require('../Controllers/Uploadimage')
 
 
 Router.use(express.json());
 Router.use(bodyParser.urlencoded({ extended: true }));
 
-        Router.get('/findAll',ControllerToken.RoleRoot,Controller.findAll);
-        Router.get('/findOne/:id',ControllerToken.RoleRoot,Controller.findOne);
-        Router.get('/findItem',ControllerToken.RoleRoot,Controller.findItem);
-        Router.get('/findUser',ControllerToken.RoleUser,Controller.findUser)
-        Router.get('/AvatarUser/:name',(req,res,next)=>{
-                res.sendFile(__basedir+`/Uploads/${req.params.name}`)
-            })
+        Router.get('/User',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.findAll);
+        Router.get('/User/:id',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.findOne);
+        Router.get('/findItem',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.findItem);
+        Router.get('/findUser',ControllerToken.RoleUser,ControllerToken.CheckToKenTime,Controller.findUser)
 
         Router.post('/RegisterToken',Controller.CheckEmail,RegisterToken.CreateRegisterToken);
         Router.post('/RegisterUser',RegisterToken.CheckNumberRegisterToken,Controller.createUser)
-        Router.post('/RegisterAdmin',ControllerToken.RoleRoot,RegisterToken.CheckNumberRegisterToken,Controller.createAdmin)
+        Router.post('/RegisterAdmin',ControllerToken.RoleRoot,ControllerToken.CheckToKenTime,RegisterToken.CheckNumberRegisterToken,Controller.createAdmin)
         Router.post('/Login',login.Authenticate,ControllerToken.CreateToken)
-        Router.post('/UploadAvatar',ControllerToken.RoleUser,ControllerUploadimage.UploadAvatar)
 
-        Router.put('/updateUser/:id',ControllerToken.RoleUser,Controller.updateUser);
+        Router.put('/User/:id',ControllerToken.RoleUser,ControllerToken.CheckToKenTime,Controller.updateUser);
         
-        //Router.delete('/delete/:id',ControllerToken.RoleRoot,Controller.deleteUser);
+        Router.delete('/User/:id',ControllerToken.RoleRoot,ControllerToken.CheckToKenTime,Controller.deleteUser);
 
 module.exports= Router;

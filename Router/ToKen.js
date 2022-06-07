@@ -8,11 +8,11 @@ const Controller = new ToKenController();
 Router.use(express.json());
 Router.use(bodyParser.urlencoded({ extended: true }));
 
-Router.get('/findAll', Controller.findAll);
-        Router.get('/findOne/:id', Controller.findOne);
+Router.get('/ToKen', Controller.findAll);
+        Router.get('/ToKen/:id', Controller.findOne);
         Router.get('/findItem', Controller.findItem);
 
-        Router.post('/create', Controller.create);
-        Router.put('/update/:id', Controller.update);
-        Router.delete('/delete/:id', Controller.delete);
+        Router.post('/ToKen', Controller.create);
+        Router.put('/ToKen/:id', Controller.update);
+        Router.delete('/ToKen/:id', Controller.delete);
 module.exports= Router;

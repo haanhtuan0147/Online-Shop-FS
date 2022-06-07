@@ -10,12 +10,12 @@ const ControllerToken=new Token();
 Router.use(express.json());
 Router.use(bodyParser.urlencoded({ extended: true }));
 
-        Router.get('/findAll', Controller.findAll);
-        Router.get('/findOne/:id', Controller.findOne);
+        Router.get('/Field', Controller.findAll);
+        Router.get('/Field/:id', Controller.findOne);
         Router.get('/findItem', Controller.findItem);
         Router.get('/findcategory/:id', Controller.findcategory);
 
-        Router.post('/create',ControllerToken.RoleAdmin,Controller.create);
-        Router.put('/update/:id',ControllerToken.RoleAdmin,Controller.update);
-        Router.delete('/delete/:id',ControllerToken.RoleAdmin,Controller.delete);
+        Router.post('/Field',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.create);
+        Router.put('/Field/:id',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.update);
+        Router.delete('/Field/:id',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.delete);
 module.exports= Router;
