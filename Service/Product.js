@@ -1,64 +1,33 @@
-const ProductRepository=require('../Repository/Product')
-const Repository = new ProductRepository();
-const imageToBase64=require('image-to-base64')
-const dotenv=require('dotenv');
-dotenv.config()
+const Product=require('../Repository/Product')
+const Repository = new Product();
+const Rcategory=require('../Repository/Product_Category')
+const Repositorycategory = new Rcategory();
+const serviceimage=require('../Service/Uploadimage')
+
 
 
 module.exports =class Product {
-    ConverJsonimagetobase64=async(item)=>{
-        var listimage=[] ;   
-        for(var i=0;i<item.length;i++)
-        {
-            
-           await imageToBase64(process.env.Uploaps+item[i]) 
-                .then(
-                    (response) => {
-                        var mity=item[i].split('.');
-                        listimage.push(`data:image/${mity[1]};base64,`+response);
-                    }
-                )
-                .catch(
-                    (error) => {
-                    }
-                )
-        }
-        return listimage;
-    }
-    findAll = async (page) => {
-        try {
-        if(!Number(page))
-        return Promise.reject({messager :"Not page is number"} );
-        const rs = await Repository.findAllpage(Number(page)-1);
-        if (Object.keys(rs).length == 0) {
-            return Promise.resolve([]);
-        }
-        for(var i=0;i<Object.keys(rs).length;i++)
-        rs[i].Image=await this.ConverJsonimagetobase64(JSON.parse(rs[i].Image));
-        return Promise.resolve(rs);
-    } catch (error) {
-        return Promise.reject({messager :error} );
-    }
-    }
-    countpagefindAll = async () => {
+    findAll = async () => {
         try {
         const rs = await Repository.findAll();
-        return Promise.resolve({page:Math.ceil((Object.keys(rs).length)/10)});
+        if (Object.keys(rs).length == 0) {
+            return Promise.reject({messager :"Not Found"} )
+        }
+        return Promise.resolve({result : rs})
     } catch (error) {
-        return Promise.reject({messager :error} );
+        return Promise.reject({messager :error} )
     }
     }
      create = async (item) => {
         try {
-            const checknameproduct = await Repository.findItem({ProductName:item.ProductName});
-            if(Object.keys(checknameproduct).length>0)
+            if(Object.keys(item).length==0)
             return Promise.reject({ messager : "fail! create",});
             const rs = await Repository.create(item);
             if(rs) {
                 return Promise.resolve({
                 messager : "Sucsuess",
                 Item:item
-            });
+            })
             }
         return Promise.reject({messager : "Create Faild "});
         } catch (error) {
@@ -68,47 +37,37 @@ module.exports =class Product {
     }
      update = async (id, item) => {
         try{
-        const checkidprduct = await Repository.findOne(id);
-        if(Object.keys(checkidprduct).length==0)
-        return Promise.reject({ messager : "fail! Not Product"});
-        const checknameproduct = await Repository.findItem({ProductName:item.ProductName});
-        if(Object.keys(checknameproduct).length>0)
-        return Promise.reject({ messager : "fail! Update exist Name Product"});
         const rs = await Repository.update(id, item);
         if (rs) {
-            return Promise.resolve({ messager: "Sucsess" });
+            return Promise.resolve({ messager: "Sucsess" })
+           
         }
-        return Promise.reject({ messager: "Update Faild" });
+        return Promise.reject({ messager: "Update Faild" })
     } catch (error) {
-        return Promise.reject({ messager: "Update Faild" } );
+        return Promise.reject({ messager: "Update Faild" } )
     }
     }
-    UpdateQuantity= async (item) => {
+    updateimage= async (id, item) => {
         try{
-            //console.log(item)
-            for(var i=0;i<item.length;i++){
-                const rs = await Repository.update(item[i].id,{Quantity:item[i].Quantity});
-                if (!rs) {
-                    return Promise.reject({ messager: "Update Faild" });
-                }
-            }
-            return Promise.resolve({ messager: "Sucsess" });
+        if(item.length==0)return Promise.reject({ messager: "updateimage Faild: not in image input?" })
+        const rs = await Repository.update(id, {Image:serviceimage.convertimage(item)});
+        if (rs) {
+            return Promise.resolve({ messager: "Sucsess" })
+        }
+        return Promise.reject({ messager: "updateimage Faild" })
     } catch (error) {
-        return Promise.reject({ messager: "Update Faild" } );
+        return Promise.reject({ messager: "updateimage 1 Faild" } )
     }
     }
      delete = async (id) => {
      try{
-        const rs1 = await Repository.findOne(id);
-        if(Object.keys(rs1).length==0)
-        return Promise.reject({ messager : "fail! Not Product"});
-        const rs = await Repository.update(id,{isDelete:1})
+        const rs = await Repository.delete(id)
         if (rs == 0) {
-            return Promise.reject({ messager: "Delete Faild" });
+            return Promise.reject({ messager: "Delete Faild" })
         }
-        return Promise.resolve({messager : "Sucsuess"});
+        return Promise.resolve({messager : "Sucsuess"})
     } catch (error) {
-        return Promise.reject({ messager: "Delete Faild" } );
+        return Promise.reject({ messager: "Delete Faild" } )
     }
     }
 
@@ -116,216 +75,111 @@ module.exports =class Product {
         try {
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
-                return Promise.resolve([]);
+                return Promise.reject({ messager: " Product not exists ! "  });
             }
-            rs[0].Image=await this.ConverJsonimagetobase64(JSON.parse(rs[0].Image));
-            return Promise.resolve(rs);
+            if (rs) {
+                return Promise.resolve(rs)
+            }
         } catch (error) {
             return Promise.reject({ messager: " Product not exists ! "  } )
         }
     }
 
 
-     findItem = async (item,page) => {
+     findItem = async (item) => {
          try {
-            if(!Number(page))
-            return Promise.reject({messager :"Not page is number"} );
-            const rs = await Repository.findItempage(item,Number(page)-1);
+            const rs = await Repository.findItem(item);
             if (Object.keys(rs).length == 0) {
-                return Promise.resolve([]);
+                return Promise.reject({messager :"Not Found"} )
             }
-            for(var i=0;i<Object.keys(rs).length;i++)
-            rs[i].Image=await this.ConverJsonimagetobase64(JSON.parse(rs[i].Image));
-            return Promise.resolve(rs);
+            return Promise.resolve({result : rs})
              
          } catch (error) {
-             //console.log(error)
-            return Promise.reject({messager :"Not Found"});
+            return Promise.reject({messager :"Not Found"})
          }
 
     }
-    countpagefindItem = async (item) => {
+    searchbyprice= async (price) => {
         try {
-           const rs = await Repository.findItem(item);
-           return Promise.resolve({page:Math.ceil((Object.keys(rs).length)/10)});
-            
-        } catch (error) {
-           return Promise.reject({messager :"Not Found"});
-        }
-
-   }
-    searchbyprice= async (price,page) => {
-        try {
-           if(!Number(page))
-           return Promise.reject({messager :"Not page is number"} );
-           const rs = await Repository.searchbypricepage(price,Number(page)-1,0);
+           const rs = await Repository.searchbyprice(price);
            if (Object.keys(rs).length == 0) {
-            return Promise.resolve([]);
+               return Promise.reject({messager :"Not Found searchbyprice"} )
            }
-           for(var i=0;i<Object.keys(rs).length;i++)
-           rs[i].Image=await this.ConverJsonimagetobase64(JSON.parse(rs[i].Image));
-           return Promise.resolve(rs);
+           return Promise.resolve({result :rs})
             
         } catch (error) {
-           return Promise.reject({messager :error});
+           return Promise.reject({messager :error})
         }
 
    }
-   countpagesearchbyprice= async (price) => {
+   searchbypriceBetween= async (sart,end) => {
     try {
-       const rs = await Repository.searchbyprice(price,0);
-       return Promise.resolve({page:Math.ceil((Object.keys(rs).length)/10)});
-        
-    } catch (error) {
-       return Promise.reject({messager :error});
-    }
-
-}
-   searchbypriceBetween= async (sart,end,page) => {
-    try {
-        if(!Number(page))
-        return Promise.reject({messager :"Not page is number"});
-       const rs = await Repository.searchbypriceBetweenpage(sart,end,Number(page)-1,0);
+       const rs = await Repository.searchbypriceBetween(sart,end);
        if (Object.keys(rs).length == 0) {
-        return Promise.resolve([]);
+           return Promise.reject({messager :"Not Found searchbypriceBetween"} )
        }
-       for(var i=0;i<Object.keys(rs).length;i++)
-       rs[i].Image=await this.ConverJsonimagetobase64(JSON.parse(rs[i].Image));
-       return Promise.resolve(rs);
+       return Promise.resolve({result : rs})
         
     } catch (error) {
-       return Promise.reject({messager :error});
+       return Promise.reject({messager :error})
     }
     }
-    countpagesearchbypriceBetween= async (sart,end) => {
+    searchbyname= async (name) => {
         try {
-           const rs = await Repository.searchbypriceBetween(sart,end,0);
-           return Promise.resolve({page:Math.ceil((Object.keys(rs).length)/10)});
-        } catch (error) {
-           return Promise.reject({messager :error});
-        }
-        }
-    searchbyname= async (name,page) => {
-        try {
-            //console.log(name)
-           if(!Number(page))
-           return Promise.reject({messager :"Not page is number"} );
-           const rs = await Repository.searchbynamepage(name,Number(page)-1,0);
+           const rs = await Repository.searchbyname(name);
            if (Object.keys(rs).length == 0) {
-            return Promise.resolve([]);
-        }
-           //console.log(rs)
-           for(var i=0;i<Object.keys(rs).length;i++)
-           rs[i].Image=await this.ConverJsonimagetobase64(JSON.parse(rs[i].Image));
-           //console.log(rs)
-           return Promise.resolve(rs);
+               return Promise.reject({messager :"Not Found searchbyname"} )
+           }
+           return Promise.resolve({result : rs})
+            
         } catch (error) {
-           return Promise.reject({messager :error});
+           return Promise.reject({messager :error})
         }
         }
-    countpagesearchbyname= async (name) => {
-            try {
-                //console.log(name)
-               const rs = await Repository.searchbyname(name,0);
-               return Promise.resolve({page:Math.ceil((Object.keys(rs).length)/10)});
-            } catch (error) {
-               return Promise.reject({messager :error});
-            }
-            }
-     searchbycategory= async (category,page) => {
+     searchbycategory= async (category) => {
         try {
-            if(!Number(page))
-            return Promise.reject({messager :"Not page is number"} );
             if(category.length==0)
-            return Promise.reject({messager :"Not Found searchbycategory"} );
+            return Promise.reject({messager :"Not Found searchbycategory"} )
             var scategory=""
             for(var i=0;i<category.length;i++)
             {
                 if(i==0)
-                scategory=`JSON_SEARCH(\`categoryId\`, 'one','${category[i]}') is not null`;
+                scategory=`JSON_SEARCH(\`categoryId\`, 'one','${category[i]}') is not null`
                 else
-                scategory=scategory+` or JSON_SEARCH(\`categoryId\`, 'one','${category[i]}') is not null`;
+                scategory=scategory+` or JSON_SEARCH(\`categoryId\`, 'one','${category[i]}') is not null`
             }
-           const rs = await Repository.searchbycategorypage(scategory,Number(page)-1,0);
+           const rs = await Repository.searchbycategory(scategory);
            if (Object.keys(rs).length == 0) {
-            return Promise.resolve([]);
+               return Promise.reject({messager :"Not Found searchbycategory"} )
            }
-           for(var i=0;i<Object.keys(rs).length;i++)
-           rs[i].Image=await this.ConverJsonimagetobase64(JSON.parse(rs[i].Image));
-           return Promise.resolve(rs);
+           return Promise.resolve({result : rs})
         } catch (error) {
-           return Promise.reject({messager :error});
+           return Promise.reject({messager :error})
         }
         }
-        countpagesearchbycategory= async (category) => {
-            try {
-                if(category.length==0)
-                return Promise.reject({messager :"Not Found searchbycategory"} );
-                var scategory="";
-                for(var i=0;i<category.length;i++)
-                {
-                    if(i==0)
-                    scategory=`JSON_SEARCH(\`categoryId\`, 'one','${category[i]}') is not null`;
-                    else
-                    scategory=scategory+` or JSON_SEARCH(\`categoryId\`, 'one','${category[i]}') is not null`;
-                }
-               const rs = await Repository.searchbycategory(scategory,0);
-               //console.log(rs)
-               return Promise.resolve({page:Math.ceil((Object.keys(rs).length)/10)});
-            } catch (error) {
-               return Promise.reject({messager :error});
-            }
-            }
-    CheckProduct=async(item)=>{
+        
+    searchbyfield= async (category) => {
         try {
-            for(var i=0;i<item.length;i++)
+            const rs1= await Repositorycategory.findItem({fieldId:category})
+            if(Object.keys(rs1).length==0)
+            return Promise.reject({messager :"Not Found searchbyfield"} )
+            var scategory=""
+            for(var i=0;i<Object.keys(rs1).length;i++)
             {
-                //console.log(item.length)
-                var rs= await Repository.findItem({id:item[i],isDelete:0});
-                //console.log(rs)
-                if(Object.keys(rs)==0)
-                return Promise.reject({messager :`item ${item[i]} not Exist`});
+                if(i==0)
+                scategory=`JSON_SEARCH(\`categoryId\`, 'one','${rs1[i].id}') is not null`
+                else
+                scategory=scategory+` or JSON_SEARCH(\`categoryId\`, 'one','${rs1[i].id}') is not null`
             }
-            return Promise.resolve({messager: "All item Exist"});
+           const rs = await Repository.searchbycategory(scategory);
+           if (Object.keys(rs).length == 0) {
+               return Promise.reject({messager :"Not Found searchbyfield"} )
+           }
+           return Promise.resolve({result : rs})
+            
         } catch (error) {
-            return Promise.reject({messager: "not item Exist"});
+           return Promise.reject({messager :"Not Found error"})
+        }
         }
 
-    }
-    findArrayProduct=async(array)=>{
-        try {
-            const rs= await Repository.findArrayProduct(array,0);
-            //console.log(rs)
-            if(Object.keys(rs)==0)
-            return Promise.resolve([]);
-            return Promise.resolve(rs);
-        } catch (error) {
-            return Promise.reject({messager: "not find item array "});
-        }
-    }
-    findDetailsProduct=async(page,item)=>{
-        try {
-            if(!Number(page))
-            return Promise.reject({messager :"Not page is number"} );
-            const rs= await Repository.findDetailsProduct(item.field,item.content,0,page);
-            //console.log(rs)
-            if(Object.keys(rs)==0)
-            return Promise.resolve([]);
-            for(var i=0;i<Object.keys(rs).length;i++)
-            rs[i].Image=await this.ConverJsonimagetobase64(JSON.parse(rs[i].Image));
-            return Promise.resolve(rs);
-        } catch (error) {
-            return Promise.reject({messager: "not find item array "});
-        }
-    }
-    countpagefindDetailsProduct=async(item)=>{
-        try {
-            const rs= await Repository.findDetailsProduct(item.field,item.content,0);
-            return Promise.resolve({page:Math.ceil((Object.keys(rs).length)/10)});
-        } catch (error) {
-            //console.log("vào đây")
-            console.log(error)
-            return Promise.reject({messager: "not find item array "});
-        }
-    }
 }

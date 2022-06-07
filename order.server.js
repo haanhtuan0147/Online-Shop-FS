@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
 const dotenv = require('dotenv')
-
 dotenv.config();
 global.__basedir = __dirname;
 const routershopingcart=require('./Router/Shopping_Cart')
@@ -31,6 +30,7 @@ class order{
             .use(passport.session())
             .use(bodyParser.urlencoded({extended:true}))
             .use(bodyParser.json())
+
     }
     start(){
         this.app.listen(this.PORT, () => {

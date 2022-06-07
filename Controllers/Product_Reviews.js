@@ -9,38 +9,32 @@ module.exports=class Product_Reviews {
 
         service.findAll()
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 }
 
      create =  (req, res, next) => {
         const item = req.body;
-        item.id = v4();
-        const author = req.headers['authorization'];
-        const token = author?.split(" ")[1];
-        service.create(item,token)
+        item.Id = v4();
+        service.create(item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
     createimagereview=  (req, res, next) => {
         const id = req.params.id;
-        const image=req.body.Image
-        const author = req.headers['authorization'];
-        const token = author?.split(" ")[1];
-        service.createimagereview(id,image,token)
+        const image=req.files
+        service.createimagereview(id,image)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
     checknotreallyProductReiview= (req, res, next) => {
         const item = req.body;
-        const author = req.headers['authorization'];
-        const token = author?.split(" ")[1];
-        service.checknotreallyProductReiview(item,token)
+        service.checknotreallyProductReiview(item)
         .then(result => {
             next()
         })
@@ -50,11 +44,9 @@ module.exports=class Product_Reviews {
      update =  (req, res, next) => {
         const item = req.body;
         const id = req.params.id;
-        const author = req.headers['authorization'];
-        const token = author?.split(" ")[1];
-        service.update(id, item,token)
+        service.update(id, item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
@@ -63,7 +55,7 @@ module.exports=class Product_Reviews {
         const id = req.params.id;
         service.findOne(id)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
@@ -71,34 +63,26 @@ module.exports=class Product_Reviews {
         const item = req.body;
         service.findItem(item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
     }
+    findimagereview=  (req, res, next) => {
+        const id = req.params.id;
+        service.findimagereview(id)
+        .then(result => {
+            baseController.sendResponse(result, req, res);
+        })
+        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+
+    }
+
     delete = (req, res, next) => {
         const id = req.params.id;
         service.delete(id)
             .then(result => {
-                baseController.sendResponse(result, req, res.status(200));
-            })
-            .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
-
-    }
-    findAVGNumberStarProductTop10 = (req, res, next) => {
-        service.findAVGNumberStarProductTop10()
-            .then(result => {
-                baseController.sendResponse(result, req, res.status(200));
-            })
-            .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
-
-    }
-    findAVGNumberStarProduct= (req, res, next) => {
-        const id=req.params.id
-        console.log(id)
-        service.findAVGNumberStarProduct(id)
-            .then(result => {
-                baseController.sendResponse(result, req, res.status(200));
+                baseController.sendResponse(result, req, res);
             })
             .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 

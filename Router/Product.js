@@ -5,29 +5,26 @@ const ProductController=require('../Controllers/Product');
 const Controller = new ProductController();
 const Token=require('../Controllers/ToKen');
 const ControllerToken=new Token();
+const ControllerUploadimage=require('../Controllers/Uploadimage');
+
 Router.use(express.json());
 Router.use(bodyParser.urlencoded({ extended: true }));
 
-        Router.get('/Product', Controller.findAll);
-        Router.get('/pagecountProduct', Controller.pagecountfindAll);
-        Router.get('/Product/:id', Controller.findOne);
-        Router.get('/findItem/:page', Controller.findItem);
-        Router.get('/countpagefindItem', Controller.countpagefindItem);
-        Router.get('/Products/searchbyprice/:page', Controller.searchbyprice);
-        Router.get('/Products/countpagesearchbyprice', Controller.countpagesearchbyprice);
-        Router.get('/Products/searchbypriceBetween/:page', Controller.searchbypriceBetween);
-        Router.get('/Products/countpagesearchbypriceBetween', Controller.countpagesearchbypriceBetween);
-        Router.get('/Products/searchbyname/:page', Controller.searchbyname);
-        Router.get('/Products/countpagesearchbyname',Controller.countpagesearchbyname);
-        Router.get('/Products/searchbycategory/:page', Controller.searchbycategory);
-        Router.get('/Products/countpagesearchbycategory',Controller.countpagesearchbycategory);
-        Router.get('/Products/findArrayProduct',Controller.findArrayProduct);
-        Router.get('/Products/countpagefindDetailsProduct',Controller.countpagefindDetailsProduct);
-        Router.get('/Products/findDetailsProduct/:page',Controller.findDetailsProduct);
-        
-        Router.post('/CheckProduct',Controller.CheckProduct);
-        Router.post('/Product',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.create);
-        Router.put('/Product/:id',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.update);
-        Router.put('/UpdateQuantityArrayProduct',ControllerToken.RoleUser,ControllerToken.CheckToKenTime,Controller.UpdateQuantity);
-        Router.delete('/delete/:id',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.delete);
+Router.get('/findAll', Controller.findAll);
+        Router.get('/findOne/:id', Controller.findOne);
+        Router.get('/findItem', Controller.findItem);
+        Router.get('/searchbyprice/:price', Controller.searchbyprice);
+        Router.get('/searchbypriceBetween', Controller.searchbypriceBetween);
+        Router.get('/searchbyname/:name', Controller.searchbyname);
+        Router.get('/searchbycategory', Controller.searchbycategory);
+        Router.get('/searchbyfield/:category', Controller.searchbyfield);
+        Router.get('/image/:name',(req,res,next)=>{
+                res.sendFile(__basedir+`/Uploads/${req.params.name}`)
+            });
+
+
+        Router.post('/create',ControllerToken.RoleAdmin,Controller.create);
+        Router.put('/uploadimage/:id',ControllerToken.RoleAdmin,ControllerUploadimage.UploadArray,Controller.updateimage);
+        Router.put('/update/:id',ControllerToken.RoleAdmin,Controller.update);
+        //Router.delete('/delete/:id',ControllerToken.RoleAdmin, Controller.delete);
 module.exports= Router;

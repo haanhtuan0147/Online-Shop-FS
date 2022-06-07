@@ -9,7 +9,7 @@ module.exports=class Order_Product {
 
         service.findAll()
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 }
@@ -19,7 +19,7 @@ module.exports=class Order_Product {
         item.Id = v4();
         service.create(item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
@@ -29,7 +29,7 @@ module.exports=class Order_Product {
         const id = req.params.id;
         service.update(id, item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
@@ -38,7 +38,7 @@ module.exports=class Order_Product {
         const id = req.params.id;
         service.findOne(id)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
@@ -46,7 +46,7 @@ module.exports=class Order_Product {
         const item = req.body;
         service.findItem(item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
@@ -56,7 +56,7 @@ module.exports=class Order_Product {
         const id = req.params.id;
         service.delete(id)
             .then(result => {
-                baseController.sendResponse(result, req, res.status(200));
+                baseController.sendResponse(result, req, res);
             })
             .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 

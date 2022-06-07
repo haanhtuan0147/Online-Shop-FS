@@ -17,8 +17,7 @@ const {v4} = require('uuid');
              PhoneNumber:"0358970771",
              Identitycard:"068200009380",
              Address:"70/5/13 Quang Trung Tổ 11 Thị Trấn Liên Nghĩa Huyện Đức Trọng Tỉnh Lâm Đồng",
-             AccountRights:"Root",
-             Avatar:"1653388616406-306847562-ei.png"
+             AccountRights:"Root"
          },
          {
             id:v4(),
@@ -28,8 +27,7 @@ const {v4} = require('uuid');
             PhoneNumber:"0358970771",
             Identitycard:"068200009380",
             Address:"70/5/13 Quang Trung Tổ 11 Thị Trấn Liên Nghĩa Huyện Đức Trọng Tỉnh Lâm Đồng",
-            AccountRights:"Admin",
-            Avatar:"1653388616406-306847562-ei.png"
+            AccountRights:"Admin"
         },
         {
             id:user1,
@@ -39,9 +37,7 @@ const {v4} = require('uuid');
             PhoneNumber:"0358970771",
             Identitycard:"068200009380",
             Address:"70/5/13 Quang Trung Tổ 11 Thị Trấn Liên Nghĩa Huyện Đức Trọng Tỉnh Lâm Đồng",
-            AccountRights:"User",
-            Avatar:"1653388616406-306847562-ei.png"
-
+            AccountRights:"User"
         },
         {
             id:user2,
@@ -51,9 +47,7 @@ const {v4} = require('uuid');
             PhoneNumber:"0358970771",
             Identitycard:"068200009380",
             Address:"70/5/13 Quang Trung Tổ 11 Thị Trấn Liên Nghĩa Huyện Đức Trọng Tỉnh Lâm Đồng",
-            AccountRights:"User",
-            Avatar:"1653388616406-306847562-ei.png"
-
+            AccountRights:"User"
         },
         {
             id:user3,
@@ -63,9 +57,7 @@ const {v4} = require('uuid');
             PhoneNumber:"0358970771",
             Identitycard:"068200009380",
             Address:"70/5/13 Quang Trung Tổ 11 Thị Trấn Liên Nghĩa Huyện Đức Trọng Tỉnh Lâm Đồng",
-            AccountRights:"User",
-            Avatar:"1653388616406-306847562-ei.png"
-
+            AccountRights:"User"
         }
      ])
      var Field1=v4()
@@ -128,7 +120,7 @@ const {v4} = require('uuid');
             id:Product[0],
             ProductName:"Apple MacBook Air M1 2020 - 13 Inchs (8GB / 16GB - 256GB / 512GB) - Hàng Chính Hãng",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["1653388616406-306847562-ei.png"]',
+            Image:'["Image01.png","Image02.png"]',
             Money:10000,
             categoryId:`["${category3}"]`,
             DetailsProduct:`{"Cpu":"i3-9100F","Ram":"8GB","Hard Drive":"256GB SSD"}`
@@ -137,7 +129,7 @@ const {v4} = require('uuid');
             id:Product[1],
             ProductName:"Apple MacBook Pro M1 PRO 2021 - 16 Inchs (M1 PRO - 16GB / 32GB - 512GB / 1TB) - Hàng Chính Hãng",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["1653388616406-306847562-ei.png"]',
+            Image:'["Image01.png","Image02.png"]',
             Money:15000,
             categoryId:`["${category3}"]`,
             DetailsProduct:`{"Cpu":"i3-9100F","Ram":"8GB","Hard Drive":"256GB SSD"}`
@@ -146,7 +138,7 @@ const {v4} = require('uuid');
             id:Product[2],
             ProductName:"Apple MacBook Pro M1 PRO 2021 - 16 Inchs (M1 PRO - 16GB / 32GB - 512GB / 1TB) - Hàng Chính Hãng",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["1653388616406-306847562-ei.png"]',
+            Image:'["Image01.png","Image02.png"]',
             Money:20000,
             categoryId:`["${category3}"]`,
             DetailsProduct:`{"Cpu":"i3-9101F","Ram":"16GB","Hard Drive":"200GB SSD"}`
@@ -155,7 +147,7 @@ const {v4} = require('uuid');
             id:Product[3],
             ProductName:"USB Wi-Fi chuẩn N tốc độ 300Mbps N300UM-TG - Hàng chính hãng",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["1653388616406-306847562-ei.png"]',
+            Image:'["Image01.png","Image02.png"]',
             Money:10000,
             categoryId:`["${category1}"]`,
             DetailsProduct:`{"Model":"N300UM"}`
@@ -164,7 +156,7 @@ const {v4} = require('uuid');
             id:Product[4],
             ProductName:"USB Wi-Fi chuẩn N tốc độ 300Mbps N300UM-TG - Hàng chính hãng",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["1653388616406-306847562-ei.png"]',
+            Image:'["Image01.png","Image02.png"]',
             Money:15000,
             categoryId:`["${category1}"]`,
             DetailsProduct:`{"Model":"N300UM"}`
@@ -173,7 +165,7 @@ const {v4} = require('uuid');
             id:Product[5],
             ProductName:"Bộ Phát Wifi TP-Link Archer C54 Băng Tần Kép Chuẩn AC1200 - Hàng Chính Hãng",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["1653388616406-306847562-ei.png"]',
+            Image:'["Image01.png","Image02.png"]',
             Money:20000,
             categoryId:`["${category1}"]`,
             DetailsProduct:`{"Model":"Archer C54"}`
@@ -182,7 +174,7 @@ const {v4} = require('uuid');
             id:Product[6],
             ProductName:"RAM PC DDR3L Samsung 4GB Bus 1600 – Hàng Nhập Khẩu",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["1653388616406-306847562-ei.png"]',
+            Image:'["Image01.png","Image02.png"]',
             Money:10000,
             categoryId:`["${category2}"]`,
             DetailsProduct:`{"RAM":"4GB"}`
@@ -191,7 +183,7 @@ const {v4} = require('uuid');
             id:Product[7],
             ProductName:"RAM PC DDR3L Samsung 8GB Bus 1600 – Hàng Nhập Khẩu",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["1653388616406-306847562-ei.png"]',
+            Image:'["Image01.png","Image02.png"]',
             Money:15000,
             categoryId:`["${category2}"]`,
             DetailsProduct:`{"RAM":"8GB"}`
@@ -200,7 +192,7 @@ const {v4} = require('uuid');
             id:Product[8],
             ProductName:"Bộ Phát Wifi TP-Link Archer C54 Băng Tần Kép Chuẩn AC1200 - Hàng Chính Hãng",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["1653388616406-306847562-ei.png"]',
+            Image:'["Image01.png","Image02.png"]',
             Money:20000,
             categoryId:`["${category2}"]`,
             DetailsProduct:`{"RAM":"16GB"}`
@@ -209,7 +201,7 @@ const {v4} = require('uuid');
             id:Product[9],
             ProductName:"Yêu Thầm Tập 1",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["1653388616406-306847562-ei.png"]',
+            Image:'["Image01.png","Image02.png"]',
             Money:10000,
             categoryId:`["${category4}","${category5}"]`,
             DetailsProduct:`{"Page":"260"}`
@@ -218,7 +210,7 @@ const {v4} = require('uuid');
             id:Product[10],
             ProductName:"Death Note Short Stories (Tặng Kèm Postcard Gập Cho 100% Phiên Bản Việt Nam)",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["1653388616406-306847562-ei.png"]',
+            Image:'["Image01.png","Image02.png"]',
             Money:10000,
             categoryId:`["${category4}","${category5}","${category6}"]`,
             DetailsProduct:`{"Page":"260"}`
@@ -227,7 +219,7 @@ const {v4} = require('uuid');
             id:Product[11],
             ProductName:"Chú Thuật Hồi Chiến Tập 1",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["1653388616406-306847562-ei.png"]',
+            Image:'["Image01.png","Image02.png"]',
             Money:10000,
             categoryId:`["${category5}","${category6}"]`,
             DetailsProduct:`{"Page":"270"}`
@@ -236,7 +228,7 @@ const {v4} = require('uuid');
             id:Product[12],
             ProductName:"Thám tử lừng danh Conan Tập 99",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["1653388616406-306847562-ei.png"]',
+            Image:'["Image01.png","Image02.png"]',
             Money:15000,
             categoryId:`["${category4}","${category5}"]`,
             DetailsProduct:`{"Page":"260"}`
@@ -245,7 +237,7 @@ const {v4} = require('uuid');
             id:Product[13],
             ProductName:"Thám tử lừng danh Conan Tập 1",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["1653388616406-306847562-ei.png"]',
+            Image:'["Image01.png","Image02.png"]',
             Money:15000,
             categoryId:`["${category4}","${category5}","${category6}"]`,
             DetailsProduct:`{"Page":"260"}`
@@ -254,7 +246,7 @@ const {v4} = require('uuid');
             id:Product[14],
             ProductName:"Thám tử lừng danh Conan Tập 2",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["1653388616406-306847562-ei.png"]',
+            Image:'["Image01.png","Image02.png"]',
             Money:15000,
             categoryId:`["${category5}","${category6}"]`,
             DetailsProduct:`{"Page":"270"}`
@@ -263,7 +255,7 @@ const {v4} = require('uuid');
             id:Product[15],
             ProductName:"Thám tử lừng danh Conan Tập 3",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["1653388616406-306847562-ei.png"]',
+            Image:'["Image01.png","Image02.png"]',
             Money:20000,
             categoryId:`["${category4}","${category5}"]`,
             DetailsProduct:`{"Page":"260"}`
@@ -272,7 +264,7 @@ const {v4} = require('uuid');
             id:Product[16],
             ProductName:"Thám tử lừng danh Conan Tập 4",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["1653388616406-306847562-ei.png"]',
+            Image:'["Image01.png","Image02.png"]',
             Money:20000,
             categoryId:`["${category4}","${category5}","${category6}"]`,
             DetailsProduct:`{"Page":"260"}`
@@ -281,7 +273,7 @@ const {v4} = require('uuid');
             id:Product[17],
             ProductName:"Thám tử lừng danh Conan Tập 5",
             DescribeProduct:"MacBook Air là máy tính xách tay mỏng và nhẹ nhất của Apple – nay thay đổi ngoạn mục với chip Apple M1 mạnh mẽ.\n Tạo ra một cú nhảy vọt về hiệu năng CPU và đồ họa, cùng thời lượng pin lên đến 18 giờ. (1)",
-            Image:'["1653388616406-306847562-ei.png"]',
+            Image:'["Image01.png","Image02.png"]',
             Money:20000,
             categoryId:`["${category5}","${category6}"]`,
             DetailsProduct:`{"Page":"270"}`
@@ -372,189 +364,162 @@ const {v4} = require('uuid');
             id:v4(),
             shoppingcartId:Shopping_Cart[0],
             productId:Product[0],
-            Money:10000,
             numberProduct:5
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[0],
             productId:Product[1],
-            Money:15000,
             numberProduct:6
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[0],
             productId:Product[2],
-            Money:20000,
             numberProduct:7
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[1],
             productId:Product[3],
-            Money:10000,
             numberProduct:8
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[1],
             productId:Product[4],
-            Money:15000,
             numberProduct:9
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[1],
             productId:Product[5],
-            Money:20000,
             numberProduct:10
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[2],
             productId:Product[6],
-            Money:10000,
             numberProduct:11
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[2],
             productId:Product[7],
-            Money:15000,
             numberProduct:12
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[2],
             productId:Product[8],
-            Money:20000,
             numberProduct:12
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[3],
             productId:Product[9],
-            Money:10000,
             numberProduct:14
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[3],
             productId:Product[10],
-            Money:10000,
             numberProduct:15
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[3],
             productId:Product[11],
-            Money:10000,
             numberProduct:16
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[4],
             productId:Product[12],
-            Money:15000,
             numberProduct:17
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[4],
             productId:Product[13],
-            Money:15000,
             numberProduct:18
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[4],
             productId:Product[14],
-            Money:15000,
             numberProduct:19
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[5],
             productId:Product[15],
-            Money:20000,
             numberProduct:20
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[5],
             productId:Product[16],
-            Money:20000,
             numberProduct:21
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[5],
             productId:Product[17],
-            Money:20000,
             numberProduct:22
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[6],
             productId:Product[0],
-            Money:10000,
             numberProduct:23
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[6],
             productId:Product[1],
-            Money:15000,
             numberProduct:24
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[6],
             productId:Product[2],
-            Money:20000,
             numberProduct:25
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[7],
             productId:Product[3],
-            Money:10000,
             numberProduct:26
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[7],
             productId:Product[4],
-            Money:15000,
             numberProduct:27
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[7],
             productId:Product[5],
-            Money:20000,
             numberProduct:28
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[8],
             productId:Product[6],
-            Money:10000,
             numberProduct:29
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[8],
             productId:Product[7],
-            Money:15000,
             numberProduct:30
         },
         {
             id:v4(),
             shoppingcartId:Shopping_Cart[8],
             productId:Product[8],
-            Money:20000,
             numberProduct:31
         },
 
@@ -587,17 +552,17 @@ const {v4} = require('uuid');
         {
             id:v4(),
             productReviewsId:Product_Reviews[0].id,
-            Image:'["1653388616406-306847562-ei.png"]'
+            Image:'["ImageReviews01.png","ImageReviews02.png"]'
         },
         {
             id:v4(),
             productReviewsId:Product_Reviews[1].id,
-            Image:'["1653388616406-306847562-ei.png"]'
+            Image:'["ImageReviews01.png","ImageReviews02.png"]'
         },
         {
             id:v4(),
             productReviewsId:Product_Reviews[2].id,
-            Image:'["1653388616406-306847562-ei.png"]'
+            Image:'["ImageReviews01.png","ImageReviews02.png"]'
         }
     ])
  }

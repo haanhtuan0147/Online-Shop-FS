@@ -1,4 +1,3 @@
-
 module.exports = {
   client: "mysql",
   connection: {
@@ -15,4 +14,4 @@ module.exports = {
     file: __dirname + '/seeds'
   },
   useNullAsDefault: true
-};
+}

@@ -1,17 +1,19 @@
 
 const util = require("util");
 const multer = require("multer");
-const dotenv=require("dotenv")
-dotenv.config()
-const imageToBase64 = require('image-to-base64');
-const maxSize = 20 * 1024 * 1024;
+const maxSize = 2 * 1024 * 1024;
+const User=require('../Repository/User')
+const RepositoryUser=new User()
+const token=require('../Repository/ToKen')
+const RepositoryToken=new token()
+
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, __basedir + "/uploads/");
   },
   filename: (req, file, cb) => {
-    const filename = Date.now() + '-' + Math.round(Math.random() * 1E9);
-      cb(null, filename + '-' + file.originalname );
+    const filename = Date.now() + '-' + Math.round(Math.random() * 1E9) 
+      cb(null, filename + '-' + file.originalname )
   },
 });
 let uploadFile = multer({
@@ -37,7 +39,7 @@ let UploadArray = multer({
     }
     cb(null, true);
 },
-limits: { fileSize: maxSize },
+  limits: { fileSize: maxSize },
 }).array("photos",10);
 let UploadArrayMiddleware= util.promisify(UploadArray);
 exports.UploadArrayMiddleware= UploadArrayMiddleware;
@@ -48,7 +50,22 @@ const upload = async (req, res) => {
       if (req.file == undefined) {
         return Promise.reject({ message: "Please upload a file!" });
       }
-      return Promise.resolve({result:req.file.filename});
+      const author = req.headers['authorization'];
+      const token = author?.split(" ")[1];
+      const rs = await RepositoryToken.findItem({Token:token});
+      if (Object.keys(rs).length == 0) {
+        return Promise.reject({messager :"Not Found"} )
+      }
+      const rs2 = await RepositoryUser.findItem({id:rs[0].userId});
+      if (Object.keys(rs2).length == 0) {
+        return Promise.reject({messager :"Not Found"} )
+      }
+      const rs3 =await RepositoryUser.update(rs[0].userId,{Avatar:req.file.filename})
+      if (rs3) {
+        return Promise.resolve({ messager: "Sucsess" })
+       }
+       return Promise.reject({ message: "Please upload a file!" });
+
     } catch (err) {
       return Promise.reject({
         message: `Could not upload the file: ${req.file.originalname}. ${err}`,
@@ -58,13 +75,11 @@ const upload = async (req, res) => {
 exports.UploadAvatar = upload;
 const UploadVi = async (req, res) => {
   try {
-    //console.log(">>>>>>>>> vào đây",req)
     await UploadArrayMiddleware(req, res);
     if (req.files == undefined) {
       return Promise.reject({ message: "Please upload a file!" });
     }
-    var image= await convertimage(req.files);
-    return Promise.resolve({result: image})
+    return Promise.resolve()
   } catch (err) {
     return Promise.reject({
       message: `Could not upload the file: ${req.file.originalname}. ${err}`,
@@ -81,11 +96,19 @@ exports.UploadArray = UploadVi;
     }
 
 }*/
-convertimage= async(images)=>{
+exports.convertimage=(images)=>{
   var image=[]
   for(var i=0;i<images.length;i++)
   {
-    image.push(images[i].filename);
+      image.push(images[i].filename)
+      /*if(i==0)
+      image=`[\"${images[i].filename}\"`
+      else if(i==images.length-1)
+      image=image+`,\"${images[i].filename}\"]`
+      else
+      image=image+`,\"${images[i].filename}\"`
+      console.log(image)*/
   }
-  return JSON.stringify(image);
+  //console.log(JSON.stringify(image))
+  return JSON.stringify(image)
 }
