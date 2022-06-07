@@ -9,7 +9,7 @@ module.exports=class Product_Category {
 
         service.findAll()
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 }
@@ -19,7 +19,7 @@ module.exports=class Product_Category {
         item.Id = v4();
         service.create(item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
@@ -29,7 +29,7 @@ module.exports=class Product_Category {
         const id = req.params.id;
         service.update(id, item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
@@ -38,7 +38,7 @@ module.exports=class Product_Category {
         const id = req.params.id;
         service.findOne(id)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
@@ -46,25 +46,17 @@ module.exports=class Product_Category {
         const item = req.body;
         service.findItem(item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
     }
-    checkArrayCategory=  (req, res, next) => {
-        const item = req.body.category;
-        service.checkArrayCategory(item)
-        .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
-        })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
-    }
     delete = (req, res, next) => {
         const id = req.params.id;
         service.delete(id)
             .then(result => {
-                baseController.sendResponse(result, req, res.status(200));
+                baseController.sendResponse(result, req, res);
             })
             .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 

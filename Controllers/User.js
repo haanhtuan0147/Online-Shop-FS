@@ -6,33 +6,27 @@ const service = new Service();
 module.exports=class User {
 
     findAll = (req, res, next) => {
-        const author = req.headers['authorization'];
-        const token = author?.split(" ")[1];
-        service.findAll(token)
+
+        service.findAll()
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 }
 
     findOne =  (req, res, next) => {
         const id = req.params.id;
-        const author = req.headers['authorization'];
-        const token = author?.split(" ")[1];
-        service.findOne(id,token)
+        service.findOne(id)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
     findItem =  (req, res, next) => {
         const item = req.body;
-        const author = req.headers['authorization'];
-        const token = author?.split(" ")[1];
-        console.log(item)
-        service.findItem(item,token)
+        service.findItem(item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
@@ -42,7 +36,7 @@ module.exports=class User {
         const token = author?.split(" ")[1];
         service.findUser(token)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
@@ -54,7 +48,7 @@ module.exports=class User {
         delete item.numberCheck
         service.create(item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500));});
     }
@@ -65,7 +59,7 @@ module.exports=class User {
         delete item.numberCheck
         service.create(item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500));});
     }
@@ -76,7 +70,7 @@ module.exports=class User {
         const token = author?.split(" ")[1];
         service.updateAccountRights(id,item,token)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500));});
     }
@@ -84,7 +78,7 @@ module.exports=class User {
         const id = req.params.id;
         service.deleteUser(id)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500));});
     }

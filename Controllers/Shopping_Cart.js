@@ -8,40 +8,37 @@ const Order_Product = new ServiceOrder_Product();
 module.exports=class Shopping_Cart {
 
     findAll = (req, res, next) => {
-        const author = req.headers['authorization'];
-        const token = author?.split(" ")[1];
-        service.findAll(token)
+
+        service.findAll()
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
-    }
+}
 
      create =  (req, res, next) => {
         const item = req.body;
         const date=new Date()
-        const author = req.headers['authorization'];
-        const token = author?.split(" ")[1];
         item.ShoppingCart.id = v4();
         item.ShoppingCart.Status="Wait"
-        item.ShoppingCart.IntendTime=new Date(date.getTime()+(1000*60*60*7)+(1000*60*60*24*7))
-        service.create(item.ShoppingCart,token)
+        item.ShoppingCart.IntendTime=new Date(date.getTime()+(1000*60*60*24*7))
+        service.create(item.ShoppingCart)
         .then(result => {
-            Order_Product.createarray(item.ShoppingCart.id,item.item).then(re=>{baseController.sendResponse({ShoppingCart:result,OrderProduct:re}, req, res.status(200));}).catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+            Order_Product.createarray(item.ShoppingCart.id,item.item).then(re=>{baseController.sendResponse({ShoppingCart:result,OrderProduct:re}, req, res);}).catch(err => { baseController.sendResponse(err, req, res.status(500)); });
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
     Cancel=(req, res, next) => {
-        service.Cancel(req, res, next,baseController)
+            service.Cancel(req, res, next,baseController)
     }
-    ConfirmTransportSuccess= (req, res, next) => {
+    Confirm_Transport_Success= (req, res, next) => {
         const item = req.body;
         const author = req.headers['authorization'];
         const token = author?.split(" ")[1];
         const id = req.params.id;
-        service.ConfirmTransportSuccess(id,item,token)
+        service.Confirm_Transport_Success(id,item,token)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
@@ -51,70 +48,52 @@ module.exports=class Shopping_Cart {
         const id = req.params.id;
         service.update(id, item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
 
     findOne =  (req, res, next) => {
         const id = req.params.id;
-        const author = req.headers['authorization'];
-        const token = author?.split(" ")[1];
-        service.findOne(id,token)
+        service.findOne(id)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
     }
     findItem =  (req, res, next) => {
         const item = req.body;
-        const author = req.headers['authorization'];
-        const token = author?.split(" ")[1];
-        service.findItem(item,token)
+        service.findItem(item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
     }
-    findShoppingcarttotalmoney =  (req, res, next) => {
+    findShoppingcart_totalmoney =  (req, res, next) => {
         const item = req.body;
-        const author = req.headers['authorization'];
-        const token = author?.split(" ")[1];
-        service.findShoppingcarttotalmoney(item,token)
+        service.findShoppingcart_totalmoney(item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
     }
-    findShoppingcarttotalmoneydetail=(req, res, next) => {
+    findShoppingcart_totalmoney_detail=(req, res, next) => {
         const id = req.params.id;
-        const author = req.headers['authorization'];
-        const token = author?.split(" ")[1];
-        service.findShoppingcarttotalmoneydetail(id,token)
+        service.findShoppingcart_totalmoney_detail(id)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
         .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
     }
-    customerreliability=(req, res, next) => {
-        const id = req.params.userId;
-        const author = req.headers['authorization'];
-        const token = author?.split(" ")[1];
-        service.customerreliability(id,token)
-        .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
-        })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 
-    }
     delete = (req, res, next) => {
         const id = req.params.id;
         service.delete(id)
             .then(result => {
-                baseController.sendResponse(result, req, res.status(200));
+                baseController.sendResponse(result, req, res);
             })
             .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
 

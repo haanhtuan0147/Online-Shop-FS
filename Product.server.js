@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
 const dotenv = require('dotenv')
-const cors=require('cors')
 dotenv.config();
 global.__basedir = __dirname;
 const routerProduct =require('./Router/Product')
@@ -21,7 +20,7 @@ class Product{
     }
     conFig() {
         this.app.use(express.json())
-             .use(cors())
+             //.use(cors(corsOptions))
             .use(
                 session({
                     secret: "keyboard cat",
