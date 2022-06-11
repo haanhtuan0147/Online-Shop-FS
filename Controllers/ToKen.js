@@ -9,9 +9,9 @@ module.exports=class ToKen {
 
         service.findAll()
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
 }
 
      create =  (req, res, next) => {
@@ -19,36 +19,35 @@ module.exports=class ToKen {
         item.Id = v4();
         service.create(item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
-
      update =  (req, res, next) => {
         const item = req.body;
         const id = req.params.id;
         service.update(id, item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
 
     findOne =  (req, res, next) => {
         const id = req.params.id;
         service.findOne(id)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
     findItem =  (req, res, next) => {
         const item = req.body;
         service.findItem(item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
 
@@ -56,18 +55,18 @@ module.exports=class ToKen {
         const id = req.params.id;
         service.delete(id)
             .then(result => {
-                baseController.sendResponse(result, req, res.status(200));
+                baseController.sendResponse(result, req, res);
             })
-            .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+            .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
     CreateToken=(req, res, next) => {
         const Email = req.user;
         service.CreateToken(Email)
             .then(result => {
-                baseController.sendResponse(result, req, res.status(200));
+                baseController.sendResponse(result, req, res);
             })
-            .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+            .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
     CheckToKenTime=(req, res, next) => {
@@ -77,7 +76,7 @@ module.exports=class ToKen {
             .then(result => {
                 next()
                         })
-            .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+            .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
     RoleRoot = (req,res,next) => {
@@ -89,7 +88,7 @@ module.exports=class ToKen {
                 next();
             })
             .catch((err) => {
-                res.status(500).json(err)
+                res.json(err)
             })
         }
     RoleAdmin = (req,res,next) => {
@@ -100,7 +99,7 @@ module.exports=class ToKen {
                     next();
             })
             .catch((err) => {
-                    res.status(500).json(err)
+                    res.json(err)
             })
     }
     RoleUser = (req,res,next) => {
@@ -113,7 +112,7 @@ module.exports=class ToKen {
                 next();
             })
         .catch((err) => {
-                        res.status(500).json(err)
+                        res.json(err)
         })
     }
 }

@@ -2,6 +2,7 @@ const UserRepository=require('../Repository/User')
 const Repository = new UserRepository();
 const TokenRepository=require('../Repository/ToKen')
 const RepositoryToken = new TokenRepository();
+const constdefault=new (require('./constdefault'))()
 const dotenv=require('dotenv')
 dotenv.config()
 const imageToBase64=require('image-to-base64')
@@ -33,22 +34,22 @@ module.exports =class User {
             });
         //console.log(select)
         if(!select)
-        return Promise.reject({messager:"not token Exist"});
+        return Promise.reject({status:406,rs:"not token Exist"});
         var rs ;
-        if(select.AccountRights=="Root"){
+        if(select.AccountRights==constdefault.AccountRoot){
             rs = await Repository.findAll();
         }
-        if(select.AccountRights=="Admin"){
-            rs = await Repository.findItem({AccountRights:"User"});
+        if(select.AccountRights==constdefault.AccountAdmin){
+            rs = await Repository.findItem({AccountRights:constdefault.AccountUser});
         }
         if (Object.keys(rs).length == 0) {
-            return Promise.resolve([]);
+            return Promise.resolve({status:200,rs:[]});
         }
         for(var i=0;i<Object.keys(rs).length;i++)
         rs[i].Avatar=await this.converimagetobase64(rs[i].Avatar);
-        return Promise.resolve(rs);
+        return Promise.resolve({status:200,rs:rs});
     } catch (error) {
-        return Promise.reject({messager :error} );
+        return Promise.reject({status:500,rs:"error"} );
     }
     }
      create = async (item) => {
@@ -56,14 +57,14 @@ module.exports =class User {
             const rs = await Repository.create(item);
             delete item.Password;
             if(rs) {
-                return Promise.resolve({
+                return Promise.resolve({status:200,rs:{
                 messager : "Sucsuess",
                 Item:item
-            });
+            }});
             }
-        return Promise.reject({messager : "Create Faild "});
+        return Promise.reject({status:406,rs:"Create Faild "});
         } catch (error) {
-            return Promise.reject({messager : "Create Faild "});
+            return Promise.reject({status:500,rs: "Create Faild "});
         }
         
     }
@@ -99,18 +100,18 @@ module.exports =class User {
                 return false;
             });
             if(!select)
-            return Promise.reject({messager:"not token Exist"});
+            return Promise.reject({status:406,rs:"not token Exist"});
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
-                return Promise.resolve([]);
+                return Promise.resolve({status:200,rs:[]});
             }
-            if(select.AccountRights=="Admin"&&(rs[0].AccountRights=="Admin"||rs[0].AccountRights=="Root")&&select.userId!=id){
-                return Promise.resolve([]);
+            if(select.AccountRights==constdefault.AccountAdmin&&(rs[0].AccountRights==constdefault.AccountAdmin||rs[0].AccountRights==constdefault.AccountRoot)&&select.userId!=id){
+                return Promise.resolve({status:200,rs:[]});
             }
             rs[0].Avatar=await this.converimagetobase64(rs[0].Avatar);
-            return Promise.resolve(rs);
+            return Promise.resolve({status:200,rs:rs});
         } catch (error) {
-            return Promise.reject({ messager: " User not exists ! "  } );
+            return Promise.reject({status:500,rs:" User not exists ! "  } );
         }
     }
 
@@ -123,36 +124,37 @@ module.exports =class User {
                 return false;
             });
         if(!select)
-        return Promise.reject({messager:"not token Exist"});
-        if(select.AccountRights=="Admin"){
-            item.AccountRights="User";
+        return Promise.reject({status:406,rs:"not token Exist"});
+        if(select.AccountRights==constdefault.AccountAdmin){
+            item.AccountRights=constdefault.AccountUser;
         }
-        console.log(item)
+        //console.log(item)
             const rs = await Repository.findItem(item);
             //console.log(rs)
             if (Object.keys(rs).length == 0) {
-                return Promise.resolve([]);
+                return Promise.resolve({status:200,rs:[]});
             }
             for(var i=0;i<Object.keys(rs).length;i++)
             rs[i].Avatar=await this.converimagetobase64(rs[i].Avatar);
-            return Promise.resolve(rs);
+            return Promise.resolve({status:200,rs:rs});
          } catch (error) {
-            return Promise.reject({messager :"Not Found"});
+            return Promise.reject({status:500,rs:"Not Found"});
          }
 
     }
     findEmailPass= async (Email,pass) => {
         try {
             //console.log(Email)
-           const rs = await Repository.findItem({Email:Email,Password:pass,isDelete:0});
-           
+           const rs = await Repository.findItem({Email:Email,isDelete:0});
            if (Object.keys(rs).length == 0) {
-               return Promise.reject({messager :"Not Found"} );
+               return Promise.reject({status:406,rs:"Not Found Email"} );
            }
+           if(pass==rs[0].Password)
            return Promise.resolve({Email:rs[0].Email});
+           return Promise.resolve({status:406,rs:"Not Found Password"});
             
         } catch (error) {
-           return Promise.reject({messager :error});
+           return Promise.reject({status:500,rs:"error"});
         }
 
    }
@@ -161,18 +163,18 @@ module.exports =class User {
         const rs = await RepositoryToken.findItem({Token:token});
         //console.log(rs)
         if (Object.keys(rs).length == 0) {
-            return Promise.resolve([]);
+            return Promise.resolve({status:200,rs:[]});
         }
-        const rs2 = await Repository.findItem({id:rs[0].userId,isDelete:0});
+        const finduser = await Repository.findItem({id:rs[0].userId,isDelete:0});
         //console.log(rs2)
-        if (Object.keys(rs2).length == 0) {
-            return Promise.resolve([]);
+        if (Object.keys(finduser).length == 0) {
+            return Promise.resolve({status:200,rs:[]});
         }
-        for(var i=0;i<Object.keys(rs2).length;i++)
-        rs2[i].Avatar=await this.converimagetobase64(rs2[i].Avatar);
-        return Promise.resolve(rs2) ;
+        for(var i=0;i<Object.keys(finduser).length;i++)
+        finduser[i].Avatar=await this.converimagetobase64(finduser[i].Avatar);
+        return Promise.resolve({status:200,rs:finduser}) ;
     } catch (error) {
-       return Promise.reject({messager :error});
+       return Promise.reject({status:500,rs:"error"});
     }
 
    }
@@ -180,20 +182,20 @@ module.exports =class User {
     try {
        const checktoken = await RepositoryToken.findItem({Token:token});
        if (Object.keys(rs).length == 0) {
-           return Promise.reject({messager :"Not Found"} )
+           return Promise.reject({status:406,rs:"Not Found"} )
        }
       
        const checkuse = await Repository.findItem({id:checktoken[0].userId});
        if (Object.keys(checkuse).length == 0) {
-           return Promise.reject({messager :"Not Found"} )
+           return Promise.reject({status:406,rs: "Not Found"} )
        }
        const checkuseupdate = await Repository.findItem({id:id});
        if (Object.keys(checkuseupdate).length == 0) {
-           return Promise.reject({messager :"Not Found"} )
+           return Promise.reject({status:406,rs: "Not Found"} )
        }
-       if((checkuse[0].AccountRights==checkuseupdate[0].AccountRights&&id==checkuse[0].id)||(checkuse[0].AccountRights=="Root")||(checkuse[0].AccountRights=="Admin"&&checkuseupdate[0].AccountRights=="User"))
+       if((checkuse[0].AccountRights==checkuseupdate[0].AccountRights&&id==checkuse[0].id)||(checkuse[0].AccountRights==constdefault.AccountRoot)||(checkuse[0].AccountRights==constdefault.AccountAdmin&&checkuseupdate[0].AccountRights==constdefault.AccountUser))
        {
-           if(checkuse[0].AccountRights=="Root"&&item.AccountRights!="Root")
+           if(checkuse[0].AccountRights==constdefault.AccountRoot&&item.AccountRights!=constdefault.AccountRoot)
            {
 
            }
@@ -204,12 +206,12 @@ module.exports =class User {
            }
         const rs = await Repository.update(id,item);
         if (rs) {
-         return Promise.resolve({ messager: "Sucsess" });
+         return Promise.resolve({status:200,rs: "Sucsess" });
          }
        }
-       return Promise.reject({ messager: "Update Faild" });
+       return Promise.reject({status:406,rs:"Update Faild" });
     } catch (error) {
-       return Promise.reject({messager :error});
+       return Promise.reject({status:500,rs:"wrong syntax"});
     }
 
    }
@@ -217,18 +219,18 @@ module.exports =class User {
     try {
        const rs = await Repository.findOne(id);
        if (Object.keys(rs).length == 0) {
-           return Promise.reject({messager :"Not Found"} );
+           return Promise.reject({status:406,rs:"Not Found"} );
        }
-       if(rs[0].AccountRights=="Root")
-       return Promise.reject({messager :"this user cannot be deleted"} );
+       if(rs[0].AccountRights==constdefault.AccountRoot)
+       return Promise.reject({status:406,rs:"this user cannot be deleted"} );
        //console.log(rs)
        const rs1 = await Repository.update(id,{isDelete:1})
        if (!rs1) {
-           return Promise.reject({ messager: "Delete Faild" });
+           return Promise.reject({status:406,rs: "Delete Faild" });
        }
-       return Promise.resolve({messager : "Sucsuess"});
+       return Promise.resolve({status:200,rs: "Sucsuess"});
     } catch (error) {
-       return Promise.reject({messager :error});
+       return Promise.reject({status:500,rs:"wrong syntax"});
     }
 
    }
@@ -236,11 +238,11 @@ module.exports =class User {
     try {
        const rs = await Repository.findItem({Email:email});
        if (Object.keys(rs).length == 0) {
-           return Promise.resolve({messager : "Sucsuess"});
+           return Promise.resolve({status:200,rs:"Sucsuess"});
        }
-       return Promise.reject({messager :"Email already exists"} );
+       return Promise.reject({status:406,rs:"Email already exists"} );
     } catch (error) {
-       return Promise.reject({messager :error});
+       return Promise.reject({status:500,rs:"wrong syntax"});
     }
 
    }

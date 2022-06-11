@@ -8,11 +8,11 @@ module.exports =class Product {
             const rs= await  api.get('/Product'+req.path,{data:req.body,headers: {'Content-Type': 'application/json;charset=utf-8'}});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result})  ;         
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+            return Promise.reject({status:error.response.status,rs:error.response.data});
         }
     }
     pagecountfindAll = async (req) => {
@@ -20,61 +20,61 @@ module.exports =class Product {
             const rs= await  api.get('/Product'+req.path);
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve(rs.data);
+            return Promise.resolve({status:rs.status,rs:rs.data.result})  ;         
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+            return Promise.reject({status:error.response.status,rs:error.response.data});
         }
     }
      create = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"});
+            return Promise.reject({status:406,rs:"NOT ITEM"});
             const rs=  await api.post('/Product'+req.path,req.body,{headers: {
                 'authorization': req.headers['authorization'],
                 'Content-Type': 'application/json;charset=utf-8'
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT CREATE Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;          
         } catch (error) {
-            return Promise.reject({message : "NOT CREATE Product"});
+            return Promise.reject({status:error.response.status,rs:error.response.data});
         }
     }
     checkArrayCategory=async(req)=>{
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"});
+            return Promise.reject({status:406,rs:"NOT ITEM"});
             const rs=  await api.get('/Product_Category/checkArrayCategory'+req.path,{data:{"category":JSON.parse(req.body.categoryId)},headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT Category Product Exist"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result});           
         } catch (error) {
-            return Promise.reject({message : "NOT Category Product Exist"});
+            return Promise.reject({status:error.response.status,rs:error.response.data});
         }
     }
      update = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"});
+            return Promise.reject({status:406,rs:"NOT ITEM"});
             const rs=  await api.put('/Product'+req.path,req.body,{headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 'authorization': req.headers['authorization']
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT UPDATE Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;          
         } catch (error) {
-            return Promise.reject({message : "NOT UPDATE Product"});
+            return Promise.reject({status:error.response.status,rs:error.response.data});
         }
     }
      delete = async (req) => {
@@ -85,11 +85,11 @@ module.exports =class Product {
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT DELETE Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result});          
         } catch (error) {
-            return Promise.reject({message : "NOT DELETE Product"});
+            return Promise.reject({status:error.response.status,rs:error.response.data});
         }
     }
 
@@ -101,11 +101,11 @@ module.exports =class Product {
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result});           
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+            return Promise.reject({status:error.response.status,rs:error.response.data});
         }
     }
 
@@ -113,33 +113,33 @@ module.exports =class Product {
      findItem = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"});
+            return Promise.reject({status:406,rs:"NOT ITEM"});
             const rs=  await api.get('/Product'+req.path,{data:req.body,headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+            return Promise.reject({status:error.response.status,rs:error.response.data});
         }
     }
     pagecountfindItem = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"});
+            return Promise.reject({status:406,rs:"NOT ITEM"});
             const rs=  await api.get('/Product'+req.path,{data:req.body,headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve(rs.data);
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+            return Promise.reject({status:error.response.status,rs:error.response.data});
         }
     }
     searchbyprice=async (req) => {     
@@ -149,11 +149,11 @@ module.exports =class Product {
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+            return Promise.reject({status:error.response.status,rs:error.response.data});
         }   
     }
     pagecountsearchbyprice=async (req) => {     
@@ -163,43 +163,43 @@ module.exports =class Product {
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve(rs.data);
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+            return Promise.reject({status:error.response.status,rs:error.response.data});
         }   
     }
     searchbypriceBetween= async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"})
+            return Promise.reject({status:406,rs:"NOT ITEM"});
             const rs=  await api.get('/Product'+req.path,{data:req.body,headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+            return Promise.reject({status:error.response.status,rs:error.response.data});
         }   
     }
     pagecountsearchbypriceBetween= async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"});
+            return Promise.reject({status:406,rs:"NOT ITEM"});
             const rs=  await api.get('/Product'+req.path,{data:req.body,headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve(rs.data);
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+            return Promise.reject({status:error.response.status,rs:error.response.data});
         }   
     }
     searchbyname= async (req) => {
@@ -209,11 +209,11 @@ module.exports =class Product {
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+            return Promise.reject({status:error.response.status,rs:error.response.data});
         }   
     }
     
@@ -224,11 +224,11 @@ module.exports =class Product {
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve(rs.data);
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+            return Promise.reject({status:error.response.status,rs:error.response.data});
         }   
     }
     findAVGNumberStarProduct= async (req) => {
@@ -238,11 +238,11 @@ module.exports =class Product {
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve(rs.data);
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+            return Promise.reject({status:error.response.status,rs:error.response.data});
         }   
     }
     countpagefindDetailsProduct= async (req) => {
@@ -252,11 +252,11 @@ module.exports =class Product {
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve(rs.data);
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+            return Promise.reject({status:error.response.status,rs:error.response.data});
         }   
     }
     findDetailsProduct= async (req) => {
@@ -266,11 +266,11 @@ module.exports =class Product {
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve(rs.data);
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+            return Promise.reject({status:error.response.status,rs:error.response.data});
         }   
     }
 }

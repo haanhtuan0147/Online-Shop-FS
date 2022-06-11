@@ -14,46 +14,46 @@ module.exports =class User {
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT FIND User"})
+            return Promise.reject({status:error.response.status,rs:error.response.data})
         }  
     }
      create = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"})
+            return Promise.reject({status:406,rs:"NOT ITEM body"})
             const rs= await api.post('/User'+req.path,req.body,{headers: {
                 'authorization': req.headers['authorization'],
                 'Content-Type': 'application/json;charset=utf-8'
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT CREATE User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT CREATE User"})
+            return Promise.reject({status:error.response.status,rs:error.response.data})
         }  
     }
 
      update = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"})
+            return Promise.reject({status:406,rs:"NOT ITEM body"})
             const rs= await api.put('/User'+req.path,req.body,{headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 'authorization': req.headers['authorization']
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT UPDATE User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT UPDATE User"})
+            return Promise.reject({status:error.response.status,rs:error.response.data})
         } 
     }
      delete = async (req) => {
@@ -64,11 +64,11 @@ module.exports =class User {
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT DELETE User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT DELETE User"})
+            return Promise.reject({status:error.response.status,rs:error.response.data})
         } 
     }
 
@@ -81,11 +81,11 @@ module.exports =class User {
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT FIND User"})
+            return Promise.reject({status:error.response.status,rs:error.response.data})
         } 
     }
 
@@ -93,18 +93,18 @@ module.exports =class User {
      findItem = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"})
+            return Promise.reject({status:406,rs:"NOT ITEM body"})
             const rs= await api.get('/User'+req.path,{data:req.body,headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 'authorization': req.headers['authorization']
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT FIND User"})
+            return Promise.reject({status:error.response.status,rs:error.response.data})
         } 
     }
     findUser= async (req) => {
@@ -115,11 +115,11 @@ module.exports =class User {
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT FIND User"})
+            return Promise.reject({status:error.response.status,rs:error.response.data})
         } 
     }
     customerreliability= async (req) => {
@@ -130,76 +130,79 @@ module.exports =class User {
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND customerreliability"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : error})
+            return Promise.reject({status:error.response.status,rs:error.response.data})
         } 
     }
     RegisterToken= async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"})
+            return Promise.reject({status:406,rs:"NOT ITEM body"})
             const rs= await api.post('/User'+req.path,req.body,{headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT RegisterToken User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT RegisterToken User"})
+            return Promise.reject({status:error.response.status,rs:error.response.data})
         } 
     }
     RegisterUser= async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"})
+            return Promise.reject({status:406,rs:"NOT ITEM body"})
             const rs= await api.post('/User'+req.path,req.body,{headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT RegisterUser User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT RegisterUser User"})
+            return Promise.reject({status:error.response.status,rs:error.response.data})
         } 
     }
     RegisterAdmin= async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"})
+            return Promise.reject({status:406,rs:"NOT ITEM body"})
             const rs=  await api.post('/User'+req.path,req.body,{headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 'authorization': req.headers['authorization']
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT RegisterUser User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT RegisterUser User"})
+            return Promise.reject({status:error.response.status,rs:error.response.data})
         } 
     }
     Login= async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"})
+            return Promise.reject({status:406,rs:"NOT ITEM body"})
             const rs= await api.post('/User'+req.path,req.body,{headers: {
                 'Content-Type': 'application/json;charset=utf-8',
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT Login User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT Login User"})
+            //console.log(error)
+            //return Promise.reject(error.response.data)
+            return Promise.reject({status:error.response.status,rs:error.response.data})
+
         } 
     }
 

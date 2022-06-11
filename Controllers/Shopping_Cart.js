@@ -12,9 +12,9 @@ module.exports=class Shopping_Cart {
         const token = author?.split(" ")[1];
         service.findAll(token)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
 
      create =  (req, res, next) => {
@@ -27,9 +27,9 @@ module.exports=class Shopping_Cart {
         item.ShoppingCart.IntendTime=new Date(date.getTime()+(1000*60*60*7)+(1000*60*60*24*7))
         service.create(item.ShoppingCart,token)
         .then(result => {
-            Order_Product.createarray(item.ShoppingCart.id,item.item).then(re=>{baseController.sendResponse({ShoppingCart:result,OrderProduct:re}, req, res.status(200));}).catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+            Order_Product.createarray(item.ShoppingCart.id,item.item).then(re=>{baseController.sendResponse({ShoppingCart:result,OrderProduct:re}, req, res);}).catch(err => { baseController.sendResponse(err, req, res); });
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
     Cancel=(req, res, next) => {
         service.Cancel(req, res, next,baseController)
@@ -41,9 +41,9 @@ module.exports=class Shopping_Cart {
         const id = req.params.id;
         service.ConfirmTransportSuccess(id,item,token)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
 
      update =  (req, res, next) => {
@@ -51,9 +51,9 @@ module.exports=class Shopping_Cart {
         const id = req.params.id;
         service.update(id, item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
 
     findOne =  (req, res, next) => {
@@ -62,9 +62,9 @@ module.exports=class Shopping_Cart {
         const token = author?.split(" ")[1];
         service.findOne(id,token)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
     findItem =  (req, res, next) => {
         const item = req.body;
@@ -72,9 +72,9 @@ module.exports=class Shopping_Cart {
         const token = author?.split(" ")[1];
         service.findItem(item,token)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
     findShoppingcarttotalmoney =  (req, res, next) => {
@@ -83,9 +83,9 @@ module.exports=class Shopping_Cart {
         const token = author?.split(" ")[1];
         service.findShoppingcarttotalmoney(item,token)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
     findShoppingcarttotalmoneydetail=(req, res, next) => {
@@ -94,9 +94,9 @@ module.exports=class Shopping_Cart {
         const token = author?.split(" ")[1];
         service.findShoppingcarttotalmoneydetail(id,token)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
     customerreliability=(req, res, next) => {
@@ -105,18 +105,18 @@ module.exports=class Shopping_Cart {
         const token = author?.split(" ")[1];
         service.customerreliability(id,token)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
     delete = (req, res, next) => {
         const id = req.params.id;
         service.delete(id)
             .then(result => {
-                baseController.sendResponse(result, req, res.status(200));
+                baseController.sendResponse(result, req, res);
             })
-            .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+            .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
 }

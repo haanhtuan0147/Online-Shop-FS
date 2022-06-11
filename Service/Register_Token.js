@@ -10,25 +10,25 @@ module.exports =class Register_Token {
         try {
         const rs = await Repository.findAll();
         if (Object.keys(rs).length == 0) {
-            return Promise.resolve([]);
+            return Promise.resolve({status:200,rs:[]});
         }
-        return Promise.resolve(rs);
+        return Promise.resolve({status:200,rs:rs});
     } catch (error) {
-        return Promise.reject({messager :error} );
+        return Promise.reject({status:500,rs:error} );
     }
     }
      create = async (item) => {
         try {
             const rs = await Repository.create(item);
             if(rs) {
-                return Promise.resolve({
+                return Promise.resolve({status:200,rs:{
                 messager : "Sucsuess",
                 Item:item
-            });
+            }});
             }
-        return Promise.reject({messager : "Create Faild "});
+        return Promise.reject({status:406,rs: "Create Faild "});
         } catch (error) {
-            return Promise.reject({messager : "Create Faild "});
+            return Promise.reject({status:500,rs: "Create Faild "});
         }
         
     }
@@ -36,23 +36,23 @@ module.exports =class Register_Token {
         try{
         const rs = await Repository.update(id, item);
         if (rs) {
-            return Promise.resolve({ messager: "Sucsess" });
+            return Promise.resolve({status:200,rs:"Sucsess" });
            
         }
-        return Promise.reject({ messager: "Update Faild" });
+        return Promise.reject({status:406,rs: "Update Faild" });
     } catch (error) {
-        return Promise.reject({ messager: "Update Faild" } );
+        return Promise.reject({status:500,rs: "Update Faild" } );
     }
     }
      delete = async (id) => {
          try{
         const rs = await Repository.delete(id);
         if (rs == 0) {
-            return Promise.reject({ messager: "Delete Faild" });
+            return Promise.reject({status:406,rs: "Delete Faild" });
         }
-        return Promise.resolve({messager : "Sucsuess"});
+        return Promise.resolve({status:200,rs: "Sucsuess"});
     } catch (error) {
-        return Promise.reject({ messager: "Delete Faild" } );
+        return Promise.reject({status:500,rs: "Delete Faild" } );
     }
     }
 
@@ -60,11 +60,11 @@ module.exports =class Register_Token {
         try {
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
-                return Promise.resolve([]);
+                return Promise.resolve({status:200,rs:[]});
             }
-            return Promise.resolve(rs);
+            return Promise.resolve({status:200,rs:rs});
         } catch (error) {
-            return Promise.reject({ messager: " Register_Token not exists ! "  } );
+            return Promise.reject({status:500,rs:" Register_Token not exists ! "  } );
         }
     }
 
@@ -73,12 +73,12 @@ module.exports =class Register_Token {
          try {
             const rs = await Repository.findItem(item);
             if (Object.keys(rs).length == 0) {
-                return Promise.resolve([]);
+                return Promise.resolve({status:200,rs:[]});
             }
-            return Promise.resolve(rs);
+            return Promise.resolve({status:200,rs:rs});
              
          } catch (error) {
-            return Promise.reject({messager :"Not Found"});
+            return Promise.reject({status:500,rs:"Not Found"});
          }
 
     }
@@ -113,14 +113,13 @@ module.exports =class Register_Token {
            //console.log(item)
           const rs=await Repository.create(item);
                if(rs) {
-                   return Promise.resolve({
-                   messager : "Sucsuess"
+                   return Promise.resolve({status:200,rs: "Sucsuess"
                });
                }
-          return Promise.reject({messager :"failed create gmail"} );
+          return Promise.reject({status:406,rs:"failed create gmail"} );
             
         } catch (error) {
-           return Promise.reject({messager :error} );
+           return Promise.reject({status:500,rs :error} );
         }
 
                    
@@ -130,18 +129,18 @@ module.exports =class Register_Token {
        const rs = await Repository.findItem({Email:item.Email});
        //console.log(rs)
        if (Object.keys(rs).length == 0) {
-           return Promise.reject({messager :"Not Found"} );
+           return Promise.reject({status:406,rs:"Not Found"} );
        }
        const Datecreate=new Date(rs[0].createdDate);
        const Datenow=new Date();
        /*console.log(Datecreate.getTime()-Datenow.getTime())
        console.log(item.numberCheck==Number(rs[0].numberCheck))*/
        if(Datecreate.getTime()-(Datenow.getTime()+(1000*60*60*7))>-300000&&item.numberCheck==Number(rs[0].numberCheck))
-       return Promise.resolve(rs);
-       return Promise.reject({messager :"Incorrect check number"});
+       return Promise.resolve({status:200,rs:rs});
+       return Promise.reject({status:406,rs:"Incorrect check number"});
         
     } catch (error) {
-       return Promise.reject({messager :error});
+       return Promise.reject({status:500,rs:error});
     }
 
 }

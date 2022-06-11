@@ -8,30 +8,30 @@ module.exports =class Field {
         try {
             const rs= await  api.get('/Field'+req.path)
             if(rs.status!=200)
-            {
-                return Promise.reject({Message:"Not Find Field"})
-            }
-            return Promise.resolve({result : rs.data})
+              {
+                return Promise.reject({status:rs.status,rs : rs.data.result})
+              }
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({Message:"Not Find Field"})
+            return Promise.reject({status:error.response.status,rs:error.response.data})
         }
         
     }
      create = async (req) => {
          try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({Message:"Not item"})
+            return Promise.reject({status:406,rs:"Not item body"})
             const rs=await api.post('/Field'+req.path,req.body,{headers: {
                 'authorization': req.headers['authorization'],
                 'Content-Type': 'application/json;charset=utf-8'
               }})
               if(rs.status!=200)
               {
-                  return Promise.reject({Message:"Not create Field"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
               }
-              return Promise.resolve({result : rs.data})      
-         } catch (error) {
-            return Promise.reject({Message:"Not create Field"})
+              return Promise.resolve({status:rs.status,rs : rs.data.result})
+            } catch (error) {
+            return Promise.reject({status:error.response.status,rs:error.response.data})
          }
 
     }
@@ -39,18 +39,18 @@ module.exports =class Field {
      update = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({Message:"Not item"})
+            return Promise.reject({status:406,rs :"Not item body"})
             const rs=await api.put('/Field'+req.path,req.body,{headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 'authorization': req.headers['authorization']
               }})
               if(rs.status!=200)
               {
-                  return Promise.reject({Message:"Not update Field"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
               }
-              return Promise.resolve({result : rs.data})      
-         } catch (error) {
-            return Promise.reject({Message:"Not update Field"})
+              return Promise.resolve({status:rs.status,rs : rs.data.result})
+            } catch (error) {
+            return Promise.reject({status:error.response.status,rs:error.response.data})
          }
     }
      delete = async (req) => {
@@ -61,11 +61,11 @@ module.exports =class Field {
               }})
               if(rs.status!=200)
               {
-                  return Promise.reject({Message:"Not delete Field"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
               }
-              return Promise.resolve({result : rs.data})      
+              return Promise.resolve({status:rs.status,rs : rs.data.result})    
          } catch (error) {
-            return Promise.reject({Message:"Not delete Field"})
+            return Promise.reject({status:error.response.status,rs:error.response.data})
          }
     }
 
@@ -77,11 +77,11 @@ module.exports =class Field {
               }})
               if(rs.status!=200)
               {
-                  return Promise.reject({Message:"Not find Field"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
               }
-              return Promise.resolve({result : rs.data})      
+              return Promise.resolve({status:rs.status,rs : rs.data.result})      
          } catch (error) {
-            return Promise.reject({Message:"Not find Field"})
+            return Promise.reject({status:error.response.status,rs:error.response.data})
          }
     }
 
@@ -89,17 +89,17 @@ module.exports =class Field {
      findItem = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({Message:"Not item"})
+            return Promise.reject({status:406,rs :"Not item"})
             const rs=await api.get('/Field'+req.path,{data:req.body,headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }})
               if(rs.status!=200)
               {
-                  return Promise.reject({Message:"Not find Field"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
               }
-              return Promise.resolve({result : rs.data})      
+              return Promise.resolve({status:rs.status,rs : rs.data.result})        
          } catch (error) {
-            return Promise.reject({Message:"Not find Field"})
+            return Promise.reject({status:error.response.status,rs:error.response.data})
          }
     }
 
@@ -110,65 +110,65 @@ module.exports =class Field {
               }})
               if(rs.status!=200)
               {
-                  return Promise.reject({Message:"Not find findcategory"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
               }
-              return Promise.resolve({result : rs.data})      
+              return Promise.resolve({status:rs.status,rs:rs.data.result})           
          } catch (error) {
-            return Promise.reject({Message:"Not find findcategory"})
+            return Promise.reject({status:error.response.status,rs:error.response.data})
          }
     }
    findProductfield= async (req) => {
     try {
         
-        const categoryfollowfield= await api.get('/Field/findcategory/'+req.params.id,{headers: {
+        const categoryfollowfield= await api.get('/Field/Field/findcategory/'+req.params.id,{headers: {
             'Content-Type': 'application/json;charset=utf-8'
           }})
           if(categoryfollowfield.status!=200)
           {
-              return Promise.reject({Message:"Not find findcategory"})
+            return Promise.reject({status:rs.status,rs:"not Find category"})           
           }
           var category=[]
-          for(var i=0;i<categoryfollowfield.data.length;i++)
+          for(var i=0;i<categoryfollowfield.data.result.length;i++)
           {
-              category.push(categoryfollowfield.data[i].id)
+              category.push(categoryfollowfield.data.result[i].id)
           }
           
-          const productfollowfied=await api.get('/Product/Products/searchbycategory/'+req.body.page,{data:{"category":category},headers: {
+          const productfollowfied=await api.get('/Product/Product/searchbycategory/'+req.body.page,{data:{"category":category},headers: {
             'Content-Type': 'application/json;charset=utf-8'
           }})
           if(productfollowfied.status!=200)
           {
-              return Promise.reject({Message:"Not find findProduct_field"})
+            return Promise.reject({status:productfollowfied.status,rs:"Not find findProduct_field"})
           }
-          return Promise.resolve({result : productfollowfied.data})      
+          return Promise.resolve({status:rs.status,rs:productfollowfied.data.result})               
      } catch (error) {
-        return Promise.reject({Message:"Not find findProduct_field"})
-     }
+        return Promise.reject({status:error.response.status,rs:error.response.data})
+    }
     }
     countpagefindProductfield= async (req) => {
         try {
-            const categoryfollowfield= await api.get('/Field/findcategory/'+req.params.id,{headers: {
+            const categoryfollowfield= await api.get('/Field/Field/findcategory/'+req.params.id,{headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }})
               if(categoryfollowfield.status!=200)
               {
-                  return Promise.reject({Message:"Not find findcategory"})
+                return Promise.reject({status:rs.status,rs:"not Find category"})           
               }
               var category=[]
-              for(var i=0;i<categoryfollowfield.data.length;i++)
+              for(var i=0;i<categoryfollowfield.data.result.length;i++)
               {
-                  category.push(categoryfollowfield.data[i].id)
+                  category.push(categoryfollowfield.data.result[i].id)
               }
-              const countpage=await api.get('/Product/Products/countpagesearchbycategory',{data:{"category":category},headers: {
+              const countpage=await api.get('/Product/Product/countpagesearchbycategory',{data:{"category":category},headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }})
               if(countpage.status!=200)
               {
-                  return Promise.reject({Message:"Not find findProduct_field"})
-              }
-              return Promise.resolve(countpage.data)      
+                return Promise.reject({status:productfollowfied.status,rs:"Not find findProduct_field"})
+            }
+            return Promise.resolve({status:rs.status,rs:{page:countpage.data}})                 
          } catch (error) {
-            return Promise.reject({Message:"Not find findProduct_field"})
-         }
+            return Promise.reject({status:error.response.status,rs:error.response.data})
+        }
         }
 }

@@ -7,19 +7,19 @@ const Controller=new User()
 Router.use(express.json());
 Router.use(bodyParser.urlencoded({ extended: true }));
 
-Router.get('/User',Controller.findAll);
-Router.get('/User/:id',Controller.findOne);
-Router.get('/findItem',Controller.findItem);
-Router.get('/findUser',Controller.findUser);
-Router.get('/customerreliability/:userId',Controller.customerreliability);
+Router.get('/',Controller.findAll);
+Router.get('/:id',Controller.findOne);
+Router.get('/User/findItem',Controller.findItem);
+Router.get('/User/findUser',Controller.findUser);
+Router.get('/User/customerreliability/:userId',Controller.customerreliability);
 
-Router.post('/RegisterToken',Controller.RegisterToken);
-Router.post('/RegisterUser',Controller.RegisterUser);
-Router.post('/RegisterAdmin',Controller.RegisterAdmin);
-Router.post('/Login',Controller.Login)
+Router.post('/User/RegisterToken',Controller.RegisterToken);
+Router.post('/User/RegisterUser',Controller.RegisterUser);
+Router.post('/User/RegisterAdmin',Controller.RegisterAdmin);
+Router.post('/User/Login',Controller.Login)
 
-Router.put('/User/:id',Controller.update);
-Router.delete('/User/:id',Controller.delete);
+Router.put('/:id',Controller.update);
+Router.delete('/:id',Controller.delete);
 
 
 module.exports= Router;

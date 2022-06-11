@@ -7,15 +7,15 @@ const Controller=new Field()
 Router.use(express.json());
 Router.use(bodyParser.urlencoded({ extended: true }));
 
-        Router.get('/Field',Controller.findAll);
-        Router.get('/Field/:id', Controller.findOne);
-        Router.get('/findItem', Controller.findItem);
-        Router.get('/findcategory/:id', Controller.findcategory);
-        Router.get('/findProduct_field/:id', Controller.findProductfield);
-        Router.get('/countpagefindProduct_field/:id', Controller.countpagefindProductfield);
+        Router.get('/',Controller.findAll);
+        Router.get('/:id', Controller.findOne);
+        Router.get('/Field/findItem', Controller.findItem);
+        Router.get('/Field/findcategory/:id', Controller.findcategory);
+        Router.get('/Field/findProduct_field/:id', Controller.findProductfield);
+        Router.get('/Field/countpagefindProduct_field/:id', Controller.countpagefindProductfield);
 
 
-        Router.post('/Field',Controller.create);
-        Router.put('/Field/:id',Controller.update);
-        Router.delete('/Field/:id',Controller.delete);
+        Router.post('/',Controller.create);
+        Router.put('/:id',Controller.update);
+        Router.delete('/:id',Controller.delete);
 module.exports= Router;

@@ -9,9 +9,9 @@ module.exports=class Product_Reviews {
 
         service.findAll()
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
 }
 
      create =  (req, res, next) => {
@@ -21,9 +21,9 @@ module.exports=class Product_Reviews {
         const token = author?.split(" ")[1];
         service.create(item,token)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
     createimagereview=  (req, res, next) => {
         const id = req.params.id;
@@ -32,9 +32,9 @@ module.exports=class Product_Reviews {
         const token = author?.split(" ")[1];
         service.createimagereview(id,image,token)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
     checknotreallyProductReiview= (req, res, next) => {
         const item = req.body;
@@ -44,7 +44,7 @@ module.exports=class Product_Reviews {
         .then(result => {
             next()
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
 
      update =  (req, res, next) => {
@@ -54,43 +54,43 @@ module.exports=class Product_Reviews {
         const token = author?.split(" ")[1];
         service.update(id, item,token)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
 
     findOne =  (req, res, next) => {
         const id = req.params.id;
         service.findOne(id)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
     findItem =  (req, res, next) => {
         const item = req.body;
         service.findItem(item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
     delete = (req, res, next) => {
         const id = req.params.id;
         service.delete(id)
             .then(result => {
-                baseController.sendResponse(result, req, res.status(200));
+                baseController.sendResponse(result, req, res);
             })
-            .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+            .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
     findAVGNumberStarProductTop10 = (req, res, next) => {
         service.findAVGNumberStarProductTop10()
             .then(result => {
-                baseController.sendResponse(result, req, res.status(200));
+                baseController.sendResponse(result, req, res);
             })
-            .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+            .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
     findAVGNumberStarProduct= (req, res, next) => {
@@ -98,9 +98,9 @@ module.exports=class Product_Reviews {
         console.log(id)
         service.findAVGNumberStarProduct(id)
             .then(result => {
-                baseController.sendResponse(result, req, res.status(200));
+                baseController.sendResponse(result, req, res);
             })
-            .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+            .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
 

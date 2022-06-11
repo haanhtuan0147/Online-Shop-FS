@@ -9,14 +9,14 @@ const Controller = new Product_CategoryController();
 Router.use(express.json());
 Router.use(bodyParser.urlencoded({ extended: true }));
 
-Router.get('/Product_Category',Controller.findAll);
-        Router.get('/Product_Category/:id',Controller.findOne);
-        Router.get('/findItem',Controller.findItem);
-        Router.get('/findProduct_category/:page',Controller.findProductcategory);
-        Router.get('/countpagefindProduct_category',Controller.countpagefindProductcategory);
+Router.get('/',Controller.findAll);
+        Router.get('/:id',Controller.findOne);
+        Router.get('/Product_Category/findItem',Controller.findItem);
+        Router.get('/Product_Category/findProduct_category/:page',Controller.findProductcategory);
+        Router.get('/Product_Category/countpagefindProduct_category',Controller.countpagefindProductcategory);
 
 
-        Router.post('/Product_Category',Controller.create);
-        Router.put('/Product_Category/:id',Controller.update);
-        Router.delete('/Product_Category/:id',Controller.delete);
+        Router.post('/',Controller.create);
+        Router.put('/:id',Controller.update);
+        Router.delete('/:id',Controller.delete);
 module.exports= Router;
