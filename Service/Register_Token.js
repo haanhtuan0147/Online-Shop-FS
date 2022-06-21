@@ -14,7 +14,9 @@ module.exports =class Register_Token {
         }
         return Promise.resolve({status:200,rs:rs});
     } catch (error) {
-        return Promise.reject({status:500,rs:error} );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      create = async (item) => {
@@ -28,7 +30,9 @@ module.exports =class Register_Token {
             }
         return Promise.reject({status:406,rs: "Create Faild "});
         } catch (error) {
-            return Promise.reject({status:500,rs: "Create Faild "});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
         
     }
@@ -41,7 +45,9 @@ module.exports =class Register_Token {
         }
         return Promise.reject({status:406,rs: "Update Faild" });
     } catch (error) {
-        return Promise.reject({status:500,rs: "Update Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      delete = async (id) => {
@@ -52,7 +58,9 @@ module.exports =class Register_Token {
         }
         return Promise.resolve({status:200,rs: "Sucsuess"});
     } catch (error) {
-        return Promise.reject({status:500,rs: "Delete Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
 
@@ -64,7 +72,9 @@ module.exports =class Register_Token {
             }
             return Promise.resolve({status:200,rs:rs});
         } catch (error) {
-            return Promise.reject({status:500,rs:" Register_Token not exists ! "  } );
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
 
@@ -78,7 +88,9 @@ module.exports =class Register_Token {
             return Promise.resolve({status:200,rs:rs});
              
          } catch (error) {
-            return Promise.reject({status:500,rs:"Not Found"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
          }
 
     }
@@ -119,7 +131,9 @@ module.exports =class Register_Token {
           return Promise.reject({status:406,rs:"failed create gmail"} );
             
         } catch (error) {
-           return Promise.reject({status:500,rs :error} );
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
 
                    
@@ -140,7 +154,9 @@ module.exports =class Register_Token {
        return Promise.reject({status:406,rs:"Incorrect check number"});
         
     } catch (error) {
-       return Promise.reject({status:500,rs:error});
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
 
 }

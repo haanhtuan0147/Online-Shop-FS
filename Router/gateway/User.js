@@ -11,7 +11,7 @@ Router.get('/',Controller.findAll);
 Router.get('/:id',Controller.findOne);
 Router.get('/User/findItem',Controller.findItem);
 Router.get('/User/findUser',Controller.findUser);
-Router.get('/User/customerreliability/:userId',Controller.customerreliability);
+Router.get('/Shopping_Cart/customerreliability/:userId',Controller.customerreliability);
 
 Router.post('/User/RegisterToken',Controller.RegisterToken);
 Router.post('/User/RegisterUser',Controller.RegisterUser);

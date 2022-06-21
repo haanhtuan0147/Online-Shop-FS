@@ -18,7 +18,10 @@ module.exports =class User {
             }
             return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         }  
     }
      create = async (req) => {
@@ -35,7 +38,10 @@ module.exports =class User {
             }
             return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         }  
     }
 
@@ -53,7 +59,10 @@ module.exports =class User {
             }
             return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         } 
     }
      delete = async (req) => {
@@ -68,7 +77,10 @@ module.exports =class User {
             }
             return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         } 
     }
 
@@ -85,7 +97,10 @@ module.exports =class User {
             }
             return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         } 
     }
 
@@ -104,7 +119,10 @@ module.exports =class User {
             }
             return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         } 
     }
     findUser= async (req) => {
@@ -119,7 +137,10 @@ module.exports =class User {
             }
             return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         } 
     }
     customerreliability= async (req) => {
@@ -134,7 +155,10 @@ module.exports =class User {
             }
             return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         } 
     }
     RegisterToken= async (req) => {
@@ -150,7 +174,10 @@ module.exports =class User {
             }
             return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         } 
     }
     RegisterUser= async (req) => {
@@ -166,7 +193,10 @@ module.exports =class User {
             }
             return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         } 
     }
     RegisterAdmin= async (req) => {
@@ -183,7 +213,10 @@ module.exports =class User {
             }
             return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         } 
     }
     Login= async (req) => {
@@ -201,7 +234,10 @@ module.exports =class User {
         } catch (error) {
             //console.log(error)
             //return Promise.reject(error.response.data)
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
 
         } 
     }

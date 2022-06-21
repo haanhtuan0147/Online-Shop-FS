@@ -13,7 +13,7 @@ Router.use(bodyParser.urlencoded({ extended: true }));
 
 Router.get('/', Controller.findAll);
         Router.get('/:id', Controller.findOne);
-        Router.get('/Product_CategoryfindItem', Controller.findItem);
+        Router.get('/Product_Category/findItem', Controller.findItem);
         Router.get('/Product_Category/checkArrayCategory', Controller.checkArrayCategory);
 
         Router.post('/',ControllerToken.RoleAdmin,ControllerToken.CheckToKenTime,Controller.create);

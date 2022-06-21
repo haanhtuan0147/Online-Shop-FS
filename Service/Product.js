@@ -37,7 +37,9 @@ module.exports =class Product {
         rs[i].Image=await this.ConverJsonimagetobase64(JSON.parse(rs[i].Image));
         return Promise.resolve({status:200,rs:rs});
     } catch (error) {
-        return Promise.reject({status:500,rs:"wrong syntax"} );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
     countpagefindAll = async () => {
@@ -45,7 +47,9 @@ module.exports =class Product {
         const rs = await Repository.findAll();
         return Promise.resolve({status:200,rs:{page:Math.ceil((Object.keys(rs).length)/10)}});
     } catch (error) {
-        return Promise.reject({status:500,rs:"wrong syntax"} );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      create = async (item) => {
@@ -62,7 +66,9 @@ module.exports =class Product {
             }
         return Promise.reject({status:406,rs: "Create Faild "});
         } catch (error) {
-            return Promise.reject({status:500,rs:"Create Faild "});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
         
     }
@@ -80,7 +86,9 @@ module.exports =class Product {
         }
         return Promise.reject({status:406,rs:"Update Faild" });
     } catch (error) {
-        return Promise.reject({status:500,rs:"Update Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
     UpdateQuantity= async (item) => {
@@ -94,7 +102,9 @@ module.exports =class Product {
             }
             return Promise.resolve({status:200,rs:"Sucsess" });
     } catch (error) {
-        return Promise.reject({status:500,rs:"Update Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      delete = async (id) => {
@@ -108,7 +118,9 @@ module.exports =class Product {
         }
         return Promise.resolve({status:200,rs:"Sucsuess"});
     } catch (error) {
-        return Promise.reject({status:500,rs:"Delete Faild"} );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      findOne = async (id) => {
@@ -120,7 +132,9 @@ module.exports =class Product {
             rs[0].Image=await this.ConverJsonimagetobase64(JSON.parse(rs[0].Image));
             return Promise.resolve({status:200,rs:rs});
         } catch (error) {
-            return Promise.reject({status:500,rs: " Product not exists ! "  } )
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
      findItem = async (item,page) => {
@@ -137,7 +151,9 @@ module.exports =class Product {
              
          } catch (error) {
              //console.log(error)
-            return Promise.reject({status:500,rs:"Not Found"});
+             if(error.sqlMessage)
+             return Promise.reject({status:406,rs:error.sqlMessage} );
+             return Promise.reject({status:500,rs:"Syntax error"});
          }
 
     }
@@ -147,7 +163,9 @@ module.exports =class Product {
            return Promise.resolve({status:200,rs:{page:Math.ceil((Object.keys(rs).length)/10)}});
             
         } catch (error) {
-           return Promise.reject({status:500,rs:"Not Found"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
 
    }
@@ -164,7 +182,9 @@ module.exports =class Product {
            return Promise.resolve({status:200,rs:rs});
             
         } catch (error) {
-           return Promise.reject({status:500,rs:"wrong syntax"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
 
    }
@@ -174,7 +194,9 @@ module.exports =class Product {
        return Promise.resolve({status:200,rs:{page:Math.ceil((Object.keys(rs).length)/10)}});
         
     } catch (error) {
-       return Promise.reject({status:500,rs:"wrong syntax"});
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
 
 }
@@ -191,7 +213,9 @@ module.exports =class Product {
        return Promise.resolve({status:200,rs:rs});
         
     } catch (error) {
-       return Promise.reject({status:500,rs:"wrong syntax"});
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
     countpagesearchbypriceBetween= async (sart,end) => {
@@ -199,7 +223,9 @@ module.exports =class Product {
            const rs = await Repository.searchbypriceBetween(sart,end,0);
            return Promise.resolve({status:200,rs:{page:Math.ceil((Object.keys(rs).length)/10)}});
         } catch (error) {
-           return Promise.reject({status:500,rs:"wrong syntax"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
         }
     searchbyname= async (name,page) => {
@@ -217,7 +243,9 @@ module.exports =class Product {
            //console.log(rs)
            return Promise.resolve({status:200,rs:rs});
         } catch (error) {
-           return Promise.reject({status:500,rs:"wrong syntax"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
         }
     countpagesearchbyname= async (name) => {
@@ -226,7 +254,9 @@ module.exports =class Product {
                const rs = await Repository.searchbyname(name,0);
                return Promise.resolve({status:200,rs:{page:Math.ceil((Object.keys(rs).length)/10)}});
             } catch (error) {
-               return Promise.reject({status:500,rs:"wrong syntax"});
+                if(error.sqlMessage)
+                return Promise.reject({status:406,rs:error.sqlMessage} );
+                return Promise.reject({status:500,rs:"Syntax error"});
             }
             }
      searchbycategory= async (category,page) => {
@@ -251,7 +281,9 @@ module.exports =class Product {
            rs[i].Image=await this.ConverJsonimagetobase64(JSON.parse(rs[i].Image));
            return Promise.resolve({status:200,rs:rs});
         } catch (error) {
-           return Promise.reject({status:500,rs:error});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
         }
         countpagesearchbycategory= async (category) => {
@@ -270,7 +302,9 @@ module.exports =class Product {
                //console.log(rs)
                return Promise.resolve({status:200,rs:{page:Math.ceil((Object.keys(rs).length)/10)}});
             } catch (error) {
-               return Promise.reject({status:500,rs:"wrong syntax"});
+                if(error.sqlMessage)
+                return Promise.reject({status:406,rs:error.sqlMessage} );
+                return Promise.reject({status:500,rs:"Syntax error"});
             }
             }
     CheckProduct=async(item)=>{
@@ -285,7 +319,9 @@ module.exports =class Product {
             }
             return Promise.resolve({status:200,rs: "All item Exist"});
         } catch (error) {
-            return Promise.reject({status:500,rs: "not item Exist"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
 
     }
@@ -297,7 +333,9 @@ module.exports =class Product {
             return Promise.resolve({status:200,rs:[]});
             return Promise.resolve({status:200,rs:rs});
         } catch (error) {
-            return Promise.reject({status:500,rs: "not find item array "});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
     findDetailsProduct=async(page,item)=>{
@@ -312,7 +350,9 @@ module.exports =class Product {
             rs[i].Image=await this.ConverJsonimagetobase64(JSON.parse(rs[i].Image));
             return Promise.resolve({status:200,rs:rs});
         } catch (error) {
-            return Promise.reject({status:500,rs: "not find item array "});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
     countpagefindDetailsProduct=async(item)=>{
@@ -322,7 +362,9 @@ module.exports =class Product {
         } catch (error) {
             //console.log("vào đây")
             //console.log(error)
-            return Promise.reject({status:500,rs: "not find item array "});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
 }

@@ -17,7 +17,9 @@ module.exports =class Product_Reviews {
         }
         return Promise.resolve({status:200,rs:rs});
     } catch (error) {
-        return Promise.reject({status:500,rs:"wrong syntax"} );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      create = async (item,token) => {
@@ -30,7 +32,7 @@ module.exports =class Product_Reviews {
             //console.log(select)
             if(!select)return Promise.reject({status:406,rs: " Token not exists ! "  });
             //console.log(select.userId!=item.userId)
-            if(select.AccountRights!=constdefault.AccountUser)return Promise.reject({status:406,rs:" You have no right to create !"  });
+            if(select.AccountRights!=constdefault.AccountUser)return Promise.reject({status:406,rs:" You have no right AccountUser !"  });
             item.userId=select.userId
             //console.log(item)
             const rs = await Repository.create(item);
@@ -43,7 +45,9 @@ module.exports =class Product_Reviews {
             }
         return Promise.reject({status:406,rs:"Create Faild "});
         } catch (error) {
-            return Promise.reject({status:500,rs:"Create Faild "});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
         
     }
@@ -65,7 +69,9 @@ module.exports =class Product_Reviews {
             }
             return Promise.resolve();
         } catch (error) {
-            return Promise.reject({status:500,rs:"checkreallyProductReiview Faild "});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
         
     }
@@ -89,7 +95,9 @@ module.exports =class Product_Reviews {
             }
             return Promise.reject({status:406,rs: "Update Faild" });
     } catch (error) {
-        return Promise.reject({status:500,rs:"Update Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
     createimagereview= async (id,images,token) => {
@@ -101,18 +109,20 @@ module.exports =class Product_Reviews {
             });
             if(!select)return Promise.reject({status:406,rs:"Token not exists !"});
             const findoneproductreview  = await Repository.findOne(id);
-            if (Object.keys(rs1).length == 0) {
+            if (Object.keys(findoneproductreview).length == 0) {
                 return Promise.reject({status:406,rs:" Product_Reviews not exists ! "  });
             }
-            //console.log(select)
-            if(select.userId!=findoneproductreview[0].userId)return Promise.reject({status:406,rs:" You have no right to change !"  });
+            //console.log(findoneproductreview)
+            if(select.userId!=findoneproductreview[0].userId)return Promise.reject({status:406,rs:" you don't have to have the right to change!"  });
             const rs =await RepositoryImage_Reviews.create({id:v4(),productReviewsId:id,Image:images});
             if (rs) {
                 return Promise.resolve({status:200,rs:"createimagereview Sucsess" });
             }
             return Promise.reject({status:406,rs: "createimagereview Faild" });
     } catch (error) {
-        return Promise.reject({status:500,rs:"wrong syntax" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      delete = async (id) => {
@@ -130,7 +140,9 @@ module.exports =class Product_Reviews {
             }
             return Promise.resolve({status:200,rs:"Sucsuess"});
     } catch (error) {
-        return Promise.reject({status:500,rs:"Delete Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
 
@@ -138,11 +150,13 @@ module.exports =class Product_Reviews {
         try {
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
-                return Promise.resolve([]);
+                return Promise.resolve({status:200,rs:[]});
             }
             return Promise.resolve({status:200,rs:rs});
         } catch (error) {
-            return Promise.reject({status:500,rs:" Product_Reviews not exists ! "  } );
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
      findItem = async (item) => {
@@ -154,7 +168,9 @@ module.exports =class Product_Reviews {
             return Promise.resolve({status:200,rs:rs});
              
          } catch (error) {
-            return Promise.reject({status:500,rs:"Not Found"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
          }
 
     }
@@ -167,7 +183,9 @@ module.exports =class Product_Reviews {
            return Promise.resolve({status:200,rs:rs});
             
         } catch (error) {
-           return Promise.reject({status:500,rs:"Not Found"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
    }
    
@@ -180,7 +198,9 @@ module.exports =class Product_Reviews {
        return Promise.resolve({status:200,rs:rs});
         
     } catch (error) {
-       return Promise.reject({status:500,rs:"Not Found"});
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
 }
 

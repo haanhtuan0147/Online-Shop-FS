@@ -49,7 +49,9 @@ module.exports =class User {
         rs[i].Avatar=await this.converimagetobase64(rs[i].Avatar);
         return Promise.resolve({status:200,rs:rs});
     } catch (error) {
-        return Promise.reject({status:500,rs:"error"} );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      create = async (item) => {
@@ -64,7 +66,9 @@ module.exports =class User {
             }
         return Promise.reject({status:406,rs:"Create Faild "});
         } catch (error) {
-            return Promise.reject({status:500,rs: "Create Faild "});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
         
     }
@@ -111,7 +115,9 @@ module.exports =class User {
             rs[0].Avatar=await this.converimagetobase64(rs[0].Avatar);
             return Promise.resolve({status:200,rs:rs});
         } catch (error) {
-            return Promise.reject({status:500,rs:" User not exists ! "  } );
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
 
@@ -138,7 +144,9 @@ module.exports =class User {
             rs[i].Avatar=await this.converimagetobase64(rs[i].Avatar);
             return Promise.resolve({status:200,rs:rs});
          } catch (error) {
-            return Promise.reject({status:500,rs:"Not Found"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
          }
 
     }
@@ -154,7 +162,9 @@ module.exports =class User {
            return Promise.resolve({status:406,rs:"Not Found Password"});
             
         } catch (error) {
-           return Promise.reject({status:500,rs:"error"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
 
    }
@@ -174,7 +184,9 @@ module.exports =class User {
         finduser[i].Avatar=await this.converimagetobase64(finduser[i].Avatar);
         return Promise.resolve({status:200,rs:finduser}) ;
     } catch (error) {
-       return Promise.reject({status:500,rs:"error"});
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
 
    }
@@ -211,7 +223,9 @@ module.exports =class User {
        }
        return Promise.reject({status:406,rs:"Update Faild" });
     } catch (error) {
-       return Promise.reject({status:500,rs:"wrong syntax"});
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
 
    }
@@ -230,7 +244,9 @@ module.exports =class User {
        }
        return Promise.resolve({status:200,rs: "Sucsuess"});
     } catch (error) {
-       return Promise.reject({status:500,rs:"wrong syntax"});
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
 
    }
@@ -242,7 +258,9 @@ module.exports =class User {
        }
        return Promise.reject({status:406,rs:"Email already exists"} );
     } catch (error) {
-       return Promise.reject({status:500,rs:"wrong syntax"});
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
 
    }

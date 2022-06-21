@@ -13,7 +13,9 @@ module.exports =class Product_Category {
         }
         return Promise.resolve({status:200,rs:rs})
     } catch (error) {
-        return Promise.reject({status:500,rs:"wrong syntax"} )
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      create = async (item) => {
@@ -21,7 +23,7 @@ module.exports =class Product_Category {
             const onefield =await RepositoryField.findOne(item.fieldId);
             if(Object.keys(onefield).length==0)
             return Promise.reject({status:406,rs:"not is fieldid Exist"});
-            const checknamecategory=await this.findItem({CategoryName:item.CategoryName});
+            const checknamecategory=await Repository.findItem({CategoryName:item.CategoryName});
             if(Object.keys(checknamecategory).length>0)
             return Promise.reject({status:406,rs:"Faild category name exits"});
             const rs = await Repository.create(item);
@@ -33,7 +35,9 @@ module.exports =class Product_Category {
             }
         return Promise.reject({status:406,rs: "Create Faild "});
         } catch (error) {
-            return Promise.reject({status:500,rs: "Create Faild "});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
         
     }
@@ -45,7 +49,7 @@ module.exports =class Product_Category {
                 return Promise.reject({status:406,rs: "not is fieldid Exist"});
             }
             if(item.CategoryName){
-                const checknamecategory=await this.findItem({CategoryName:item.CategoryName});
+                const checknamecategory=await Repository.findItem({CategoryName:item.CategoryName});
                 if(Object.keys(checknamecategory).length>0)
                 return Promise.reject({status:406,rs:  "Faild category name exits"});
             }
@@ -56,7 +60,9 @@ module.exports =class Product_Category {
         }
         return Promise.reject({status:406,rs:"Update Faild" });
     } catch (error) {
-        return Promise.reject({status:500,rs:"Update Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      delete = async (id) => {
@@ -67,7 +73,9 @@ module.exports =class Product_Category {
         }
         return Promise.resolve({status:200,rs:"Sucsuess"});
     } catch (error) {
-        return Promise.reject({status:500,rs:"Delete Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
 
@@ -79,7 +87,9 @@ module.exports =class Product_Category {
             }
             return Promise.resolve({status:200,rs:rs});
         } catch (error) {
-            return Promise.reject({status:500,rs:" Product_Category not exists ! "  } );
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
 
@@ -93,7 +103,9 @@ module.exports =class Product_Category {
             return Promise.resolve({status:200,rs:rs});
              
          } catch (error) {
-            return Promise.reject({status:500,rs:"Not Found"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
          }
 
     }
@@ -108,7 +120,9 @@ module.exports =class Product_Category {
            return Promise.resolve({status:200,rs:"Sucsuess"});
             
         } catch (error) {
-           return Promise.reject({status:500,rs:"Not Found"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
 
    }

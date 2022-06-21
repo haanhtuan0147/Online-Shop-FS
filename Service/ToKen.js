@@ -18,7 +18,9 @@ module.exports =class ToKen {
         }
         return Promise.resolve({status:200,rs:rs});
     } catch (error) {
-        return Promise.reject({status:500,rs:"wrong syntax"} );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      create = async (item) => {
@@ -34,7 +36,9 @@ module.exports =class ToKen {
             }
         return Promise.reject({status:406,rs:"Create Faild "});
         } catch (error) {
-            return Promise.reject({status:500,rs:"Create Faild "});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
         
     }
@@ -47,7 +51,9 @@ module.exports =class ToKen {
         }
         return Promise.reject({status:406,rs:"Update Faild" });
     } catch (error) {
-        return Promise.reject({status:500,rs:"Update Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      delete = async (id) => {
@@ -58,7 +64,9 @@ module.exports =class ToKen {
         }
         return Promise.resolve({status:200,rs:"Sucsuess"});
     } catch (error) {
-        return Promise.reject({status:500,rs:"Delete Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
 
@@ -70,7 +78,9 @@ module.exports =class ToKen {
             }
             return Promise.resolve({status:200,rs:rs});
         } catch (error) {
-            return Promise.reject({status:500,rs:" ToKen not exists ! "  } );
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
 
@@ -84,7 +94,9 @@ module.exports =class ToKen {
             return Promise.resolve({status:200,rs:rs});
              
          } catch (error) {
-            return Promise.reject({status:500,rs:"Not Found"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
          }
 
     }
@@ -104,7 +116,9 @@ module.exports =class ToKen {
             return Promise.resolve({status:200,rs:{Message:"Success",ToKen:token}});
             return Promise.reject({status:406,rs:"Add Defective Token"});
         } catch (error) {
-            return Promise.reject({status:500,rs:"Add Defective Token"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error Token"});
         }
    }
    RoleRoot=async (token) => {
@@ -115,12 +129,13 @@ module.exports =class ToKen {
             return data;
             return false;
         });
+        console.log(select)
         if(!select)return Promise.reject({status:406,rs:"Token Does Not Exist!"})
         if(select.AccountRights==constdefault.AccountRoot)
             return Promise.resolve();
             return Promise.reject({status:406,rs:"You Are Insufficient"});
         } catch (error) {
-            return Promise.reject({status:500,rs:"You Are Insufficient"});
+            return Promise.reject({status:500,rs:"Syntax error Token"});
         }
     }
     RoleAdmin=async (token) => {
@@ -131,13 +146,14 @@ module.exports =class ToKen {
                 return data;
                 return false;
             });
-            //console.log(token)
-            if(!select)return Promise.reject({status:406,rs:"Token Does Not Exist!"})
+            console.log(select)
+            if(!select)return Promise.reject({status:406,rs:"Token Does Not Exist!"});
                if(select.AccountRights==constdefault.AccountRoot||select.AccountRights==constdefault.AccountAdmin)
                 return Promise.resolve();
                 return Promise.reject({status:406,rs:"You Are Insufficient"});
             } catch (error) {
-                return Promise.reject({status:500,rs:"You Are Insufficient"});
+                return Promise.reject({status:500,rs:"Syntax error Token"});
+
             }
         }
     RoleUser=async (token) => {
@@ -153,7 +169,7 @@ module.exports =class ToKen {
             return Promise.resolve();
             return Promise.reject({status:406,rs:"You Are Insufficient"});
         } catch (error) {
-            return Promise.reject({status:500,rs:"You Are Insufficient"});
+            return Promise.reject({status:500,rs:"Syntax error Token"});
         }
     }
     resfresh=async(select,date)=>{
@@ -165,27 +181,31 @@ module.exports =class ToKen {
             return Promise.reject({status:406,rs:"Token Not Generated"});
             
         } catch (error) {
-            return Promise.reject({status:500,rs:"Token Not Generated"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
      
     }
     CheckToKenTime=async(token)=>{
         try {
-            const select= await Repository.SelectToken({ToKen:token});
+            const select= await Repository.findItem({ToKen:token});
             //console.log(select)
             if(Object.keys(select).length==0)
             return Promise.reject({status:406,rs:"Token Does Not Exist!"});
             const date=((new Date()).getTime()+25200000);
-            const date2=((new Date(select.updatedDate)).getTime())+10800000;
+            const date2=((new Date(select[0].updatedDate)).getTime())+10800000;
             if(date>date2)
-            return Promise.reject({status:406,rs:"Token Expired!"});
+            return Promise.reject({status:406,rs:"Token out of date!"});
             if(date+3600000>date2)
             {
                 return this.resfresh(select,date);       
             }
             return Promise.resolve();
         } catch (error) {
-            return Promise.reject({status:500,rs:"Token Does Not Exist!"})
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error Date Token"});
         }
     }
 

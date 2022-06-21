@@ -27,7 +27,7 @@ module.exports=class Shopping_Cart {
         item.ShoppingCart.IntendTime=new Date(date.getTime()+(1000*60*60*7)+(1000*60*60*24*7))
         service.create(item.ShoppingCart,token)
         .then(result => {
-            Order_Product.createarray(item.ShoppingCart.id,item.item).then(re=>{baseController.sendResponse({ShoppingCart:result,OrderProduct:re}, req, res);}).catch(err => { baseController.sendResponse(err, req, res); });
+            Order_Product.createarray(item.ShoppingCart.id,item.item).then(re=>{baseController.sendResponse({status:200,rs:{ShoppingCart:result,OrderProduct:re}}, req, res);}).catch(err => { baseController.sendResponse(err, req, res); });
         })
         .catch(err => { baseController.sendResponse(err, req, res); });
     }

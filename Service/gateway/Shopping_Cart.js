@@ -22,7 +22,10 @@ module.exports =class Shopping_Cart {
             }
             return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         }   
     }
      create = async (req) => {
@@ -36,14 +39,15 @@ module.exports =class Shopping_Cart {
                 const productone=await apiProduct.get(`/Product/${body.item[i].productId}`,{headers: {
                     'Content-Type': 'application/json;charset=utf-8'
                   }});
-                if(productone.status!=200)
-                return Promise.reject({status:406,rs: "NOT CREATE Shopping_Cart"});
+                if(Object.keys(productone.data.result).length==0)
+                return Promise.reject({status:406,rs: `NOT Exits Product ${body.item[i].productId}`});
                 var Quantityater=Number(productone.data.result[0].Quantity)-Number(body.item[i].numberProduct);
                 if(Quantityater<0)
                 return Promise.reject({status:406,rs:"Quantiy product insufficient "+body.item[i].productId+Quantityater+"Number product"});
                 Quantity.push({id:productone.data.result[0].id,Quantity:Quantityater});
                 body.item[i].Money=productone.data.result[0].Money;
             }
+            //console.log(Quantity)
             //console.log("loc sản phẩm")
             //console.log(req.headers['authorization'])
             //thêm vào shopping cart
@@ -61,12 +65,16 @@ module.exports =class Shopping_Cart {
                 'Content-Type': 'application/json;charset=utf-8',
                 'authorization': req.headers['authorization']
               }});
+              //console.log(QuantityProduct)
             //console.log("thay đổi lại số lượng sản phẩm")
             if(QuantityProduct.status!=200)
             return Promise.reject({status:406,rs:"NOT Update Quantity product"});
-            return Promise.resolve({status:rs.status,rs:insertshopiingcar.data.result});
+            return Promise.resolve({status:insertshopiingcar.status,rs:{ShoppingCart:insertshopiingcar.data.result.ShoppingCart.rs,OrderProduct:insertshopiingcar.data.result.OrderProduct.rs}});
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+          if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result});
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
      findOne = async (req) => {
@@ -81,7 +89,10 @@ module.exports =class Shopping_Cart {
             }
             return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         }  
     }
 
@@ -100,7 +111,10 @@ module.exports =class Shopping_Cart {
             }
             return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         }  
     }
     findShoppingcarttotalmoney= async (req) => {
@@ -117,7 +131,10 @@ module.exports =class Shopping_Cart {
             }
             return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         }  
   
     }
@@ -133,7 +150,10 @@ module.exports =class Shopping_Cart {
             }
             return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         }  
     }
     CancelConfirmTransportSuccess= async (req) => {
@@ -180,7 +200,10 @@ module.exports =class Shopping_Cart {
             //console.log("hoàn thành thay đổi")
             return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         }  
     }
     CheckProduct= async (req) => {
@@ -201,7 +224,10 @@ module.exports =class Shopping_Cart {
             }
             return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         }  
     }
     CheckUserReally= async (req) => {
@@ -214,13 +240,16 @@ module.exports =class Shopping_Cart {
             {
                 return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            if(rs.data.result==[])
+            if(Object.keys(rs.data.result).length==0)
             {
                 return Promise.reject({status:406,rs:"CheckUserReally fail"});
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }  
     }
 

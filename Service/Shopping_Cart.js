@@ -34,7 +34,9 @@ module.exports =class Shopping_Cart {
                 return Promise.resolve({status:200,rs:rs});
             }
     } catch (error) {
-        return Promise.reject({status:500,rs:"wrong syntax"} );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      create = async (item,token) => {
@@ -59,7 +61,9 @@ module.exports =class Shopping_Cart {
             }
         return Promise.reject({status:406,rs: "Create Faild Shopping_Cart"});
         } catch (error) {
-            return Promise.reject({status:500,rs: "Create Faild Shopping_Cart"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
         
     }
@@ -72,7 +76,9 @@ module.exports =class Shopping_Cart {
         }
         return Promise.reject({status:406,rs: "Update Faild" });
     } catch (error) {
-        return Promise.reject({status:500,rs: "Update Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      delete = async (id) => {
@@ -83,7 +89,9 @@ module.exports =class Shopping_Cart {
         }
         return Promise.resolve({status:200,rs: "Sucsuess"});
     } catch (error) {
-        return Promise.reject({status:500,rs: "Delete Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      findOne = async (id,token) => {
@@ -101,10 +109,12 @@ module.exports =class Shopping_Cart {
                 return Promise.resolve({status:200,rs:[]});
             }
             if(select.AccountRights==constdefault.AccountUser&&rs[0].userId!=select.userId)
-            return Promise.reject({ messager: " you do not have permission to view this user's shopping cart ! "  });
+            return Promise.reject({status:406,rs:" you do not have permission to view this user's shopping cart ! "  });
             return Promise.resolve({status:200,rs:rs});
         } catch (error) {
-            return Promise.reject({status:500,rs: " Shopping_Cart not exists ! "  } );
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
      findItem = async (item,token) => {
@@ -125,7 +135,9 @@ module.exports =class Shopping_Cart {
             return Promise.resolve({status:200,rs:rs});
              
          } catch (error) {
-            return Promise.reject({status:500,rs:"Not Found"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
          }
 
     }
@@ -146,7 +158,9 @@ module.exports =class Shopping_Cart {
            return Promise.resolve({status:200,rs:rs});
             
         } catch (error) {
-           return Promise.reject({status:500,rs:"Not Found"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
 
    }
@@ -161,7 +175,7 @@ module.exports =class Shopping_Cart {
         if(!select) return Promise.reject({status:406,rs:"not user?"});
         const checkshoppingcart=await Repository.findOne(id);
         if(Object.keys(checkshoppingcart).length==0)return Promise.resolve({status:200,rs:[]});
-        if(select.AccountRights==constdefault.AccountUser&&checkshoppingcart[0].userId!=select.userId)return Promise.resolve([]);
+        if(select.AccountRights==constdefault.AccountUser&&checkshoppingcart[0].userId!=select.userId)return Promise.resolve({status:200,rs:[]});
         const rs = await Repositoryorder_product.findShoppingcarttotalmoneydetail(id);
         if (Object.keys(rs).length == 0) {
             return Promise.resolve({status:200,rs:[]});
@@ -169,7 +183,9 @@ module.exports =class Shopping_Cart {
         return Promise.resolve({status:200,rs:rs});
         
     } catch (error) {
-       return Promise.reject({status:500,rs:"Not Found"});
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
 
     }
@@ -196,7 +212,9 @@ module.exports =class Shopping_Cart {
             }
             return Promise.resolve({status:200,rs:rs}); 
         } catch (error) {
-           return Promise.reject({status:500,rs:"Not Found"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
     
         }
@@ -232,6 +250,8 @@ module.exports =class Shopping_Cart {
             next();
             } 
             catch (error) {
+                if(error.sqlMessage)
+                 baseController.sendResponse({status:406,rs:error.sqlMessage}, req, res);
                  baseController.sendResponse({status:500,rs:"wrong syntax"}, req, res);
             }
         
@@ -257,7 +277,9 @@ module.exports =class Shopping_Cart {
         if(rs)return Promise.resolve({status:200,rs:"successfully Status the order!"});
         return Promise.reject({status:406,rs:"this status cannot be saved!"});
         } catch (error) {
-            return Promise.reject({status:500,rs:"wrong syntax"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
         
     }

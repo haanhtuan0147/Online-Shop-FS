@@ -12,7 +12,10 @@ module.exports =class Product {
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result})  ;         
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
     pagecountfindAll = async (req) => {
@@ -24,7 +27,10 @@ module.exports =class Product {
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result})  ;         
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
      create = async (req) => {
@@ -41,7 +47,10 @@ module.exports =class Product {
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result}) ;          
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
     checkArrayCategory=async(req)=>{
@@ -57,7 +66,10 @@ module.exports =class Product {
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result});           
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
      update = async (req) => {
@@ -74,7 +86,10 @@ module.exports =class Product {
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result}) ;          
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
      delete = async (req) => {
@@ -89,7 +104,10 @@ module.exports =class Product {
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result});          
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
 
@@ -105,7 +123,10 @@ module.exports =class Product {
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result});           
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
 
@@ -123,7 +144,10 @@ module.exports =class Product {
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
     pagecountfindItem = async (req) => {
@@ -139,7 +163,10 @@ module.exports =class Product {
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
     searchbyprice=async (req) => {     
@@ -153,7 +180,10 @@ module.exports =class Product {
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
     pagecountsearchbyprice=async (req) => {     
@@ -167,7 +197,10 @@ module.exports =class Product {
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
     searchbypriceBetween= async (req) => {
@@ -183,7 +216,10 @@ module.exports =class Product {
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
     pagecountsearchbypriceBetween= async (req) => {
@@ -199,7 +235,10 @@ module.exports =class Product {
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
     searchbyname= async (req) => {
@@ -213,7 +252,10 @@ module.exports =class Product {
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
     
@@ -228,7 +270,10 @@ module.exports =class Product {
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
     findAVGNumberStarProduct= async (req) => {
@@ -242,7 +287,10 @@ module.exports =class Product {
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
     countpagefindDetailsProduct= async (req) => {
@@ -256,7 +304,10 @@ module.exports =class Product {
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
     findDetailsProduct= async (req) => {
@@ -270,7 +321,10 @@ module.exports =class Product {
             }
             return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({status:error.response.status,rs:error.response.data});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
 }

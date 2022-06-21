@@ -14,7 +14,9 @@ module.exports =class Image_Reviews {
         }
         return Promise.resolve({status:200,rs:rs});
     } catch (error) {
-        return Promise.reject({status:500,rs:error} );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      create = async (item) => {
@@ -31,7 +33,9 @@ module.exports =class Image_Reviews {
             }
         return Promise.reject({status:406,rs:"Create Faild "});
         } catch (error) {
-            return Promise.reject({status:500,rs:"Create Faild "});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
         
     }
@@ -44,7 +48,9 @@ module.exports =class Image_Reviews {
         }
         return Promise.reject({status:406,rs:"Update Faild" });
     } catch (error) {
-        return Promise.reject({status:500,rs: "Update Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      delete = async (id) => {
@@ -55,7 +61,9 @@ module.exports =class Image_Reviews {
         }
         return Promise.resolve({status:200,rs:"Sucsuess"});
     } catch (error) {
-        return Promise.reject({status:500,rs:"Delete Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
 
@@ -67,7 +75,9 @@ module.exports =class Image_Reviews {
             }
             return Promise.resolve({status:200,rs:rs});
         } catch (error) {
-            return Promise.reject({status:500,rs: " Image_Reviews not exists ! "  } );
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
 
@@ -81,7 +91,9 @@ module.exports =class Image_Reviews {
             return Promise.resolve({status:200,rs:rs});
              
          } catch (error) {
-            return Promise.reject({status:500,rs:"Not Found"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
          }
 
     }
@@ -116,7 +128,9 @@ module.exports =class Image_Reviews {
           return Promise.resolve({status:200,rs:listimage});
             
         } catch (error) {
-           return Promise.reject({status:500,rs:"Not Found"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
 
    }
@@ -133,7 +147,9 @@ module.exports =class Image_Reviews {
       return Promise.resolve({status:200,rs:listimage});
         
     } catch (error) {
-       return Promise.reject({status:500,rs:"Not Found"});
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
 
    }

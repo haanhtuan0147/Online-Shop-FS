@@ -35,7 +35,7 @@ module.exports=class Shopping_Cart {
         });
     }
     findShoppingcarttotalmoney=  (req, res, next) => {
-        service.findShoppingcart_totalmoney(req).then((result) => {
+        service.findShoppingcarttotalmoney(req).then((result) => {
             baseController.sendResponse(result, req, res);
         }).catch((err) => {
              baseController.sendResponse(err, req, res);

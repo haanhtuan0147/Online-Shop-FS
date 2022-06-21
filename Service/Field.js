@@ -13,12 +13,14 @@ module.exports =class Field {
         }
         return Promise.resolve({status:200,rs:rs});
     } catch (error) {
-        return Promise.reject({status:500,rs:"not find"} );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      create = async (item) => {
         try {
-            const checknamefield=await this.findItem({FieldName:item.FieldName})
+            const checknamefield=await Repository.findItem({FieldName:item.FieldName})
             if(Object.keys(checknamefield).length>0)
             return Promise.reject({status:406,rs: "Faild field name exits"});
             const rs = await Repository.create(item);
@@ -30,14 +32,16 @@ module.exports =class Field {
             }
         return Promise.reject({status:406,rs:"Create Faild item not right"});
         } catch (error) {
-            return Promise.reject({status:500,rs:"Create Faild "});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
         
     }
      update = async (id, item) => {
         try{
         if(item.FieldName){
-            const checknamefield=await this.findItem({FieldName:item.FieldName})
+            const checknamefield=await Repository.findItem({FieldName:item.FieldName})
             if(Object.keys(checknamefield).length>0)
             return Promise.reject({status:406,rs:"Faild field name exits"});
         }
@@ -48,7 +52,9 @@ module.exports =class Field {
         }
         return Promise.reject({status:406,rs:"Update Faild" });
     } catch (error) {
-        return Promise.reject({status:500,rs:"Update Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      delete = async (id) => {
@@ -62,7 +68,9 @@ module.exports =class Field {
             }
            return Promise.resolve({status:200,rs: "Sucsuess"});
     } catch (error) {
-        return Promise.reject({status:500,rs: "Delete Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
 
@@ -74,7 +82,9 @@ module.exports =class Field {
             }
             return Promise.resolve({status:200,rs:rs});
         } catch (error) {
-            return Promise.reject({status:500,rs:" Field not exists ! "  } );
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
 
@@ -88,7 +98,9 @@ module.exports =class Field {
             return Promise.resolve({status:200,rs:rs});
              
          } catch (error) {
-            return Promise.reject({status:500,rs:"Not Found findItem"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
          }
 
     }
@@ -101,7 +113,9 @@ module.exports =class Field {
            return Promise.resolve({status:200,rs:rs});
             
         } catch (error) {
-           return Promise.reject({status:500,rs:"Not Found findcategory"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
 
    }

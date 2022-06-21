@@ -88,7 +88,7 @@ module.exports=class ToKen {
                 next();
             })
             .catch((err) => {
-                res.json(err)
+                baseController.sendResponse(err, req, res);
             })
         }
     RoleAdmin = (req,res,next) => {
@@ -99,7 +99,7 @@ module.exports=class ToKen {
                     next();
             })
             .catch((err) => {
-                    res.json(err)
+                baseController.sendResponse(err, req, res);
             })
     }
     RoleUser = (req,res,next) => {
@@ -112,7 +112,7 @@ module.exports=class ToKen {
                 next();
             })
         .catch((err) => {
-                        res.json(err)
+            baseController.sendResponse(err, req, res);
         })
     }
 }
