@@ -152,14 +152,17 @@ module.exports =class User {
     }
     findEmailPass= async (Email,pass) => {
         try {
-            //console.log(Email)
-           const rs = await Repository.findItem({Email:Email,isDelete:0});
+           const rs = await Repository.findItem({Email:Email});
            if (Object.keys(rs).length == 0) {
                return Promise.reject({status:406,rs:"Not Found Email"} );
            }
-           if(pass==rs[0].Password)
-           return Promise.resolve({Email:rs[0].Email});
-           return Promise.resolve({status:406,rs:"Not Found Password"});
+           if(rs[0].isDelete==0){
+            if(pass==rs[0].Password)
+            return Promise.resolve({Email:rs[0].Email});
+            else
+            return Promise.reject({status:406,rs:"Not Found Password"});
+           }
+           return Promise.reject({status:406,rs:"Account is currently locked"});
             
         } catch (error) {
             if(error.sqlMessage)
@@ -193,10 +196,9 @@ module.exports =class User {
    updateAccountRights= async (id,item,token) => {
     try {
        const checktoken = await RepositoryToken.findItem({Token:token});
-       if (Object.keys(rs).length == 0) {
+       if (Object.keys(checktoken).length == 0) {
            return Promise.reject({status:406,rs:"Not Found"} )
        }
-      
        const checkuse = await Repository.findItem({id:checktoken[0].userId});
        if (Object.keys(checkuse).length == 0) {
            return Promise.reject({status:406,rs: "Not Found"} )

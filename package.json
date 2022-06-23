@@ -22,6 +22,7 @@
     "express-session": "^1.17.3",
     "form-data": "^4.0.0",
     "formidable": "^2.0.1",
+    "googleapis": "^104.0.0",
     "http-proxy-middleware": "^2.0.6",
     "image-to-base64": "^2.2.0",
     "jsonwebtoken": "^8.5.1",

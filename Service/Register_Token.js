@@ -1,8 +1,10 @@
-const Register_TokenRepository=require('../Repository/Register_Token')
+const Register_TokenRepository=require('../Repository/Register_Token');
 const Repository = new Register_TokenRepository();
-const dotenv=require('dotenv')
-dotenv.config()
-const nodemailer=require('nodemailer')
+const dotenv=require('dotenv');
+dotenv.config();
+const nodemailer=require('nodemailer');
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
 
 
 module.exports =class Register_Token {
@@ -99,44 +101,71 @@ module.exports =class Register_Token {
     }
     CreateRegisterToken=  async (item) => {
         try {
+            var Email=/^[a-z0-9](.?[a-z0-9]){5,}@gmail.com$/g
+            if (!item.Email.match(Email)) {
+                return Promise.reject({status:406,rs:"failed create gmail"} );
+            }
            item.numberCheck=this.ramdom();
-           var transporter = nodemailer.createTransport({
-             service: 'gmail',
-             auth: {
-               user: process.env.Gmail,
-               pass: process.env.pass
-             }
-           });
+           const oauth2Client = new OAuth2(
+            process.env.CLIENT_ID,
+            process.env.CLIENT_SECRET,
+            "https://developers.google.com/oauthplayground"
+          );
+        
+          oauth2Client.setCredentials({
+            refresh_token: process.env.REFRESH_TOKEN
+          });
+          const accessToken =await new Promise((resolve, reject) => {
+              oauth2Client.getAccessToken((err, token) => {
+              if (err) {
+                  
+                  resolve(null);
+              }
+              resolve(token);
+            });
+          })
+          //console.log(accessToken)
+          if(!accessToken)
+          return Promise.reject({status:406,rs:"failed create gmail Accectoken"} );
+        
+          const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+              type: "OAuth2",
+              user: process.env.Gmail,
+              accessToken,
+              clientId: process.env.CLIENT_ID,
+              clientSecret: process.env.CLIENT_SECRET,
+              refreshToken: process.env.REFRESH_TOKEN
+            }
+          });
            var mailOptions = {
-             from: process.env.Gmail,
-             to: item.Email,
-             subject: 'Gửi email dùng Node.js --- dammio.com',
-             text: item.numberCheck
-           };
-            transporter.sendMail(mailOptions,function(error, info){
-                if(error){
-                    console.log(error);
+            from: process.env.Gmail,
+            to: item.Email,
+            subject: 'Gửi email dùng Node.js --- dammio.com',
+            text: item.numberCheck
+          }
+           transporter.sendMail(mailOptions,function(error, info){
+            if(error){
+                console.log(error)
+            }
+            else{
+                console.log(info)
+
+            }
+          })
+            const rs=await Repository.create(item);
+                if(rs) {
+                    return Promise.resolve({status:200,rs: "Sucsuess"
+                })
                 }
-                else{
-                    console.log("Sucsuess"+info);
-                }
-   
-           });
-           //console.log(item)
-          const rs=await Repository.create(item);
-               if(rs) {
-                   return Promise.resolve({status:200,rs: "Sucsuess"
-               });
-               }
-          return Promise.reject({status:406,rs:"failed create gmail"} );
-            
-        } catch (error) {
+         return Promise.reject({status:406,rs:"failed create gmail"} )
+             
+         } catch (error) {
             if(error.sqlMessage)
             return Promise.reject({status:406,rs:error.sqlMessage} );
             return Promise.reject({status:500,rs:"Syntax error"});
-        }
-
-                   
+         }
    }
    CheckNumberRegisterToken=async (item) => {
     try {

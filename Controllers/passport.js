@@ -3,6 +3,8 @@ const passport =require("passport");
 const ServiceUser =require('../Service/User')
 const Service=new ServiceUser()
 const localStrategy = require('passport-local').Strategy;
+const BaseController =require('./BaseController');
+const baseController = new BaseController();
  passport.use(new localStrategy(async (username, password, done) => {
  await Service.findEmailPass(username, password).then(result=>{
     return done(null, result);
@@ -20,7 +22,7 @@ const localStrategy = require('passport-local').Strategy;
 })
 exports.Authenticate =(req, res, next) => {
     passport.authenticate('local', async(err, user) => {
-    if (!user.Email) return res.status(user.status).json({ message: user.rs});
+    if (!user.Email) return baseController.sendResponse(user, req, res);
     else {
         //res.json(user.Email)
         req.user =user.Email;
