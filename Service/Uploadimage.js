@@ -46,12 +46,11 @@ const upload = async (req, res) => {
     try {
       await uploadFileMiddleware(req, res);
       if (req.file == undefined) {
-        return Promise.reject({ message: "Please upload a file!" });
+        return Promise.reject({status:406,rs: "Please upload a file!" });
       }
-      return Promise.resolve({result:req.file.filename});
+      return Promise.resolve({status:200,rs:req.file.filename});
     } catch (err) {
-      return Promise.reject({
-        message: `Could not upload the file: ${req.file.originalname}. ${err}`,
+      return Promise.reject({status:500,rs: `Could not upload the file: ${req.file.originalname}. ${err}`,
       });
     }
   };
@@ -61,13 +60,12 @@ const UploadVi = async (req, res) => {
     //console.log(">>>>>>>>> vào đây",req)
     await UploadArrayMiddleware(req, res);
     if (req.files == undefined) {
-      return Promise.reject({ message: "Please upload a file!" });
+      return Promise.reject({status:406,rs: "Please upload a file!" });
     }
     var image= await convertimage(req.files);
-    return Promise.resolve({result: image})
+    return Promise.resolve({status:200,rs:image})
   } catch (err) {
-    return Promise.reject({
-      message: `Could not upload the file: ${req.file.originalname}. ${err}`,
+    return Promise.reject({status:500,rs: `Could not upload the file: ${req.file.originalname}. ${err}`,
     });
   }
 };

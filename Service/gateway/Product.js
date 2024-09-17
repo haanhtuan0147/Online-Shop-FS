@@ -8,11 +8,14 @@ module.exports =class Product {
             const rs= await  api.get('/Product'+req.path,{data:req.body,headers: {'Content-Type': 'application/json;charset=utf-8'}});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result})  ;         
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
     pagecountfindAll = async (req) => {
@@ -20,61 +23,73 @@ module.exports =class Product {
             const rs= await  api.get('/Product'+req.path);
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve(rs.data);
+            return Promise.resolve({status:rs.status,rs:rs.data.result})  ;         
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
      create = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"});
+            return Promise.reject({status:406,rs:"NOT ITEM"});
             const rs=  await api.post('/Product'+req.path,req.body,{headers: {
                 'authorization': req.headers['authorization'],
                 'Content-Type': 'application/json;charset=utf-8'
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT CREATE Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;          
         } catch (error) {
-            return Promise.reject({message : "NOT CREATE Product"});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
     checkArrayCategory=async(req)=>{
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"});
+            return Promise.reject({status:406,rs:"NOT ITEM"});
             const rs=  await api.get('/Product_Category/checkArrayCategory'+req.path,{data:{"category":JSON.parse(req.body.categoryId)},headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT Category Product Exist"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result});           
         } catch (error) {
-            return Promise.reject({message : "NOT Category Product Exist"});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
      update = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"});
+            return Promise.reject({status:406,rs:"NOT ITEM"});
             const rs=  await api.put('/Product'+req.path,req.body,{headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 'authorization': req.headers['authorization']
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT UPDATE Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;          
         } catch (error) {
-            return Promise.reject({message : "NOT UPDATE Product"});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
      delete = async (req) => {
@@ -85,11 +100,14 @@ module.exports =class Product {
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT DELETE Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result});          
         } catch (error) {
-            return Promise.reject({message : "NOT DELETE Product"});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
 
@@ -101,11 +119,14 @@ module.exports =class Product {
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result});           
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
 
@@ -113,33 +134,39 @@ module.exports =class Product {
      findItem = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"});
+            return Promise.reject({status:406,rs:"NOT ITEM"});
             const rs=  await api.get('/Product'+req.path,{data:req.body,headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
     pagecountfindItem = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"});
+            return Promise.reject({status:406,rs:"NOT ITEM"});
             const rs=  await api.get('/Product'+req.path,{data:req.body,headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve(rs.data);
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
     searchbyprice=async (req) => {     
@@ -149,11 +176,14 @@ module.exports =class Product {
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
     pagecountsearchbyprice=async (req) => {     
@@ -163,43 +193,52 @@ module.exports =class Product {
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve(rs.data);
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
     searchbypriceBetween= async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"})
+            return Promise.reject({status:406,rs:"NOT ITEM"});
             const rs=  await api.get('/Product'+req.path,{data:req.body,headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
     pagecountsearchbypriceBetween= async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"});
+            return Promise.reject({status:406,rs:"NOT ITEM"});
             const rs=  await api.get('/Product'+req.path,{data:req.body,headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve(rs.data);
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
     searchbyname= async (req) => {
@@ -209,11 +248,14 @@ module.exports =class Product {
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve({result : rs.data});
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
     
@@ -224,11 +266,14 @@ module.exports =class Product {
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve(rs.data);
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
     findAVGNumberStarProduct= async (req) => {
@@ -238,11 +283,14 @@ module.exports =class Product {
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve(rs.data);
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
     countpagefindDetailsProduct= async (req) => {
@@ -252,11 +300,14 @@ module.exports =class Product {
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve(rs.data);
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
     findDetailsProduct= async (req) => {
@@ -266,11 +317,14 @@ module.exports =class Product {
               }});
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND Product"});
+                return Promise.reject({status:rs.status,rs : rs.data.result});
             }
-            return Promise.resolve(rs.data);
+            return Promise.resolve({status:rs.status,rs:rs.data.result}) ;   
         } catch (error) {
-            return Promise.reject({message : "NOT FIND Product"});
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"});
         }   
     }
 }

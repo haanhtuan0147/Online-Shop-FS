@@ -8,9 +8,9 @@ module.exports=class Field {
     findAll = (req, res, next) => {
         service.findAll()
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
 }
 
      create =  (req, res, next) => {
@@ -19,9 +19,9 @@ module.exports=class Field {
         item.Id = v4();
         service.create(item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
 
      update =  (req, res, next) => {
@@ -30,44 +30,44 @@ module.exports=class Field {
         const id = req.params.id;
         service.update(id, item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
 
     findOne =  (req, res, next) => {
         const id = req.params.id;
         service.findOne(id)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
     findItem =  (req, res, next) => {
         const item = req.body;
         service.findItem(item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
     findcategory=  (req, res, next) => {
         const id = req.params.id;
         service.findcategory(id)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
     delete = (req, res, next) => {
         const id = req.params.id;
         service.delete(id)
             .then(result => {
-                baseController.sendResponse(result, req, res.status(200));
+                baseController.sendResponse(result, req, res);
             })
-            .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+            .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
 }

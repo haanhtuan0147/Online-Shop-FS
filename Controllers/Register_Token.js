@@ -9,9 +9,9 @@ module.exports=class Register_Token {
 
         service.findAll()
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
 }
 
      create =  (req, res, next) => {
@@ -19,9 +19,9 @@ module.exports=class Register_Token {
         item.Id = v4();
         service.create(item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
 
      update =  (req, res, next) => {
@@ -29,26 +29,26 @@ module.exports=class Register_Token {
         const id = req.params.id;
         service.update(id, item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
 
     findOne =  (req, res, next) => {
         const id = req.params.id;
         service.findOne(id)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
     }
     findItem =  (req, res, next) => {
         const item = req.body;
         service.findItem(item)
         .then(result => {
-            baseController.sendResponse(result, req, res.status(200));
+            baseController.sendResponse(result, req, res);
         })
-        .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+        .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
 
@@ -56,9 +56,9 @@ module.exports=class Register_Token {
         const id = req.params.id;
         service.delete(id)
             .then(result => {
-                baseController.sendResponse(result, req, res.status(200));
+                baseController.sendResponse(result, req, res);
             })
-            .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+            .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
     CreateRegisterToken= (req, res, next) => {
@@ -66,9 +66,9 @@ module.exports=class Register_Token {
         item.id=v4()
         service.CreateRegisterToken(item)
             .then(result => {
-                baseController.sendResponse(result, req, res.status(200));
+                baseController.sendResponse(result, req, res);
             })
-            .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+            .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
     CheckNumberRegisterToken= (req, res, next) => {
@@ -77,7 +77,7 @@ module.exports=class Register_Token {
             .then(()=>{
                 next()
             })
-            .catch(err => { baseController.sendResponse(err, req, res.status(500)); });
+            .catch(err => { baseController.sendResponse(err, req, res); });
 
     }
 }

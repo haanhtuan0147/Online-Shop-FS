@@ -14,46 +14,55 @@ module.exports =class User {
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT FIND User"})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         }  
     }
      create = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"})
+            return Promise.reject({status:406,rs:"NOT ITEM body"})
             const rs= await api.post('/User'+req.path,req.body,{headers: {
                 'authorization': req.headers['authorization'],
                 'Content-Type': 'application/json;charset=utf-8'
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT CREATE User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT CREATE User"})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         }  
     }
 
      update = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"})
+            return Promise.reject({status:406,rs:"NOT ITEM body"})
             const rs= await api.put('/User'+req.path,req.body,{headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 'authorization': req.headers['authorization']
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT UPDATE User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT UPDATE User"})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         } 
     }
      delete = async (req) => {
@@ -64,11 +73,14 @@ module.exports =class User {
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT DELETE User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT DELETE User"})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         } 
     }
 
@@ -81,11 +93,14 @@ module.exports =class User {
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT FIND User"})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         } 
     }
 
@@ -93,18 +108,21 @@ module.exports =class User {
      findItem = async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"})
+            return Promise.reject({status:406,rs:"NOT ITEM body"})
             const rs= await api.get('/User'+req.path,{data:req.body,headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 'authorization': req.headers['authorization']
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT FIND User"})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         } 
     }
     findUser= async (req) => {
@@ -115,11 +133,14 @@ module.exports =class User {
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT FIND User"})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         } 
     }
     customerreliability= async (req) => {
@@ -130,76 +151,94 @@ module.exports =class User {
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT FIND customerreliability"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : error})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         } 
     }
     RegisterToken= async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"})
+            return Promise.reject({status:406,rs:"NOT ITEM body"})
             const rs= await api.post('/User'+req.path,req.body,{headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT RegisterToken User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT RegisterToken User"})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         } 
     }
     RegisterUser= async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"})
+            return Promise.reject({status:406,rs:"NOT ITEM body"})
             const rs= await api.post('/User'+req.path,req.body,{headers: {
                 'Content-Type': 'application/json;charset=utf-8'
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT RegisterUser User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT RegisterUser User"})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         } 
     }
     RegisterAdmin= async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"})
+            return Promise.reject({status:406,rs:"NOT ITEM body"})
             const rs=  await api.post('/User'+req.path,req.body,{headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 'authorization': req.headers['authorization']
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT RegisterUser User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT RegisterUser User"})
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
         } 
     }
     Login= async (req) => {
         try {
             if(Object.keys(req.body).length==0)
-            return Promise.reject({message : "NOT ITEM"})
+            return Promise.reject({status:406,rs:"NOT ITEM body"})
             const rs= await api.post('/User'+req.path,req.body,{headers: {
                 'Content-Type': 'application/json;charset=utf-8',
               }})
             if(rs.status!=200)
             {
-                return Promise.reject({message : "NOT Login User"})
+                return Promise.reject({status:rs.status,rs : rs.data.result})
             }
-            return Promise.resolve({result : rs.data})
+            return Promise.resolve({status:rs.status,rs : rs.data.result})
         } catch (error) {
-            return Promise.reject({message : "NOT Login User"})
+            //console.log(error)
+            //return Promise.reject(error.response.data)
+             if(error.response)
+          return Promise.reject({status:error.response.status,rs:error.response.data.result})
+          else
+          return Promise.reject({status:500,rs:"Syntax error"})
+
         } 
     }
 

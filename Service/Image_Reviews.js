@@ -10,28 +10,32 @@ module.exports =class Image_Reviews {
         try {
         const rs = await Repository.findAll();
         if (Object.keys(rs).length == 0) {
-            return Promise.resolve([]);
+            return Promise.resolve({status:200,rs:[]});
         }
-        return Promise.resolve(rs);
+        return Promise.resolve({status:200,rs:rs});
     } catch (error) {
-        return Promise.reject({messager :error} );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      create = async (item) => {
         try {
             const checkProductReview = await RepositoryProduct_Reviews.findOne(item.productReviewsId)
             if(Object.keys(checkProductReview).length==0)
-            return Promise.reject({messager : "Create Faild  ProductReview not exits"});
+            return Promise.reject({status:406,rs:"Create Faild  ProductReview not exits"});
             const rs = await Repository.create(item);
             if(rs) {
-                return Promise.resolve({
+                return Promise.resolve({status:200,rs:{
                 messager : "Sucsuess",
                 Item:item
-            });
+            }});
             }
-        return Promise.reject({messager : "Create Faild "});
+        return Promise.reject({status:406,rs:"Create Faild "});
         } catch (error) {
-            return Promise.reject({messager : "Create Faild "});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
         
     }
@@ -39,23 +43,27 @@ module.exports =class Image_Reviews {
         try{
         const rs = await Repository.update(id, item);
         if (rs) {
-            return Promise.resolve({ messager: "Sucsess" });
+            return Promise.resolve({status:200,rs:"Sucsess"});
            
         }
-        return Promise.reject({ messager: "Update Faild" });
+        return Promise.reject({status:406,rs:"Update Faild" });
     } catch (error) {
-        return Promise.reject({ messager: "Update Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      delete = async (id) => {
          try{
         const rs = await Repository.delete(id);
         if (rs == 0) {
-            return Promise.reject({ messager: "Delete Faild" });
+            return Promise.reject({status:406,rs:"Delete Faild" });
         }
-        return Promise.resolve({messager : "Sucsuess"});
+        return Promise.resolve({status:200,rs:"Sucsuess"});
     } catch (error) {
-        return Promise.reject({ messager: "Delete Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
 
@@ -63,11 +71,13 @@ module.exports =class Image_Reviews {
         try {
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
-                return Promise.resolve([]);
+                return Promise.resolve({status:200,rs:[]});
             }
-            return Promise.resolve(rs);
+            return Promise.resolve({status:200,rs:rs});
         } catch (error) {
-            return Promise.reject({ messager: " Image_Reviews not exists ! "  } );
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
 
@@ -76,12 +86,14 @@ module.exports =class Image_Reviews {
          try {
             const rs = await Repository.findItem(item);
             if (Object.keys(rs).length == 0) {
-                return Promise.resolve([]);
+                return Promise.resolve({status:200,rs:[]});
             }
-            return Promise.resolve({result : rs});
+            return Promise.resolve({status:200,rs:rs});
              
          } catch (error) {
-            return Promise.reject({messager :"Not Found"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
          }
 
     }
@@ -108,15 +120,17 @@ module.exports =class Image_Reviews {
         try {
            const rs = await Repository.findItem({productReviewsId:id});
            if (Object.keys(rs).length == 0) {
-            return Promise.resolve([]);
+            return Promise.resolve({status:200,rs:[]});
         }
            var listimage=await this.ConverJsonimagetobase64(rs);
           if(listimage.length==0)
-          return Promise.resolve([]);
-          return Promise.resolve({ListImageReview:listimage});
+          return Promise.resolve({status:200,rs:[]});
+          return Promise.resolve({status:200,rs:listimage});
             
         } catch (error) {
-           return Promise.reject({messager :"Not Found"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
 
    }
@@ -129,11 +143,13 @@ module.exports =class Image_Reviews {
        }
       var listimage= await this.ConverJsonimagetobase64(rs);
       if(listimage.length==0)
-      return Promise.resolve([]);
-      return Promise.resolve({ListImageReview:listimage});
+      return Promise.resolve({status:200,rs:[]});
+      return Promise.resolve({status:200,rs:listimage});
         
     } catch (error) {
-       return Promise.reject({messager :"Not Found"});
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
 
    }

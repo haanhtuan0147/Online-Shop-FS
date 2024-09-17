@@ -9,31 +9,35 @@ module.exports =class Product_Category {
         try {
         const rs = await Repository.findAll();
         if (Object.keys(rs).length == 0) {
-            return Promise.resolve([])
+            return Promise.resolve({status:200,rs:[]})
         }
-        return Promise.resolve(rs)
+        return Promise.resolve({status:200,rs:rs})
     } catch (error) {
-        return Promise.reject({messager :error} )
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      create = async (item) => {
         try {
             const onefield =await RepositoryField.findOne(item.fieldId);
             if(Object.keys(onefield).length==0)
-            return Promise.reject({messager : "not is fieldid Exist"});
-            const checknamecategory=await this.findItem({CategoryName:item.CategoryName});
+            return Promise.reject({status:406,rs:"not is fieldid Exist"});
+            const checknamecategory=await Repository.findItem({CategoryName:item.CategoryName});
             if(Object.keys(checknamecategory).length>0)
-            return Promise.reject({messager :  "Faild category name exits"});
+            return Promise.reject({status:406,rs:"Faild category name exits"});
             const rs = await Repository.create(item);
             if(rs) {
-                return Promise.resolve({
+                return Promise.resolve({status:200,rs:{
                 messager : "Sucsuess",
                 Item:item
-            });
+            }});
             }
-        return Promise.reject({messager : "Create Faild "});
+        return Promise.reject({status:406,rs: "Create Faild "});
         } catch (error) {
-            return Promise.reject({messager : "Create Faild "});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
         
     }
@@ -42,32 +46,36 @@ module.exports =class Product_Category {
             if(item.fieldId){
                 const onefield =await RepositoryField.findOne(item.fieldId);
                 if(Object.keys(onefield).length==0)
-                return Promise.reject({messager : "not is fieldid Exist"});
+                return Promise.reject({status:406,rs: "not is fieldid Exist"});
             }
             if(item.CategoryName){
-                const checknamecategory=await this.findItem({CategoryName:item.CategoryName});
+                const checknamecategory=await Repository.findItem({CategoryName:item.CategoryName});
                 if(Object.keys(checknamecategory).length>0)
-                return Promise.reject({messager :  "Faild category name exits"});
+                return Promise.reject({status:406,rs:  "Faild category name exits"});
             }
         const rs = await Repository.update(id, item);
         if (rs) {
-            return Promise.resolve({ messager: "Sucsess" });
+            return Promise.resolve({status:200,rs: "Sucsess" });
            
         }
-        return Promise.reject({ messager: "Update Faild" });
+        return Promise.reject({status:406,rs:"Update Faild" });
     } catch (error) {
-        return Promise.reject({ messager: "Update Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      delete = async (id) => {
          try{
         const rs = await Repository.delete(id);
         if (rs == 0) {
-            return Promise.reject({ messager: "Delete Faild" });
+            return Promise.reject({status:406,rs:"Delete Faild" });
         }
-        return Promise.resolve({messager : "Sucsuess"});
+        return Promise.resolve({status:200,rs:"Sucsuess"});
     } catch (error) {
-        return Promise.reject({ messager: "Delete Faild" } );
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
 
@@ -75,11 +83,13 @@ module.exports =class Product_Category {
         try {
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
-                return Promise.resolve([]);
+                return Promise.resolve({status:200,rs:[]});
             }
-            return Promise.resolve(rs);
+            return Promise.resolve({status:200,rs:rs});
         } catch (error) {
-            return Promise.reject({ messager: " Product_Category not exists ! "  } );
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
 
@@ -88,12 +98,14 @@ module.exports =class Product_Category {
          try {
             const rs = await Repository.findItem(item);
             if (Object.keys(rs).length == 0) {
-                return Promise.resolve([]);
+                return Promise.resolve({status:200,rs:[]});
             }
-            return Promise.resolve(rs);
+            return Promise.resolve({status:200,rs:rs});
              
          } catch (error) {
-            return Promise.reject({messager :"Not Found"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
          }
 
     }
@@ -102,13 +114,15 @@ module.exports =class Product_Category {
             for(var i=0;i<item.length;i++){
                 const rs = await Repository.findOne(item[i]);
                 if (Object.keys(rs).length == 0) {
-                    return Promise.reject({messager :"Not Found"});
+                    return Promise.reject({status:406,rs:"Not Found"});
                 }
             }
-           return Promise.resolve({messager :"Sucsuess"});
+           return Promise.resolve({status:200,rs:"Sucsuess"});
             
         } catch (error) {
-           return Promise.reject({messager :"Not Found"});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
 
    }

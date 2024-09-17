@@ -11,32 +11,36 @@ module.exports =class Order_Product {
         try {
         const rs = await Repository.findAll();
         if (Object.keys(rs).length == 0) {
-            return Promise.resolve([])
+            return Promise.resolve({status:200,rs:[]})
         }
-        return Promise.resolve(rs)
+        return Promise.resolve({status:200,rs:rs})
     } catch (error) {
-        return Promise.reject({messager :error} )
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      create = async (item) => {
         try {
             const rs = await Repository.create(item);
             if(rs) {
-                return Promise.resolve({
+                return Promise.resolve({status:200,rs:{
                 messager : "Sucsuess",
                 Item:item
-            })
+            }})
             }
-        return Promise.reject({messager : "Create Faild "});
+        return Promise.reject({status:406,rs: "Create Faild "});
         } catch (error) {
-            return Promise.reject({messager : "Create Faild "});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
         
     }
     createarray= async (id,arrayitem) => {
         try {
             if(Object.keys(arrayitem).length==0)
-            return Promise.reject({ messager : "fail! createarray not item"});
+            return Promise.reject({status:406,rs: "fail! createarray not item"});
             arrayitem.forEach(function(it){
                 it.shoppingcartId=id
                 it.id=v4()
@@ -44,16 +48,18 @@ module.exports =class Order_Product {
             const rs = await Repository.create(arrayitem);
             if(rs) {
                 //console.log(rs)
-                return Promise.resolve({
+                return Promise.resolve({status:200,rs:{
                 messager : "Sucsuess",
                 Item:arrayitem
-            })
+            }})
             }
             await Repositoryshoppingcart.delete(id);
             await Repository.deleteAll({shoppingcartId:id});
-            return Promise.reject({messager : "Create Faild "});
+            return Promise.reject({status:406,rs:"Create Faild "});
         } catch (error) {
-            return Promise.reject({messager : "Create Faild "});
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
         
     }
@@ -61,23 +67,27 @@ module.exports =class Order_Product {
         try{
         const rs = await Repository.update(id, item);
         if (rs) {
-            return Promise.resolve({ messager: "Sucsess" })
+            return Promise.resolve({status:200,rs: "Sucsess" })
            
         }
-        return Promise.reject({ messager: "Update Faild" })
+        return Promise.reject({status:406,rs:"Update Faild" })
     } catch (error) {
-        return Promise.reject({ messager: "Update Faild" } )
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
      delete = async (id) => {
          try{
         const rs = await Repository.delete(id)
         if (rs == 0) {
-            return Promise.reject({ messager: "Delete Faild" })
+            return Promise.reject({status:406,rs:"Delete Faild" })
         }
-        return Promise.resolve({messager : "Sucsuess"})
+        return Promise.resolve({status:200,rs:"Sucsuess"})
     } catch (error) {
-        return Promise.reject({ messager: "Delete Faild" } )
+        if(error.sqlMessage)
+        return Promise.reject({status:406,rs:error.sqlMessage} );
+        return Promise.reject({status:500,rs:"Syntax error"});
     }
     }
 
@@ -85,11 +95,13 @@ module.exports =class Order_Product {
         try {
             const rs  = await Repository.findOne(id);
             if (Object.keys(rs).length == 0) {
-                return Promise.resolve([])
+                return Promise.resolve({status:200,rs:[]})
             }
-            return Promise.resolve(rs)
+            return Promise.resolve({status:200,rs:rs})
         } catch (error) {
-            return Promise.reject({ messager: " Order_Product not exists ! "  } )
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
         }
     }
 
@@ -98,12 +110,14 @@ module.exports =class Order_Product {
          try {
             const rs = await Repository.findItem(item);
             if (Object.keys(rs).length == 0) {
-                return Promise.resolve([])
+                return Promise.resolve({status:200,rs:[]})
             }
-            return Promise.resolve(rs)
+            return Promise.resolve({status:200,rs:rs})
              
          } catch (error) {
-            return Promise.reject({messager :"Not Found"})
+            if(error.sqlMessage)
+            return Promise.reject({status:406,rs:error.sqlMessage} );
+            return Promise.reject({status:500,rs:"Syntax error"});
          }
 
     }

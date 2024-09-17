@@ -47,7 +47,6 @@
         table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
         table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
         table.check('??>=??',['updatedDate','createdDate']);
-
     })
     .createTable('Product_Category',function(table){
         table.specificType('id','CHAR(100)').notNullable().primary();
@@ -136,7 +135,7 @@
         table.specificType('userId','CHAR(100)').notNullable();
         table.specificType('IdProduct','CHAR(100)').notNullable();
         table.text('Comment').notNullable();
-        table.check('??>=??',['updatedDate','createdDate']);
+    table.check('??>=??',['updatedDate','createdDate']);
         table.timestamp('createdDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP '));
         table.timestamp('updatedDate',{ useTz: true, precision: 2 }).defaultTo(knex.raw('CURRENT_TIMESTAMP ON UpDate CURRENT_TIMESTAMP'));
         table.foreign("IdProduct").references("Id").inTable("Product");

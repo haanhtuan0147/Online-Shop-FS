@@ -3,14 +3,14 @@ const passport =require("passport");
 const ServiceUser =require('../Service/User')
 const Service=new ServiceUser()
 const localStrategy = require('passport-local').Strategy;
+const BaseController =require('./BaseController');
+const baseController = new BaseController();
  passport.use(new localStrategy(async (username, password, done) => {
-    let authenticated_user = await Service.findEmailPass(username, password).then(result=>{return result}).catch(()=>{return {}}); //truy vấn db
-    if (Object.keys(authenticated_user).length == 0) { //object rỗng trả về false
-        return done(null, false);
-    }
-    else {
-        return done(null, authenticated_user) //trả về username
-    }
+ await Service.findEmailPass(username, password).then(result=>{
+    return done(null, result);
+   }).catch((error)=>{
+    return done(null, error)
+  }); //truy vấn db
 }
 ))
  passport.serializeUser((user, done) => {
@@ -22,8 +22,7 @@ const localStrategy = require('passport-local').Strategy;
 })
 exports.Authenticate =(req, res, next) => {
     passport.authenticate('local', async(err, user) => {
-        
-    if (!user) return res.status(500).json({ message: "Wrong login information" });
+    if (!user.Email) return baseController.sendResponse(user, req, res);
     else {
         //res.json(user.Email)
         req.user =user.Email;
